@@ -3,22 +3,22 @@ import { BrowserModule } from '@angular/platform-browser';
 import { RouterModule } from '@angular/router';
 
 import { AppComponent } from './app.component';
-import { SectionsComponent } from './views/sections/sections.component';
 import { BrandsComponent } from './views/brands/brands.component';
 import { WarehousesComponent } from './views/warehouses/warehouses.component';
 import { UsersComponent } from './views/users/users.component';
 import { LandingsComponent } from './views/landings/landings.component';
 import { ReportsComponent } from './views/reports/reports.component';
+import { ProfileComponent } from './views/profile/profile.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    SectionsComponent,
     BrandsComponent,
     WarehousesComponent,
     UsersComponent,
     LandingsComponent,
-    ReportsComponent
+    ReportsComponent,
+    ProfileComponent
   ],
   imports: [
     BrowserModule,
@@ -28,6 +28,7 @@ import { ReportsComponent } from './views/reports/reports.component';
       {path: 'warehouses', component: WarehousesComponent},
       {path: 'landings', component: LandingsComponent},
       {path: 'reports', component: ReportsComponent},
+      {path: 'profile', component: ProfileComponent},
     ]),
   ],
   providers: [],
