@@ -1,5 +1,4 @@
-
-<div class="wrapper">
+<div>
   <div class="sidebar" data-color="purple" data-background-color="white" data-image="../assets/img/sidebar-1.jpg">
     <!--
       Tip 1: You can change the color of the sidebar using: data-color="purple | azure | green | orange | danger"
@@ -11,49 +10,50 @@
     </a></div>
     <div class="sidebar-wrapper">
       <nav>
-      <ul class="nav">
-        <li class="nav-item" routerLinkActive="active">
-          <a class="nav-link" routerLink="/users">
-            <i class="material-icons">groups</i>
-            <p>Users</p>
-          </a>
-        </li>
-        <li class="nav-item" routerLinkActive="active">
-          <a class="nav-link" routerLink="/brands">
-            <i class="material-icons">style</i>
-            <p>Brands</p>
-          </a>
-        </li>
-        <li class="nav-item" routerLinkActive="active">
-          <a class="nav-link" routerLink="/warehouses">
-            <i class="material-icons">store</i>
-            <p>Warehouses</p>
-          </a>
-        </li>
-        <li class="nav-item" routerLinkActive="active">
-          <a class="nav-link" routerLink="/deliveries">
-            <i class="material-icons">local_shipping</i>
-            <p>Deliveries</p>
-          </a>
-        </li>
-         <li class="nav-item" routerLinkActive="active">
-          <a class="nav-link" routerLink="/reports">
-            <i class="material-icons">content_paste</i>
-            <p>Reports</p>
-          </a>
-        </li>
-        <li class="nav-item" routerLinkActive="active">
-          <a class="nav-link" routerLink="/profile">
-            <i class="material-icons">person</i>
-            <p>User Profile</p>
-          </a>
-        </li>
+        <ul class="nav">
+          <li class="nav-item" routerLinkActive="active">
+            <a class="nav-link" routerLink="/users" (click)="setSection('Users')">
+              <i class="material-icons">groups</i>
+              <p>Users</p>
+            </a>
+          </li>
+          <li class="nav-item" routerLinkActive="active">
+            <a class="nav-link" routerLink="/brands" (click)="setSection('Brands')">
+              <i class="material-icons">style</i>
+              <p>Brands</p>
+            </a>
+          </li>
+          <li class="nav-item" routerLinkActive="active">
+            <a class="nav-link" routerLink="/warehouses" (click)="setSection('Warehouses')">
+              <i class="material-icons">store</i>
+              <p>Warehouses</p>
+            </a>
+          </li>
+          <li class="nav-item" routerLinkActive="active">
+            <a class="nav-link" routerLink="/deliveries" (click)="setSection('Deliveries schedule')">
+              <i class="material-icons">local_shipping</i>
+              <p>Deliveries</p>
+            </a>
+          </li>
+          <li class="nav-item" routerLinkActive="active">
+            <a class="nav-link" routerLink="/reports" (click)="setSection('Reports')">
+              <i class="material-icons">content_paste</i>
+              <p>Reports</p>
+            </a>
+          </li>
+          <li class="nav-item" routerLinkActive="active">
+            <a class="nav-link" routerLink="/profile" (click)="setSection('User profile')">
+              <i class="material-icons">person</i>
+              <p>User Profile</p>
+            </a>
+          </li>
         </ul>
       </nav>
     </div>
   </div>
-  <div class="main-panel">
-    <div class="content">
+   <div class="main-panel">
+    <app-navbar [title]="section"></app-navbar>
+    <div class="content wrapper">
       <div class="container-fluid">
         <router-outlet></router-outlet>
       </div>
@@ -116,7 +116,8 @@
         </a>
       </li>
       <li class="button-container github-star">
-        <a class="github-button" href="https://github.com/creativetimofficial/material-dashboard" data-icon="octicon-star" data-size="large" data-show-count="true" aria-label="Star ntkme/github-buttons on GitHub">Star</a>
+        <a class="github-button" href="https://github.com/creativetimofficial/material-dashboard" data-icon="octicon-star" data-size="large" data-show-count="true"
+           aria-label="Star ntkme/github-buttons on GitHub">Star</a>
       </li>
       <li class="header-title">Thank you for 95 shares!</li>
       <li class="button-container text-center">

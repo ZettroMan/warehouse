@@ -28,7 +28,7 @@ import { NavbarComponent } from './views/navbar/navbar.component';
       {path: 'users', component: UsersComponent},
       {path: 'brands', component: BrandsComponent},
       {path: 'warehouses', component: WarehousesComponent},
-      {path: 'landings', component: DeliveriesComponent},
+      {path: 'deliveries', component: DeliveriesComponent},
       {path: 'reports', component: ReportsComponent},
       {path: 'profile', component: ProfileComponent},
     ]),

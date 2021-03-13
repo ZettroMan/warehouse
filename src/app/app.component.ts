@@ -7,4 +7,10 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'warehouse';
+  section = '';
+
+  // tslint:disable-next-line:typedef
+  setSection(section: string) {
+    this.section = section;
+  }
 }
