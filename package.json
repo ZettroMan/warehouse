@@ -1,6 +1,8 @@
 {
   "name": "warehouse",
-  "version": "0.0.0",
+  "version": "1.0.0",
+  "description": "Application for warehouse managing and planning",
+  "author": "ND Team",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
