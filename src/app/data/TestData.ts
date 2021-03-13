@@ -48,7 +48,7 @@ export class TestData {
     {
       id: 3,
       username: 'semen',
-      fullName: 'PathSegment Andreevich',
+      fullName: 'Semen Andreevich',
       email: 'sema@yandex.ru',
       phone: '+74657122347',
       role: 'BRAND_MANAGER',
