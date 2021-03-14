@@ -9,7 +9,7 @@ import { UsersComponent } from './views/users/users.component';
 import { DeliveriesComponent } from './views/deliveries/deliveries.component';
 import { ReportsComponent } from './views/reports/reports.component';
 import { ProfileComponent } from './views/profile/profile.component';
-import { NavbarComponent } from './views/navbar/navbar.component';
+import { ShopsComponent } from './views/shops/shops.component';
 
 @NgModule({
   declarations: [
@@ -20,7 +20,7 @@ import { NavbarComponent } from './views/navbar/navbar.component';
     DeliveriesComponent,
     ReportsComponent,
     ProfileComponent,
-    NavbarComponent
+    ShopsComponent
   ],
   imports: [
     BrowserModule,
@@ -28,6 +28,7 @@ import { NavbarComponent } from './views/navbar/navbar.component';
       {path: 'users', component: UsersComponent},
       {path: 'brands', component: BrandsComponent},
       {path: 'warehouses', component: WarehousesComponent},
+      {path: 'shops', component: ShopsComponent},
       {path: 'deliveries', component: DeliveriesComponent},
       {path: 'reports', component: ReportsComponent},
       {path: 'profile', component: ProfileComponent},

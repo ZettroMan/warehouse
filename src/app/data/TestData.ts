@@ -7,24 +7,24 @@ import {User} from '../model/User';
 export class TestData {
 
   static warehouses: Warehouse[] = [
-    {id: 1, name: 'Warehouse 1', label: 'WH1'},
-    {id: 2, name: 'Warehouse 2', label: 'WH2'},
-    {id: 3, name: 'Warehouse 3', label: 'WH3'},
-    {id: 4, name: 'Warehouse 4', label: 'WH4'},
-    {id: 5, name: 'Warehouse 5', label: 'WH5'},
+    {id: 1, name: 'Склад 1', label: 'WH1'},
+    {id: 2, name: 'Склад 2', label: 'WH2'},
+    {id: 3, name: 'Склад 3', label: 'WH3'},
+    {id: 4, name: 'Склад 4', label: 'WH4'},
+    {id: 5, name: 'Склад 5', label: 'WH5'},
   ];
 
 
   static brands: Brand[] = [
-    {id: 1, name: 'Brand 1', label: 'BRND_1'},
-    {id: 2, name: 'Brand 2', label: 'BRND_2'},
-    {id: 3, name: 'Brand 3', label: 'BRND_3'},
-    {id: 4, name: 'Brand 4', label: 'BRND_4'},
-    {id: 5, name: 'Brand 5', label: 'BRND_5'},
-    {id: 6, name: 'Brand 6', label: 'BRND_6'},
-    {id: 7, name: 'Brand 7', label: 'BRND_7'},
-    {id: 8, name: 'Brand 8', label: 'BRND_8'},
-    {id: 9, name: 'Brand 9', label: 'BRND_9'},
+    {id: 1, name: 'Бренд 1', label: 'BRND_1'},
+    {id: 2, name: 'Бренд 2', label: 'BRND_2'},
+    {id: 3, name: 'Бренд 3', label: 'BRND_3'},
+    {id: 4, name: 'Бренд 4', label: 'BRND_4'},
+    {id: 5, name: 'Бренд 5', label: 'BRND_5'},
+    {id: 6, name: 'Бренд 6', label: 'BRND_6'},
+    {id: 7, name: 'Бренд 7', label: 'BRND_7'},
+    {id: 8, name: 'Бренд 8', label: 'BRND_8'},
+    {id: 9, name: 'Бренд 9', label: 'BRND_9'},
   ];
 
 
@@ -32,7 +32,7 @@ export class TestData {
     {
       id: 1,
       username: 'timur',
-      fullName: 'Taimuraz',
+      fullName: 'Таймураз',
       email: 'tm@gmail.com',
       phone: '+78867892431',
       role: 'ADMIN',
@@ -40,7 +40,7 @@ export class TestData {
     {
       id: 2,
       username: 'igor',
-      fullName: 'Igor Vladimirovich',
+      fullName: 'Игорь Владимирович Коробов',
       email: 'igorek@gmail.com',
       phone: '+75647983245',
       role: 'BRAND_MANAGER',
@@ -48,7 +48,7 @@ export class TestData {
     {
       id: 3,
       username: 'semen',
-      fullName: 'Semen Andreevich',
+      fullName: 'Семён Андреевич Лалетин',
       email: 'sema@yandex.ru',
       phone: '+74657122347',
       role: 'BRAND_MANAGER',
@@ -56,7 +56,7 @@ export class TestData {
     {
       id: 4,
       username: 'ravshan',
-      fullName: 'Ravshan Abdimutalibovich',
+      fullName: 'Равшан Абдимуталибович Мамасаидов',
       email: 'vanya@yandex.ru',
       phone: '+799996448945',
       role: 'WAREHOUSE',
@@ -64,7 +64,7 @@ export class TestData {
     {
       id: 5,
       username: 'dzhamshut',
-      fullName: 'Dzhamshut Mamasaidovich',
+      fullName: 'Джамшут Ибрагимович Аликбеков',
       email: 'dima@yandex.ru',
       phone: '+79654669123',
       role: 'WAREHOUSE',

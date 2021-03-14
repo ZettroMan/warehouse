@@ -12,39 +12,45 @@
       <nav>
         <ul class="nav">
           <li class="nav-item" routerLinkActive="active">
-            <a class="nav-link" routerLink="/users" (click)="setSection('Users')">
+            <a class="nav-link" routerLink="/users" (click)="setSection('Пользователи')">
               <i class="material-icons">groups</i>
-              <p>Users</p>
+              <p>Пользователи</p>
             </a>
           </li>
           <li class="nav-item" routerLinkActive="active">
-            <a class="nav-link" routerLink="/brands" (click)="setSection('Brands')">
+            <a class="nav-link" routerLink="/brands" (click)="setSection('Бренды')">
               <i class="material-icons">style</i>
-              <p>Brands</p>
+              <p>Бренды</p>
             </a>
           </li>
           <li class="nav-item" routerLinkActive="active">
-            <a class="nav-link" routerLink="/warehouses" (click)="setSection('Warehouses')">
+            <a class="nav-link" routerLink="/shops" (click)="setSection('Магазины')">
+              <i class="material-icons">storefront</i>
+              <p>Магазины</p>
+            </a>
+          </li>
+          <li class="nav-item" routerLinkActive="active">
+            <a class="nav-link" routerLink="/warehouses" (click)="setSection('Склады')">
               <i class="material-icons">store</i>
-              <p>Warehouses</p>
+              <p>Склады</p>
             </a>
           </li>
           <li class="nav-item" routerLinkActive="active">
-            <a class="nav-link" routerLink="/deliveries" (click)="setSection('Deliveries schedule')">
+            <a class="nav-link" routerLink="/deliveries" (click)="setSection('График поставок')">
               <i class="material-icons">local_shipping</i>
-              <p>Deliveries</p>
+              <p style="text-transform: none">График поставок</p>
             </a>
           </li>
           <li class="nav-item" routerLinkActive="active">
-            <a class="nav-link" routerLink="/reports" (click)="setSection('Reports')">
+            <a class="nav-link" routerLink="/reports" (click)="setSection('Отчеты')">
               <i class="material-icons">content_paste</i>
-              <p>Reports</p>
+              <p>Отчеты</p>
             </a>
           </li>
           <li class="nav-item" routerLinkActive="active">
-            <a class="nav-link" routerLink="/profile" (click)="setSection('User profile')">
+            <a class="nav-link" routerLink="/profile" (click)="setSection('Мой профиль')">
               <i class="material-icons">person</i>
-              <p>User Profile</p>
+              <p style="text-transform: none">Мой профиль</p>
             </a>
           </li>
         </ul>
@@ -52,8 +58,7 @@
     </div>
   </div>
    <div class="main-panel">
-    <app-navbar [title]="section"></app-navbar>
-    <div class="content wrapper">
+    <div class="content">
       <div class="container-fluid">
         <router-outlet></router-outlet>
       </div>
