@@ -14,6 +14,7 @@ export class DataHandlerService {
   usersSubject = new BehaviorSubject<User[]>(TestData.users);
   warehousesSubject = new BehaviorSubject<Warehouse[]>(TestData.warehouses);
   brandsSubject = new BehaviorSubject<Brand[]>(TestData.brands);
+  shopsSubject = new BehaviorSubject<Brand[]>(TestData.shops);
 
   constructor() {
   }

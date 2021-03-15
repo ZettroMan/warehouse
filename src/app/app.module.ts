@@ -10,6 +10,8 @@ import { DeliveriesComponent } from './views/deliveries/deliveries.component';
 import { ReportsComponent } from './views/reports/reports.component';
 import { ProfileComponent } from './views/profile/profile.component';
 import { ShopsComponent } from './views/shops/shops.component';
+import {DELIVERY_URL_TOKEN} from './services/dao/impl/DeliveryService';
+import {HttpClientModule} from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -33,8 +35,15 @@ import { ShopsComponent } from './views/shops/shops.component';
       {path: 'reports', component: ReportsComponent},
       {path: 'profile', component: ProfileComponent},
     ]),
+    HttpClientModule
   ],
-  providers: [],
+  providers: [
+    {
+      provide: DELIVERY_URL_TOKEN,
+      useValue: 'http://localhost:8082/api/v1/deliveries'
+    },
+
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

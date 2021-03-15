@@ -14,10 +14,12 @@ export class Delivery {
   numberOfPlaces: string;
   torgNumber: string;
   invoice: string;
-  user: string;
+  // user: string;
 
 
-  constructor(id: number, deliveryDate: Date, deliveryTime: string, carInfo: string, driverInfo: string, brand: string, orderNumber: string, deliveryType: string, sender: string, comment: string, shop: string, numberOfPlaces: string, torgNumber: string, invoice: string, user: string) {
+  constructor(id: number, deliveryDate: Date, deliveryTime: string, carInfo: string, driverInfo: string,
+              brand: string, orderNumber: string, deliveryType: string, sender: string, comment: string,
+              shop: string, numberOfPlaces: string, torgNumber: string, invoice: string) {
     this.id = id;
     this.deliveryDate = deliveryDate;
     this.deliveryTime = deliveryTime;
@@ -32,7 +34,7 @@ export class Delivery {
     this.numberOfPlaces = numberOfPlaces;
     this.torgNumber = torgNumber;
     this.invoice = invoice;
-    this.user = user;
+    // this.user = user;
   }
-}
+
 }

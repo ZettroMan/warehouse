@@ -3,11 +3,11 @@ export class Warehouse {
 
   id: number;
   name: string;
-  label: string;
+  abbr: string;
 
-  constructor(id: number, name: string, label: string) {
+  constructor(id: number, name: string, abbr: string) {
     this.id = id;
     this.name = name;
-    this.label = label;
+    this.abbr = abbr;
   }
 }

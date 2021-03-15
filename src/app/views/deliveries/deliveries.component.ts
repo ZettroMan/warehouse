@@ -1,4 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
+import {Observable} from 'rxjs';
+import {Delivery} from '../../model/Delivery';
+import {DeliveryService} from '../../services/dao/impl/DeliveryService';
 
 @Component({
   selector: 'app-deliveries',
@@ -7,9 +10,15 @@ import { Component, OnInit } from '@angular/core';
 })
 export class DeliveriesComponent implements OnInit {
 
-  constructor() { }
+  deliveries: Observable<Delivery[]>;
 
-  ngOnInit(): void {
+  constructor(private ds: DeliveryService) {}
+
+  ngOnInit() {
+    this.reloadData();
   }
 
+  private reloadData() {
+    this.deliveries = this.ds.findAll();
+  }
 }

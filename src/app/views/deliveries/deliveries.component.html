@@ -16,120 +16,61 @@
                   ID
                 </th>
                 <th>
-                  Name
+                  Дата
                 </th>
                 <th>
-                  Country
+                  Время
                 </th>
                 <th>
-                  City
+                  Авто
                 </th>
                 <th>
-                  Salary
+                  Водитель
                 </th>
-                </thead>
+                <th>
+                  Бренд
+                </th>
+                <th>
+                  Номер заказа
+                </th>
+                <th>
+                  Тип доставки
+                </th>
+                <th>
+                  Отправитель
+                </th>
+                <th>
+                  Комментарий
+                </th>
+                <th>
+                  Магазин
+                </th>
+                <th>
+                  Кол-во мест
+                </th>
+               <th>
+                  Торг
+                </th>
+                <th>
+                  Счет-фактура
+                </th>
+                 </thead>
                 <tbody>
-                <tr>
-                  <td>
-                    1
-                  </td>
-                  <td>
-                    Dakota Rice
-                  </td>
-                  <td>
-                    Niger
-                  </td>
-                  <td>
-                    Oud-Turnhout
-                  </td>
-                  <td class="text-primary">
-                    $36,738
-                  </td>
-                </tr>
-                <tr>
-                  <td>
-                    2
-                  </td>
-                  <td>
-                    Minerva Hooper
-                  </td>
-                  <td>
-                    Curaçao
-                  </td>
-                  <td>
-                    Sinaai-Waas
-                  </td>
-                  <td class="text-primary">
-                    $23,789
-                  </td>
-                </tr>
-                <tr>
-                  <td>
-                    3
-                  </td>
-                  <td>
-                    Sage Rodriguez
-                  </td>
-                  <td>
-                    Netherlands
-                  </td>
-                  <td>
-                    Baileux
-                  </td>
-                  <td class="text-primary">
-                    $56,142
-                  </td>
-                </tr>
-                <tr>
-                  <td>
-                    4
-                  </td>
-                  <td>
-                    Philip Chaney
-                  </td>
-                  <td>
-                    Korea, South
-                  </td>
-                  <td>
-                    Overland Park
-                  </td>
-                  <td class="text-primary">
-                    $38,735
-                  </td>
-                </tr>
-                <tr>
-                  <td>
-                    5
-                  </td>
-                  <td>
-                    Doris Greene
-                  </td>
-                  <td>
-                    Malawi
-                  </td>
-                  <td>
-                    Feldkirchen in Kärnten
-                  </td>
-                  <td class="text-primary">
-                    $63,542
-                  </td>
-                </tr>
-                <tr>
-                  <td>
-                    6
-                  </td>
-                  <td>
-                    Mason Porter
-                  </td>
-                  <td>
-                    Chile
-                  </td>
-                  <td>
-                    Gloucester
-                  </td>
-                  <td class="text-primary">
-                    $78,615
-                  </td>
+                <tr *ngFor="let delivery of deliveries | async">
+                  <td>{{delivery.id}}</td>
+                  <td>{{delivery.deliveryDate}}</td>
+                  <td>{{delivery.deliveryTime}}</td>
+                  <td>{{delivery.carInfo}}</td>
+                  <td>{{delivery.driverInfo}}</td>
+                  <td>{{delivery.brand}}</td>
+                  <td>{{delivery.orderNumber}}</td>
+                  <td>{{delivery.deliveryType}}</td>
+                  <td>{{delivery.sender}}</td>
+                  <td>{{delivery.comment}}</td>
+                  <td>{{delivery.shop}}</td>
+                  <td>{{delivery.numberOfPlaces}}</td>
+                  <td>{{delivery.torgNumber}}</td>
+                  <td>{{delivery.invoice}}</td>
                 </tr>
                 </tbody>
               </table>
