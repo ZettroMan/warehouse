@@ -15158,7 +15158,7 @@ fieldset[disabled] .form-group.is-focused .togglebutton label {
 }
 
 .sidebar {
-  position: fixed;
+  /*position: fixed;*/
   top: 0;
   bottom: 0;
   left: 0;
@@ -15570,7 +15570,7 @@ fieldset[disabled] .form-group.is-focused .togglebutton label {
 }
 
 .main-panel>.content {
-  margin-top: 0px;
+  margin-top: 24px;
   padding: 30px 15px;
   min-height: calc(100vh - 123px);
 }

@@ -14,11 +14,11 @@ export class DeliveriesComponent implements OnInit {
 
   constructor(private ds: DeliveryService) {}
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.reloadData();
   }
 
-  private reloadData() {
+  private reloadData(): void {
     this.deliveries = this.ds.findAll();
   }
 }
