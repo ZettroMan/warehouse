@@ -30,3 +30,26 @@
   text-shadow: 0 1px 0 #528ecc;
   outline: 0;
 }
+
+.demo-header {
+  align-items: center;
+  /*background: $brand;*/
+  /*box-shadow: 0 0.1em 1.5em rgba($dark-grey, 0.5);*/
+  /*color: $white;*/
+  display: flex;
+  padding: 1em;
+}
+
+.demo-header__toggle {
+  background: transparent;
+  /*border: 0.15rem solid $white;*/
+  border-left: 0;
+  border-right: 0;
+  cursor: pointer;
+  font-size: 0;
+  height: 1.5rem;
+  margin-right: 1rem;
+  position: relative;
+  width: 2rem;
+
+}
