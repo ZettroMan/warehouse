@@ -13,9 +13,11 @@
   padding-top: 0.375rem;
 }
 
-.mat-icon-button {
-  height:0px !important;
-  top: -6px;
-
+tbody tr:hover {
+  background: #bea5c1; /* Цвет фона при наведении */
+  cursor: pointer;
 }
 
+.card-header-primary {
+  padding: 8px 16px !important;
+}

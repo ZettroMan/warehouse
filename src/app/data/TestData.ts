@@ -35,7 +35,7 @@ export class TestData {
     {id: 5, name: 'Магазин 5', abbr: 'SHOP_5', brand: TestData.brands[2]},
     {id: 6, name: 'Магазин 6', abbr: 'SHOP_6', brand: TestData.brands[4]},
     {id: 7, name: 'Магазин 7', abbr: 'SHOP_7', brand: TestData.brands[7]},
-    {id: 8, name: 'Магазин 8', abbr: 'SHOP_8', brand: TestData.brands[9]},
+    {id: 8, name: 'Магазин 8', abbr: 'SHOP_8', brand: TestData.brands[6]},
     {id: 9, name: 'Магазин 9', abbr: 'SHOP_9', brand: TestData.brands[1]},
   ];
 

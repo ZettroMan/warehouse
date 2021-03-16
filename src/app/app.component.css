@@ -55,7 +55,7 @@
 }
 
 .ng-sidebar-container{
-  height: 750px;
+  height: 100%;
   width:100%;
   position: absolute;
   left: 0px;

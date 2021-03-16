@@ -1,1 +1,43 @@
-<p>shops works!</p>
+
+<div class="content">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="card">
+          <div class="card-header card-header-primary">
+            <h4 class="card-title ">Магазины</h4>
+          </div>
+          <div class="card-body">
+            <div class="table-responsive">
+              <table class="table">
+                <thead class=" text-primary">
+                <th>
+                  №
+                </th>
+                <th>
+                  Название
+                </th>
+                <th>
+                  Аббревиатура
+                </th>
+                <th>
+                  Бренд
+                </th>
+                </thead>
+                <tbody>
+                <tr *ngFor="let shop of shops; let i = index">
+                  <td>{{i + 1}}</td>
+                  <td>{{shop.name}}</td>
+                  <td>{{shop.abbr}}</td>
+                  <td>{{shop.brand.name}}</td>
+                </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
