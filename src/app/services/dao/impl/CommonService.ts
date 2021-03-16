@@ -20,6 +20,10 @@ export class CommonService<T> {
     return this.httpClient.post<T>(this.url + '/add', t);
   }
 
+  addAll(t: T[]): Observable<T[]> {
+    return this.httpClient.post<T[]>(this.url + '/add', t);
+  }
+
   delete(id: number): Observable<T> {
     return this.httpClient.delete<T>(this.url + '/delete/' + id);
   }

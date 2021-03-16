@@ -12,6 +12,10 @@ import { ProfileComponent } from './views/profile/profile.component';
 import { ShopsComponent } from './views/shops/shops.component';
 import {DELIVERY_URL_TOKEN} from './services/dao/impl/DeliveryService';
 import {HttpClientModule} from '@angular/common/http';
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import {MatTableModule} from '@angular/material/table';
+import {FormsModule} from '@angular/forms';
+import {MatButtonModule} from '@angular/material/button';
 
 @NgModule({
   declarations: [
@@ -26,6 +30,9 @@ import {HttpClientModule} from '@angular/common/http';
   ],
   imports: [
     BrowserModule,
+    FormsModule,
+    MatTableModule,
+    BrowserAnimationsModule,
     RouterModule.forRoot([
       {path: 'users', component: UsersComponent},
       {path: 'brands', component: BrandsComponent},
@@ -35,7 +42,8 @@ import {HttpClientModule} from '@angular/common/http';
       {path: 'reports', component: ReportsComponent},
       {path: 'profile', component: ProfileComponent},
     ]),
-    HttpClientModule
+    HttpClientModule,
+    MatButtonModule
   ],
   providers: [
     {
