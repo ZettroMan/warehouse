@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import {Brand} from '../../model/Brand';
+import {DataHandlerService} from '../../services/data-handler.service';
 
 @Component({
   selector: 'app-brands',
@@ -7,9 +9,12 @@ import { Component, OnInit } from '@angular/core';
 })
 export class BrandsComponent implements OnInit {
 
-  constructor() { }
+  brands: Brand[];
+
+  constructor(private dataHandlerService: DataHandlerService) { }
 
   ngOnInit(): void {
+    this.dataHandlerService.brandsSubject.subscribe(brands => this.brands = brands);
   }
 
 }

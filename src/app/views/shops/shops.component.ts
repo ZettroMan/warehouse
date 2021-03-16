@@ -1,4 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
+import {DataHandlerService} from '../../services/data-handler.service';
+import {Shop} from '../../model/Shop';
 
 @Component({
   selector: 'app-shops',
@@ -7,9 +9,12 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ShopsComponent implements OnInit {
 
-  constructor() { }
+  shops: Shop[];
+
+  constructor(private dataHandlerService: DataHandlerService) { }
 
   ngOnInit(): void {
+    this.dataHandlerService.shopsSubject.subscribe(shops => this.shops = shops);
   }
 
 }

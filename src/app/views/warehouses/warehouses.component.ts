@@ -1,4 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
+import {DataHandlerService} from '../../services/data-handler.service';
+import {Warehouse} from '../../model/Warehouse';
 
 @Component({
   selector: 'app-warehouses',
@@ -7,9 +9,12 @@ import { Component, OnInit } from '@angular/core';
 })
 export class WarehousesComponent implements OnInit {
 
-  constructor() { }
+  warehouses: Warehouse[];
+
+  constructor(private dataHandlerService: DataHandlerService) { }
 
   ngOnInit(): void {
+    this.dataHandlerService.warehousesSubject.subscribe(warehouses => this.warehouses = warehouses);
   }
 
 }
