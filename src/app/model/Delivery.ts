@@ -1,3 +1,4 @@
+import {DeliveryDto} from './DeliveryDto';
 
 export class Delivery {
   id: number;
@@ -14,6 +15,7 @@ export class Delivery {
   numberOfPlaces: string;
   torgNumber: string;
   invoice: string;
+
   // user: string;
 
 
@@ -36,5 +38,4 @@ export class Delivery {
     this.invoice = invoice;
     // this.user = user;
   }
-
 }

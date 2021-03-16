@@ -35,11 +35,11 @@ export class DeliveryService extends CommonService<Delivery> implements Delivery
 
 
   name = 'Paste it';
-  val:any;
+  val: any;
   displayedColumns: string[] ;
   dataSource: any[] = [];
 
-  data(event:ClipboardEvent) {
+  data(event: ClipboardEvent): void {
     let clipboardData = event.clipboardData;
     let pastedText = clipboardData.getData('text');
     let row_data = pastedText.split('\n');

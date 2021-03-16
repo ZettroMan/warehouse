@@ -1,9 +1,9 @@
 import {Component, OnInit} from '@angular/core';
 import {Observable} from 'rxjs';
 import {Delivery} from '../../model/Delivery';
+import {DeliveryDto} from '../../model/DeliveryDto';
 import {DeliveryService} from '../../services/dao/impl/DeliveryService';
 import {MatTableDataSource} from '@angular/material/table';
-import * as moment from 'moment';
 
 @Component({
   selector: 'app-deliveries',
@@ -15,7 +15,8 @@ export class DeliveriesComponent implements OnInit {
   deliveries: Observable<Delivery[]>;
   displayedColumns: string[];
   dataSource: MatTableDataSource<any[]>;
-  dataToSend: Observable<Delivery[]>;
+  dataToSend: DeliveryDto[];
+  stringRows: string[];
 
   constructor(private ds: DeliveryService) {
   }
@@ -32,6 +33,7 @@ export class DeliveriesComponent implements OnInit {
   }
 
   data(event: ClipboardEvent): void {
+    this.stringRows = [];
     const clipboardData = event.clipboardData;
     const pastedText = clipboardData.getData('text');
     const rowData = pastedText.split('\n');
@@ -44,46 +46,51 @@ export class DeliveriesComponent implements OnInit {
       });
       data.push(row);
     });
+    this.stringRows = rowData;
     this.dataSource = new MatTableDataSource(data);
   }
 
   sendDeliveriesEvent(): void {
-    // this.ds.addAll(this.tableToDeliveries(this.dataSource));
-    this.tableToDeliveries(this.dataSource);
-    // console.log(this.dataSource.data.length);
+    console.log(this.tableToDeliveries(this.stringRows));
+    const delivery: Delivery[] = [];
+    // console.log(this.dataToSend.length);
+    for (let i = 0; i < this.dataToSend.length; i++) {
+      delivery.push(this.dataToSend[i].buildDelivery(this.dataToSend[i]));
+    }
+    console.log(delivery);
+    this.ds.add(delivery[0]);
     this.dataSource = null;
     this.reloadData();
   }
 
-  tableToDeliveries(table: MatTableDataSource<any[]>): Delivery[] {
-    let result: Delivery[];
-    let delivery: Delivery;
-    for (let i = 0; i < table.data.length - 1; i++) {
-      delivery = null;
-      result = null;
-      let a: string[][];
-      a = table.data[i];
-      const b = a.toLocaleString();
-      console.log(b);
-      // for (let j = 0; j < 13; j++) {
-      //   console.log(a[i][j]);
-        // delivery.deliveryDate = moment(a[j], 'DD.MM.YYYY').toDate();
-        // delivery.deliveryTime = a[j];
-        // delivery.carInfo = a[j];
-        // delivery.driverInfo = a[j];
-        // delivery.brand = a[j];
-        // delivery.orderNumber = a[j];
-        // delivery.deliveryType = a[j];
-        // delivery.sender = a[j];
-        // delivery.comment = a[j];
-        // delivery.shop = a[j];
-        // delivery.numberOfPlaces = a[j];
-        // delivery.torgNumber = a[j];
-        // delivery.invoice = a[j];
-        // console.log(delivery);
-      // }
-     // result[i] = delivery;
+  tableToDeliveries(data: string[]): DeliveryDto[] {
+    this.dataToSend = [];
+    for (let i = 0; i < data.length - 1; i++) {
+      const delivery: DeliveryDto = new DeliveryDto();
+      // Разбиваем строковое значение даты по точкам и указываем значения явно в объект Date
+      const rowData = data[i].split('\t');
+      // const date: Date = new Date();
+      // // const partsOfDate = data[0].split('.');
+      // // date.setDate(Number(partsOfDate[0]));
+      // // date.setMonth(Number(partsOfDate[1]));
+      // // date.setFullYear(Number(partsOfDate[2]));
+      // console.log(date);
+      delivery.deliveryDate = rowData[0];
+      // Закончили с датой, заполняем остальные поля
+      delivery.deliveryTime = rowData[1];
+      delivery.carInfo = rowData[2];
+      delivery.driverInfo = rowData[3];
+      delivery.brand = rowData[4];
+      delivery.orderNumber = rowData[5];
+      delivery.deliveryType = rowData[6];
+      delivery.sender = rowData[7];
+      delivery.comment = rowData[8];
+      delivery.shop = rowData[9];
+      delivery.numberOfPlaces = rowData[10];
+      delivery.torgNumber = rowData[11];
+      delivery.invoice = rowData[12];
+      this.dataToSend.push(delivery);
     }
-    return null;
+    return this.dataToSend;
   }
 }

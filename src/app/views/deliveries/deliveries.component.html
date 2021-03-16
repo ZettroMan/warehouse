@@ -97,7 +97,7 @@
                   <ng-container *ngFor="let column of displayedColumns" [matColumnDef]="column">
                     <th class=" text-primary" contenteditable="false" mat-header-cell
                         *matHeaderCellDef><b>{{column}}</b>  </th>
-                    <td contenteditable="true" mat-cell *matCellDef="let element"> {{element[column]}} </td>
+                    <td contenteditable="false" mat-cell *matCellDef="let element"> {{element[column]}} </td>
                   </ng-container>
                   <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
                   <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
