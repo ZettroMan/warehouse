@@ -17,7 +17,7 @@ export class CommonService<T> {
   }
 
   add(t: T): Observable<T> {
-    return this.httpClient.post<T>(this.url + '/add', t);
+    return this.httpClient.post<T>(`${this.url}/add`, t);
   }
 
   delete(id: number): Observable<T> {
