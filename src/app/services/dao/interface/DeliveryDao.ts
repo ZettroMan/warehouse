@@ -1,4 +1,4 @@
-import {CommonDao} from './CommonDAO';
+import {CommonDao} from './CommonDao';
 import {Delivery} from '../../../model/Delivery';
 
 // специфичные методы для работы с категориями (которые не входят в обычный CRUD)
