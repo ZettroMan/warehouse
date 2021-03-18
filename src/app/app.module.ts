@@ -17,6 +17,7 @@ import {DELIVERY_URL_TOKEN} from './services/dao/impl/DeliveryService';
 import {HttpClientModule} from '@angular/common/http';
 import {SidebarModule} from 'ng-sidebar';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import {MatTableModule} from '@angular/material/table';
 
 const routes: Routes = [
   {path: 'users', component: UsersComponent},
@@ -40,15 +41,16 @@ const routes: Routes = [
     ProfileComponent,
     ShopsComponent
   ],
-  imports: [
-    BrowserModule,
-    RouterModule.forRoot(routes),
-    HttpClientModule,
-    SidebarModule.forRoot(),
-    MatButtonModule,
-    MatIconModule,
-    BrowserAnimationsModule
-  ],
+    imports: [
+        BrowserModule,
+        RouterModule.forRoot(routes),
+        HttpClientModule,
+        SidebarModule.forRoot(),
+        MatButtonModule,
+        MatIconModule,
+        BrowserAnimationsModule,
+        MatTableModule
+    ],
   providers: [
     {
       provide: DELIVERY_URL_TOKEN,
