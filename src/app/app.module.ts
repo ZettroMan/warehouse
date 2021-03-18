@@ -54,7 +54,7 @@ const routes: Routes = [
   providers: [
     {
       provide: DELIVERY_URL_TOKEN,
-      useValue: 'http://localhost:8082/api/v1/deliveries'
+      useValue: 'https://command-project-warehouse.herokuapp.com/api/v1/deliveries'
     },
 
   ],
