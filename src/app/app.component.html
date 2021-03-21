@@ -1,82 +1,66 @@
 <mat-sidenav-container>
 
   <mat-sidenav mode="side" [(opened)]="opened">
-      <div class="logo"><a href="#" class="simple-text">
-        My Warehouse
-      </a></div>
-      <div>
-        <nav>
-          <ul class="nav">
-            <li class="nav-item" routerLinkActive="active">
-              <a class="nav-link" routerLink="/users">
-                <i class="material-icons">groups</i>
-                <p>Пользователи</p>
-              </a>
-            </li>
-            <li class="nav-item" routerLinkActive="active">
-              <a class="nav-link" routerLink="/brands">
-                <i class="material-icons">style</i>
-                <p>Бренды</p>
-              </a>
-            </li>
-            <li class="nav-item" routerLinkActive="active">
-              <a class="nav-link" routerLink="/shops">
-                <i class="material-icons">storefront</i>
-                <p>Магазины</p>
-              </a>
-            </li>
-            <li class="nav-item" routerLinkActive="active">
-              <a class="nav-link" routerLink="/warehouses">
-                <i class="material-icons">store</i>
-                <p>Склады</p>
-              </a>
-            </li>
-            <li class="nav-item" routerLinkActive="active">
-              <a class="nav-link" routerLink="/deliveries">
-                <i class="material-icons">local_shipping</i>
-                <p style="text-transform: none">График доставок</p>
-              </a>
-            </li>
-            <li class="nav-item" routerLinkActive="active">
-              <a class="nav-link" routerLink="/reports">
-                <i class="material-icons">content_paste</i>
-                <p>Отчеты</p>
-              </a>
-            </li>
-            <li class="nav-item" routerLinkActive="active">
-              <a class="nav-link" routerLink="/profile">
-                <i class="material-icons">person</i>
-                <p style="text-transform: none">Мой профиль</p>
-              </a>
-            </li>
-          </ul>
-        </nav>
-      </div>
+    <div class="logo"><a href="#" class="simple-text">
+      My Warehouse
+    </a></div>
+    <div>
+      <mat-list>
+        <mat-list-item routerLink="/users" routerLinkActive="active">
+          <mat-icon matListIcon>groups</mat-icon>
+          <h3 matLine>Пользователи</h3>
+        </mat-list-item>
+        <mat-list-item routerLink="/brands" routerLinkActive="active">
+          <mat-icon matListIcon>style</mat-icon>
+          <h3 matLine>Бренды</h3>
+        </mat-list-item>
+        <mat-list-item routerLink="/shops" routerLinkActive="active">
+          <mat-icon matListIcon>storefront</mat-icon>
+          <h3 matLine>Магазины</h3>
+        </mat-list-item>
+        <mat-list-item routerLink="/warehouses" routerLinkActive="active">
+          <mat-icon matListIcon>store</mat-icon>
+          <h3 matLine>Склады</h3>
+        </mat-list-item>
+        <mat-list-item routerLink="/deliveries" routerLinkActive="active">
+          <mat-icon matListIcon>local_shipping</mat-icon>
+          <h3 matLine>График поставок</h3>
+        </mat-list-item>
+        <mat-list-item routerLink="/reports" routerLinkActive="active">
+          <mat-icon matListIcon>content_paste</mat-icon>
+          <h3 matLine>Отчеты</h3>
+        </mat-list-item>
+        <mat-list-item routerLink="/profile" routerLinkActive="active">
+          <mat-icon matListIcon>person</mat-icon>
+          <h3 matLine>Мой профиль</h3>
+        </mat-list-item>
+      </mat-list>
+    </div>
   </mat-sidenav>
 
   <!--  основной контент-->
   <!--  ng-sidebar-content - над чем будет открываться слайд-меню-->
   <mat-sidenav-content>
-      <mat-toolbar class="navbar" color="primary">
-        <div class="col-8 text-left align-self-top">
-          <button mat-icon-button disableRipple type="button" (click)="opened=!opened">
-            <mat-icon>menu</mat-icon>
-          </button>
-        </div>
-        <!--  помощь, настройки-->
-        <div class="col-4 text-right align-self-top">
-          <button mat-icon-button class="header-icon">
-            <mat-icon>settings</mat-icon>
-          </button>
-          <button mat-icon-button class="header-icon">
-            <mat-icon>help</mat-icon>
-          </button>
-        </div>
-      </mat-toolbar>
-
-      <div class="container-fluid">
-        <router-outlet></router-outlet>
+    <mat-toolbar class="navbar" color="primary">
+      <div class="col-8 text-left align-self-top">
+        <button mat-icon-button disableRipple type="button" (click)="opened=!opened">
+          <mat-icon>menu</mat-icon>
+        </button>
       </div>
+      <!--  помощь, настройки-->
+      <div class="col-4 text-right align-self-top">
+        <button mat-icon-button class="header-icon">
+          <mat-icon>settings</mat-icon>
+        </button>
+        <button mat-icon-button class="header-icon">
+          <mat-icon>help</mat-icon>
+        </button>
+      </div>
+    </mat-toolbar>
+
+    <div class="container-fluid">
+      <router-outlet></router-outlet>
+    </div>
 
   </mat-sidenav-content>
 
