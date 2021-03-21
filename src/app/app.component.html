@@ -1,37 +1,10 @@
-<ng-sidebar-container  class='ng-sidebar-container'>
+<mat-sidenav-container>
 
-  <ng-sidebar
-    [(opened)]="_opened"
-    [mode]="_MODES[1]"
-    [keyClose]="_keyClose"
-    [position]="_POSITIONS[_positionNum]"
-    [dock]="_dock"
-    [dockedSize]="'50px'"
-    [autoCollapseHeight]="_autoCollapseHeight"
-    [autoCollapseWidth]="_autoCollapseWidth"
-    [closeOnClickOutside]="_closeOnClickOutside"
-    [closeOnClickBackdrop]="_closeOnClickBackdrop"
-    [showBackdrop]="_showBackdrop"
-    [animate]="_animate"
-    [trapFocus]="_trapFocus"
-    [autoFocus]="_autoFocus"
-    [sidebarClass]="'demo-sidebar'"
-    [ariaLabel]="'My sidebar'"
-    (onOpenStart)="_onOpenStart()"
-    (onOpened)="_onOpened()"
-    (onCloseStart)="_onCloseStart()"
-    (onClosed)="_onClosed()">
-
-    <div class="sidebar" data-color="purple" data-background-color="white" data-image="../assets/img/sidebar-2.jpg">
-      <!--
-        Tip 1: You can change the color of the sidebar using: data-color="purple | azure | green | orange | danger"
-
-        Tip 2: you can also add an image using data-image tag
-    -->
-      <div class="logo"><a href="#" class="simple-text logo-normal">
+  <mat-sidenav mode="side" [(opened)]="opened">
+      <div class="logo"><a href="#" class="simple-text">
         My Warehouse
       </a></div>
-      <div class="sidebar-wrapper">
+      <div>
         <nav>
           <ul class="nav">
             <li class="nav-item" routerLinkActive="active">
@@ -79,16 +52,14 @@
           </ul>
         </nav>
       </div>
-    </div>
-
-  </ng-sidebar>
+  </mat-sidenav>
 
   <!--  основной контент-->
   <!--  ng-sidebar-content - над чем будет открываться слайд-меню-->
-  <div ng-sidebar-content>
-      <div class="navbar navbar-expand navbar-transparent" style="margin-bottom: 0px">
+  <mat-sidenav-content>
+      <mat-toolbar class="navbar" color="primary">
         <div class="col-8 text-left align-self-top">
-          <button mat-icon-button type="button" (click)="_toggleOpened()">
+          <button mat-icon-button disableRipple type="button" (click)="opened=!opened">
             <mat-icon>menu</mat-icon>
           </button>
         </div>
@@ -101,11 +72,12 @@
             <mat-icon>help</mat-icon>
           </button>
         </div>
-      </div>
+      </mat-toolbar>
 
       <div class="container-fluid">
         <router-outlet></router-outlet>
       </div>
 
-  </div>
-</ng-sidebar-container>
+  </mat-sidenav-content>
+
+</mat-sidenav-container>
