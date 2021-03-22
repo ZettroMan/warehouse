@@ -2,8 +2,10 @@ import {BrowserModule} from '@angular/platform-browser';
 import {NgModule} from '@angular/core';
 
 import {RouterModule, Routes} from '@angular/router';
-import {MatButtonModule} from '@angular/material/button';
-import {MatIconModule} from '@angular/material/icon';
+import {HttpClientModule} from '@angular/common/http';
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import {MaterialModule} from './material/material.module';
+
 import {AppComponent} from './app.component';
 import {BrandsComponent} from './views/brands/brands.component';
 import {WarehousesComponent} from './views/warehouses/warehouses.component';
@@ -13,11 +15,12 @@ import {ReportsComponent} from './views/reports/reports.component';
 import {ProfileComponent} from './views/profile/profile.component';
 import {ShopsComponent} from './views/shops/shops.component';
 
+
+import {registerLocaleData} from '@angular/common';
+import localeRu from '@angular/common/locales/ru';
 import {DELIVERY_URL_TOKEN} from './services/dao/impl/DeliveryService';
-import {HttpClientModule} from '@angular/common/http';
-import {SidebarModule} from 'ng-sidebar';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import {MatTableModule} from '@angular/material/table';
+
+registerLocaleData(localeRu);
 
 const routes: Routes = [
   {path: 'users', component: UsersComponent},
@@ -27,8 +30,8 @@ const routes: Routes = [
   {path: 'deliveries', component: DeliveriesComponent},
   {path: 'reports', component: ReportsComponent},
   {path: 'profile', component: ProfileComponent},
-  {path: '', component: UsersComponent},
 ];
+
 
 @NgModule({
   declarations: [
@@ -41,23 +44,20 @@ const routes: Routes = [
     ProfileComponent,
     ShopsComponent
   ],
-    imports: [
-        BrowserModule,
-        RouterModule.forRoot(routes),
-        HttpClientModule,
-        SidebarModule.forRoot(),
-        MatButtonModule,
-        MatIconModule,
-        BrowserAnimationsModule,
-        MatTableModule
-    ],
+  imports: [
+    BrowserModule,
+    RouterModule.forRoot(routes),
+    HttpClientModule,
+    BrowserAnimationsModule,
+    MaterialModule
+  ],
   providers: [
     {
       provide: DELIVERY_URL_TOKEN,
       useValue: 'https://command-project-warehouse.herokuapp.com/api/v1/deliveries'
     },
-
   ],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {
+}
