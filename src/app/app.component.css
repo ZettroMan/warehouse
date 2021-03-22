@@ -1,36 +1,3 @@
-/*.button {*/
-/*  box-shadow: inset 0 1px 0 0 #ffffff;*/
-/*  background: #ffffff linear-gradient(to bottom, #ffffff 5%, #f6f6f6 100%);*/
-/*  border-radius: 6px;*/
-/*  border: 1px solid #dcdcdc;*/
-/*  display: inline-block;*/
-/*  cursor: pointer;*/
-/*  color: #666666;*/
-/*  font-family: Arial, sans-serif;*/
-/*  font-size: 15px;*/
-/*  font-weight: bold;*/
-/*  padding: 6px 24px;*/
-/*  text-decoration: none;*/
-/*  text-shadow: 0 1px 0 #ffffff;*/
-/*  outline: 0;*/
-/*}*/
-/*.activebutton {*/
-/*  box-shadow: inset 0 1px 0 0 #dcecfb;*/
-/*  background: #bddbfa linear-gradient(to bottom, #bddbfa 5%, #80b5ea 100%);*/
-/*  border-radius: 6px;*/
-/*  border: 1px solid #84bbf3;*/
-/*  display: inline-block;*/
-/*  cursor: pointer;*/
-/*  color: #ffffff;*/
-/*  font-family: Arial, sans-serif;*/
-/*  font-size: 15px;*/
-/*  font-weight: bold;*/
-/*  padding: 6px 24px;*/
-/*  text-decoration: none;*/
-/*  text-shadow: 0 1px 0 #528ecc;*/
-/*  outline: 0;*/
-/*}*/
-
 /*.demo-header {*/
 /*  align-items: center;*/
 /*  !*background: $brand;*!*/
@@ -54,19 +21,20 @@
 
 /*}*/
 
-.mat-sidenav-container{
-  height: 100%;
-}
-
 .mat-sidenav, .mat-sidenav-content {
   padding: 16px;
 }
 
 .mat-sidenav {
-  background-color: #eed9d9;
+  background-color: #ebb0f7;
   width: 260px;
+  height: 100%;
+  box-shadow: 0 0 20px 6px rgba(0, 0, 0, 0.4);
 }
 
+.mat-sidenav-content {
+  background-color: #d3ced3;
+}
 
 .mat-sidenav .logo .simple-text {
   text-transform: uppercase;
@@ -108,8 +76,24 @@
   line-height: 20px;
 }
 
+.mat-list-item {
+  border-radius: 16px;
+}
+
+.mat-list-item:hover {
+  background: linear-gradient(60deg, #ab47bc, #8e24aa);
+  cursor: pointer;
+  color: #eaeaea;
+}
+
+
 .topnavbar {
   justify-content: space-between;
+  background-color: transparent !important;
+  box-shadow: none;
+  height: 32px;
+  margin: 0 0 8px 0;
+  padding: 0;
 }
 
 span {

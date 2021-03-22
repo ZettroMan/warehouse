@@ -1,4 +1,4 @@
-<mat-sidenav-container>
+<mat-sidenav-container style="height: 100%">
 
   <mat-sidenav mode="side" [(opened)]="opened">
     <div class="logo"><a href="#" class="simple-text">
@@ -41,7 +41,7 @@
   <!--  основной контент-->
   <!--  ng-sidebar-content - над чем будет открываться слайд-меню-->
   <mat-sidenav-content>
-    <mat-toolbar class="topnavbar" color="primary">
+    <mat-toolbar class="topnavbar">
       <div class="col-8 text-left align-self-top">
         <button mat-icon-button disableRipple type="button" (click)="opened=!opened">
           <mat-icon>menu</mat-icon>
