@@ -1,111 +1,67 @@
-<ng-sidebar-container  class='ng-sidebar-container'>
+<mat-sidenav-container style="height: 100%">
 
-  <ng-sidebar
-    [(opened)]="_opened"
-    [mode]="_MODES[1]"
-    [keyClose]="_keyClose"
-    [position]="_POSITIONS[_positionNum]"
-    [dock]="_dock"
-    [dockedSize]="'50px'"
-    [autoCollapseHeight]="_autoCollapseHeight"
-    [autoCollapseWidth]="_autoCollapseWidth"
-    [closeOnClickOutside]="_closeOnClickOutside"
-    [closeOnClickBackdrop]="_closeOnClickBackdrop"
-    [showBackdrop]="_showBackdrop"
-    [animate]="_animate"
-    [trapFocus]="_trapFocus"
-    [autoFocus]="_autoFocus"
-    [sidebarClass]="'demo-sidebar'"
-    [ariaLabel]="'My sidebar'"
-    (onOpenStart)="_onOpenStart()"
-    (onOpened)="_onOpened()"
-    (onCloseStart)="_onCloseStart()"
-    (onClosed)="_onClosed()">
-
-    <div class="sidebar" data-color="purple" data-background-color="white" data-image="../assets/img/sidebar-2.jpg">
-      <!--
-        Tip 1: You can change the color of the sidebar using: data-color="purple | azure | green | orange | danger"
-
-        Tip 2: you can also add an image using data-image tag
-    -->
-      <div class="logo"><a href="#" class="simple-text logo-normal">
-        My Warehouse
-      </a></div>
-      <div class="sidebar-wrapper">
-        <nav>
-          <ul class="nav">
-            <li class="nav-item" routerLinkActive="active">
-              <a class="nav-link" routerLink="/users">
-                <i class="material-icons">groups</i>
-                <p>Пользователи</p>
-              </a>
-            </li>
-            <li class="nav-item" routerLinkActive="active">
-              <a class="nav-link" routerLink="/brands">
-                <i class="material-icons">style</i>
-                <p>Бренды</p>
-              </a>
-            </li>
-            <li class="nav-item" routerLinkActive="active">
-              <a class="nav-link" routerLink="/shops">
-                <i class="material-icons">storefront</i>
-                <p>Магазины</p>
-              </a>
-            </li>
-            <li class="nav-item" routerLinkActive="active">
-              <a class="nav-link" routerLink="/warehouses">
-                <i class="material-icons">store</i>
-                <p>Склады</p>
-              </a>
-            </li>
-            <li class="nav-item" routerLinkActive="active">
-              <a class="nav-link" routerLink="/deliveries">
-                <i class="material-icons">local_shipping</i>
-                <p style="text-transform: none">График доставок</p>
-              </a>
-            </li>
-            <li class="nav-item" routerLinkActive="active">
-              <a class="nav-link" routerLink="/reports">
-                <i class="material-icons">content_paste</i>
-                <p>Отчеты</p>
-              </a>
-            </li>
-            <li class="nav-item" routerLinkActive="active">
-              <a class="nav-link" routerLink="/profile">
-                <i class="material-icons">person</i>
-                <p style="text-transform: none">Мой профиль</p>
-              </a>
-            </li>
-          </ul>
-        </nav>
-      </div>
+  <mat-sidenav mode="side" [(opened)]="opened">
+    <div class="logo"><a href="#" class="simple-text">
+      My Warehouse
+    </a></div>
+    <div>
+      <mat-list>
+        <mat-list-item routerLink="/users" routerLinkActive="active">
+          <mat-icon matListIcon>groups</mat-icon>
+          <h3 matLine>Пользователи</h3>
+        </mat-list-item>
+        <mat-list-item routerLink="/brands" routerLinkActive="active">
+          <mat-icon matListIcon>style</mat-icon>
+          <h3 matLine>Бренды</h3>
+        </mat-list-item>
+        <mat-list-item routerLink="/shops" routerLinkActive="active">
+          <mat-icon matListIcon>storefront</mat-icon>
+          <h3 matLine>Магазины</h3>
+        </mat-list-item>
+        <mat-list-item routerLink="/warehouses" routerLinkActive="active">
+          <mat-icon matListIcon>store</mat-icon>
+          <h3 matLine>Склады</h3>
+        </mat-list-item>
+        <mat-list-item routerLink="/deliveries" routerLinkActive="active">
+          <mat-icon matListIcon>local_shipping</mat-icon>
+          <h3 matLine>График поставок</h3>
+        </mat-list-item>
+        <mat-list-item routerLink="/reports" routerLinkActive="active">
+          <mat-icon matListIcon>content_paste</mat-icon>
+          <h3 matLine>Отчеты</h3>
+        </mat-list-item>
+        <mat-list-item routerLink="/profile" routerLinkActive="active">
+          <mat-icon matListIcon>person</mat-icon>
+          <h3 matLine>Мой профиль</h3>
+        </mat-list-item>
+      </mat-list>
     </div>
-
-  </ng-sidebar>
+  </mat-sidenav>
 
   <!--  основной контент-->
   <!--  ng-sidebar-content - над чем будет открываться слайд-меню-->
-  <div ng-sidebar-content>
-      <div class="navbar navbar-expand navbar-transparent" style="margin-bottom: 0px">
-        <div class="col-8 text-left align-self-top">
-          <button mat-icon-button type="button" (click)="_toggleOpened()">
-            <mat-icon>menu</mat-icon>
-          </button>
-        </div>
-        <!--  помощь, настройки-->
-        <div class="col-4 text-right align-self-top">
-          <button mat-icon-button class="header-icon">
-            <mat-icon>settings</mat-icon>
-          </button>
-          <button mat-icon-button class="header-icon">
-            <mat-icon>help</mat-icon>
-          </button>
-        </div>
+  <mat-sidenav-content>
+    <mat-toolbar class="topnavbar">
+      <div class="col-8 text-left align-self-top">
+        <button mat-icon-button disableRipple type="button" (click)="opened=!opened">
+          <mat-icon>menu</mat-icon>
+        </button>
       </div>
-
-      <div class="container-fluid">
-        <router-outlet></router-outlet>
+      <!--  помощь, настройки-->
+      <div class="col-4 text-right align-self-top">
+        <button mat-icon-button class="header-icon">
+          <mat-icon>settings</mat-icon>
+        </button>
+        <button mat-icon-button class="header-icon">
+          <mat-icon>help</mat-icon>
+        </button>
       </div>
+    </mat-toolbar>
 
-  </div>
-</ng-sidebar-container>
+    <div class="container-fluid">
+      <router-outlet></router-outlet>
+    </div>
+
+  </mat-sidenav-content>
+
+</mat-sidenav-container>
