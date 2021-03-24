@@ -9,4 +9,8 @@ export class Brand {
     this.name = name;
     this.abbr = abbr;
   }
+
+  toString(): string {
+    return this.name;
+  }
 }

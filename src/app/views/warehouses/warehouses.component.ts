@@ -1,6 +1,7 @@
 import {Component, OnInit} from '@angular/core';
-import {DataHandlerService} from '../../services/data-handler.service';
 import {Warehouse} from '../../model/Warehouse';
+import {Observable} from 'rxjs';
+import {WarehouseService} from '../../services/dao/impl/WarehouseService';
 
 @Component({
   selector: 'app-warehouses',
@@ -9,12 +10,13 @@ import {Warehouse} from '../../model/Warehouse';
 })
 export class WarehousesComponent implements OnInit {
 
-  warehouses: Warehouse[];
+  warehouses: Observable<Warehouse[]>;
 
-  constructor(private dataHandlerService: DataHandlerService) { }
+  constructor(private warehouseService: WarehouseService) {
+  }
 
   ngOnInit(): void {
-    this.dataHandlerService.warehousesSubject.subscribe(warehouses => this.warehouses = warehouses);
+    this.warehouses = this.warehouseService.findAll();
   }
 
 }

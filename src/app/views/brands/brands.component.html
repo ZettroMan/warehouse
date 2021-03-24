@@ -22,7 +22,7 @@
                 </th>
                 </thead>
                 <tbody>
-                <tr *ngFor="let brand of brands; let i = index">
+                <tr *ngFor="let brand of brands | async; let i = index">
                   <td>{{i + 1}}</td>
                   <td>{{brand.name}}</td>
                   <td>{{brand.abbr}}</td>

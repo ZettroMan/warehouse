@@ -1,5 +1,3 @@
-import {Delivery} from './Delivery';
-
 export class DeliveryDto {
   deliveryDate: string;    // только дата, без времени
   deliveryTime: string;  // по факту - Enum
@@ -20,9 +18,9 @@ export class DeliveryDto {
   constructor() {
   }
 
-  public buildDelivery(deliveryDto: DeliveryDto): Delivery {
-    return new Delivery(null, new Date(), deliveryDto.deliveryTime, deliveryDto.carInfo, deliveryDto.driverInfo,
-      deliveryDto.brand, deliveryDto.orderNumber, deliveryDto.deliveryType, deliveryDto.sender, deliveryDto.comment, deliveryDto.shop,
-      deliveryDto.numberOfPlaces, deliveryDto.torgNumber, deliveryDto.invoice);
-  }
+  // public buildDelivery(deliveryDto: DeliveryDto): Delivery {
+  //   return new Delivery(null, new Date(), deliveryDto.deliveryTime, deliveryDto.carInfo, deliveryDto.driverInfo,
+  //     deliveryDto.brand, deliveryDto.orderNumber, deliveryDto.deliveryType, deliveryDto.sender, deliveryDto.comment, deliveryDto.shop,
+  //     deliveryDto.numberOfPlaces, deliveryDto.torgNumber, deliveryDto.invoice);
+  // }
 }

@@ -1,10 +1,9 @@
 import {Injectable} from '@angular/core';
-import {User} from '../model/User';
 import {TestData} from '../data/TestData';
-import {Warehouse} from '../model/Warehouse';
-import {Brand} from '../model/Brand';
 import {BehaviorSubject} from 'rxjs';
-import {Shop} from '../model/Shop';
+import {Role} from '../model/Role';
+import {DeliveryTime} from '../model/DeliveryTime';
+import {DeliveryType} from '../model/DeliveryType';
 
 @Injectable({
   providedIn: 'root'
@@ -12,10 +11,9 @@ import {Shop} from '../model/Shop';
 
 export class DataHandlerService {
 
-  usersSubject = new BehaviorSubject<User[]>(TestData.users);
-  warehousesSubject = new BehaviorSubject<Warehouse[]>(TestData.warehouses);
-  brandsSubject = new BehaviorSubject<Brand[]>(TestData.brands);
-  shopsSubject = new BehaviorSubject<Shop[]>(TestData.shops);
+  rolesSubject = new BehaviorSubject<Role[]>(TestData.roles);
+  deliveryTimesSubject = new BehaviorSubject<DeliveryTime[]>(TestData.deliveryTimes);
+  deliveryTypesSubject = new BehaviorSubject<DeliveryType[]>(TestData.deliveryTypes);
 
   constructor() {
   }

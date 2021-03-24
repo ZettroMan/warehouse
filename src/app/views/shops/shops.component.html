@@ -25,7 +25,7 @@
                 </th>
                 </thead>
                 <tbody>
-                <tr *ngFor="let shop of shops; let i = index">
+                <tr *ngFor="let shop of shops | async; let i = index">
                   <td>{{i + 1}}</td>
                   <td>{{shop.name}}</td>
                   <td>{{shop.abbr}}</td>
