@@ -1,4 +1,3 @@
-
 <div class="content">
   <div class="container-fluid">
     <div class="row">
@@ -48,29 +47,33 @@
                 <th>
                   Кол-во мест
                 </th>
-               <th>
+                <th>
                   Торг
                 </th>
                 <th>
                   Счет-фактура
                 </th>
-                 </thead>
+                <th>
+                  Склад
+                </th>
+                </thead>
                 <tbody>
                 <tr *ngFor="let delivery of deliveries | async">
                   <td>{{delivery.id}}</td>
                   <td>{{delivery.deliveryDate}}</td>
-                  <td>{{delivery.deliveryTime}}</td>
+                  <td>{{delivery.deliveryTime.deliveryTime}}</td>
                   <td>{{delivery.carInfo}}</td>
                   <td>{{delivery.driverInfo}}</td>
-                  <td>{{delivery.brand}}</td>
+                  <td>{{delivery.brand.name}}</td>
                   <td>{{delivery.orderNumber}}</td>
-                  <td>{{delivery.deliveryType}}</td>
+                  <td>{{delivery.deliveryType.type}}</td>
                   <td>{{delivery.sender}}</td>
                   <td>{{delivery.comment}}</td>
-                  <td>{{delivery.shop}}</td>
+                  <td>{{delivery.shop.name}}</td>
                   <td>{{delivery.numberOfPlaces}}</td>
                   <td>{{delivery.torgNumber}}</td>
                   <td>{{delivery.invoice}}</td>
+                  <td>{{delivery.warehouse.name}}</td>
                 </tr>
                 </tbody>
               </table>
@@ -97,7 +100,7 @@
                 <table mat-table [dataSource]="dataSource" class="table">
                   <ng-container *ngFor="let column of displayedColumns" [matColumnDef]="column">
                     <th class=" text-primary" contenteditable="false" mat-header-cell
-                        *matHeaderCellDef><b>{{column}}</b>  </th>
+                        *matHeaderCellDef><b>{{column}}</b></th>
                     <td contenteditable="false" mat-cell *matCellDef="let element"> {{element[column]}} </td>
                   </ng-container>
                   <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
@@ -105,8 +108,9 @@
                 </table>
 
                 <div style="text-align:center">
-                  <button mat-flat-button color=”accent” (click)="sendDeliveriesEvent()" >
-                    Подтвердить корректность данных и отправить</button>
+                  <button mat-flat-button color=”accent” (click)="sendDeliveriesEvent()">
+                    Подтвердить корректность данных и отправить
+                  </button>
                 </div>
 
               </div>

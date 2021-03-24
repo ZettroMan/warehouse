@@ -1,6 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {User} from '../../model/User';
-import {DataHandlerService} from '../../services/data-handler.service';
+import {Observable} from 'rxjs';
+import {UserService} from '../../services/dao/impl/UserService';
 
 @Component({
   selector: 'app-users',
@@ -9,13 +10,13 @@ import {DataHandlerService} from '../../services/data-handler.service';
 })
 export class UsersComponent implements OnInit {
 
-  users: User[];
+  users: Observable<User[]>;
 
-  constructor(private dataHandlerService: DataHandlerService) {
+  constructor(private userService: UserService) {
   }
 
   ngOnInit(): void {
-    this.dataHandlerService.usersSubject.subscribe(users => this.users = users);
+    this.users = this.userService.findAll();
   }
 
 }

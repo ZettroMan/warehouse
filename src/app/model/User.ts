@@ -1,3 +1,5 @@
+import {Role} from './Role';
+import {Brand} from './Brand';
 
 export class User {
   id: number;
@@ -5,14 +7,19 @@ export class User {
   fullName: string;
   email: string;
   phone: string;
-  role: string;
+  password: string;
+  brands: Brand[];
+  roles: Role[];
 
-  constructor(id: number, username: string, fullName: string, email: string, phone: string, role: string) {
+  constructor(id: number, username: string, fullName: string, email: string,
+              phone: string, password: string, brands: Brand[], roles: Role[]) {
     this.id = id;
     this.username = username;
     this.fullName = fullName;
     this.email = email;
     this.phone = phone;
-    this.role = role;
+    this.password = password;
+    this.brands = brands;
+    this.roles = roles;
   }
 }

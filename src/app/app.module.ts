@@ -18,7 +18,11 @@ import {ShopsComponent} from './views/shops/shops.component';
 
 import {registerLocaleData} from '@angular/common';
 import localeRu from '@angular/common/locales/ru';
-import {DELIVERY_URL_TOKEN} from './services/dao/impl/DeliveryService';
+import {DELIVERIES_URL_TOKEN} from './services/dao/impl/DeliveryService';
+import {BRANDS_URL_TOKEN} from './services/dao/impl/BrandService';
+import {WAREHOUSES_URL_TOKEN} from './services/dao/impl/WarehouseService';
+import {SHOPS_URL_TOKEN} from './services/dao/impl/ShopService';
+import {USERS_URL_TOKEN} from './services/dao/impl/UserService';
 
 registerLocaleData(localeRu);
 
@@ -31,7 +35,6 @@ const routes: Routes = [
   {path: 'reports', component: ReportsComponent},
   {path: 'profile', component: ProfileComponent},
 ];
-
 
 @NgModule({
   declarations: [
@@ -53,8 +56,24 @@ const routes: Routes = [
   ],
   providers: [
     {
-      provide: DELIVERY_URL_TOKEN,
+      provide: DELIVERIES_URL_TOKEN,
       useValue: 'https://command-project-warehouse.herokuapp.com/api/v1/deliveries'
+    },
+    {
+      provide: BRANDS_URL_TOKEN,
+      useValue: 'https://command-project-warehouse.herokuapp.com/api/v1/brands'
+    },
+    {
+      provide: WAREHOUSES_URL_TOKEN,
+      useValue: 'https://command-project-warehouse.herokuapp.com/api/v1/warehouses'
+    },
+    {
+      provide: SHOPS_URL_TOKEN,
+      useValue: 'https://command-project-warehouse.herokuapp.com/api/v1/shops'
+    },
+    {
+      provide: USERS_URL_TOKEN,
+      useValue: 'https://command-project-warehouse.herokuapp.com/api/v1/users'
     },
   ],
   bootstrap: [AppComponent]

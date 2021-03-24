@@ -9,7 +9,16 @@ import {Component} from '@angular/core';
 
 export class AppComponent {
 
+  // тип устройства - на будущее
+  isMobile: boolean;
+  isTablet: boolean;
+
   title = 'warehouse';
-  opened = true;
+
+  // параметры бокового меню с категориями
+  menuOpened = true;  // по умолчанию - открыто
+
+  // TODO - здесь надо будет потом вставить SearchValues для тех сущностей, по которым нужно осуществлять поиск
+  // TODO - потом сюда еще можно будет добавить DeviceDetectorService и IntroService
 
 }

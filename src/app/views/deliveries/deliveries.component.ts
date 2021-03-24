@@ -18,7 +18,7 @@ export class DeliveriesComponent implements OnInit {
   dataToSend: DeliveryDto[];
   stringRows: string[];
 
-  constructor(private ds: DeliveryService) {}
+  constructor(private deliveryService: DeliveryService) {}
 
   ngOnInit(): void {
     const title = 'Дата прибытия на склад\tПлановое время прибытия на склад\tМарка и номер ТС\tФИО водителя, телефон\tБренд\tВЗ\t' +
@@ -28,7 +28,7 @@ export class DeliveriesComponent implements OnInit {
   }
 
   private reloadData(): void {
-    this.deliveries = this.ds.findAll();
+    this.deliveries = this.deliveryService.findAll();
   }
 
   data(event: ClipboardEvent): void {
@@ -53,11 +53,11 @@ export class DeliveriesComponent implements OnInit {
     console.log(this.tableToDeliveries(this.stringRows));
     const delivery: Delivery[] = [];
     // console.log(this.dataToSend.length);
-    for (let i = 0; i < this.dataToSend.length; i++) {
-      delivery.push(this.dataToSend[i].buildDelivery(this.dataToSend[i]));
-    }
+    // for (let i = 0; i < this.dataToSend.length; i++) {
+    //   delivery.push(this.dataToSend[i].buildDelivery(this.dataToSend[i]));
+    // }
     console.log(delivery);
-    this.ds.add(delivery[0]);
+    // this.deliveryService.add(delivery[0]);
     this.dataSource = null;
     this.reloadData();
   }

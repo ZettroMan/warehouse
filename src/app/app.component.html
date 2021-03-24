@@ -1,6 +1,6 @@
 <mat-sidenav-container style="height: 100%">
 
-  <mat-sidenav mode="side" [(opened)]="opened">
+  <mat-sidenav mode="side" [(opened)]="menuOpened">
     <div class="logo"><a href="#" class="simple-text">
       My Warehouse
     </a></div>
@@ -43,7 +43,7 @@
   <mat-sidenav-content>
     <mat-toolbar class="topnavbar">
       <div class="col-8 text-left align-self-top">
-        <button mat-icon-button disableRipple type="button" (click)="opened=!opened">
+        <button mat-icon-button disableRipple type="button" (click)="menuOpened=!menuOpened">
           <mat-icon>menu</mat-icon>
         </button>
       </div>

@@ -1,6 +1,7 @@
 import {Component, OnInit} from '@angular/core';
-import {DataHandlerService} from '../../services/data-handler.service';
 import {Shop} from '../../model/Shop';
+import {Observable} from 'rxjs';
+import {ShopService} from '../../services/dao/impl/ShopService';
 
 @Component({
   selector: 'app-shops',
@@ -9,12 +10,12 @@ import {Shop} from '../../model/Shop';
 })
 export class ShopsComponent implements OnInit {
 
-  shops: Shop[];
+  shops: Observable<Shop[]>;
 
-  constructor(private dataHandlerService: DataHandlerService) { }
+  constructor(private shopService: ShopService) { }
 
   ngOnInit(): void {
-    this.dataHandlerService.shopsSubject.subscribe(shops => this.shops = shops);
+    this.shops = this.shopService.findAll();
   }
 
 }
