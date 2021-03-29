@@ -56,46 +56,46 @@ registerLocaleData(localeRu);
       useClass: TokenInterceptor,
       multi: true
     },
-    // {
-    //   provide: DELIVERIES_URL_TOKEN,
-    //   useValue: 'https://command-project-warehouse.herokuapp.com/api/v1/deliveries'
-    // },
-    // {
-    //   provide: BRANDS_URL_TOKEN,
-    //   useValue: 'https://command-project-warehouse.herokuapp.com/api/v1/brands'
-    // },
-    // {
-    //   provide: WAREHOUSES_URL_TOKEN,
-    //   useValue: 'https://command-project-warehouse.herokuapp.com/api/v1/warehouses'
-    // },
-    // {
-    //   provide: SHOPS_URL_TOKEN,
-    //   useValue: 'https://command-project-warehouse.herokuapp.com/api/v1/shops'
-    // },
-    // {
-    //   provide: USERS_URL_TOKEN,
-    //   useValue: 'https://command-project-warehouse.herokuapp.com/api/v1/users'
-    // },
     {
       provide: DELIVERIES_URL_TOKEN,
-      useValue: 'http://localhost:8189/api/v1/deliveries'
+      useValue: 'https://command-project-warehouse.herokuapp.com/api/v1/deliveries'
     },
     {
       provide: BRANDS_URL_TOKEN,
-      useValue: 'http://localhost:8189/api/v1/brands'
+      useValue: 'https://command-project-warehouse.herokuapp.com/api/v1/brands'
     },
     {
       provide: WAREHOUSES_URL_TOKEN,
-      useValue: 'http://localhost:8189/api/v1/warehouses'
+      useValue: 'https://command-project-warehouse.herokuapp.com/api/v1/warehouses'
     },
     {
       provide: SHOPS_URL_TOKEN,
-      useValue: 'http://localhost:8189/api/v1/shops'
+      useValue: 'https://command-project-warehouse.herokuapp.com/api/v1/shops'
     },
     {
       provide: USERS_URL_TOKEN,
-      useValue: 'http://localhost:8189/api/v1/users'
+      useValue: 'https://command-project-warehouse.herokuapp.com/api/v1/users'
     },
+    // {
+    //   provide: DELIVERIES_URL_TOKEN,
+    //   useValue: 'http://localhost:8189/api/v1/deliveries'
+    // },
+    // {
+    //   provide: BRANDS_URL_TOKEN,
+    //   useValue: 'http://localhost:8189/api/v1/brands'
+    // },
+    // {
+    //   provide: WAREHOUSES_URL_TOKEN,
+    //   useValue: 'http://localhost:8189/api/v1/warehouses'
+    // },
+    // {
+    //   provide: SHOPS_URL_TOKEN,
+    //   useValue: 'http://localhost:8189/api/v1/shops'
+    // },
+    // {
+    //   provide: USERS_URL_TOKEN,
+    //   useValue: 'http://localhost:8189/api/v1/users'
+    // },
   ],
   bootstrap: [AppComponent]
 })
