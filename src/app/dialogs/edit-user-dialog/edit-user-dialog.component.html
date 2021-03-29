@@ -1,0 +1,44 @@
+<h2 mat-dialog-title>Пользователь: {{user.fullName}}</h2>
+<mat-dialog-content>
+
+  <mat-form-field>
+    <mat-label>Логин</mat-label>
+    <input matInput required [(ngModel)]="user.username" readonly>
+  </mat-form-field>
+
+  <mat-form-field>
+    <mat-label>Имя пользователя (ФИО)</mat-label>
+    <input matInput  [(ngModel)]="user.fullName">
+  </mat-form-field>
+
+  <mat-form-field>
+    <mat-label>E-mail</mat-label>
+    <input matInput  [(ngModel)]="user.email">
+  </mat-form-field>
+
+  <mat-form-field>
+    <mat-label>Телефон</mat-label>
+    <input matInput  [(ngModel)]="user.phone">
+  </mat-form-field>
+
+  <mat-form-field>
+    <mat-label>Бренды</mat-label>
+    <mat-select [compareWith]="compareFn" [(ngModel)]="user.brands" multiple>
+      <mat-option *ngFor="let brand of allBrands" [value]="brand">{{brand.abbr}}</mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <mat-form-field>
+    <mat-label>Роли в системе</mat-label>
+    <mat-select [compareWith]="compareFn" [(ngModel)]="user.roles" multiple>
+      <mat-option *ngFor="let role of allRoles" [value]="role">{{role.role}}</mat-option>
+    </mat-select>
+  </mat-form-field>
+
+
+</mat-dialog-content>
+<mat-dialog-actions>
+  <button mat-button [mat-dialog-close]="user">Сохранить</button>
+  <button mat-button [mat-dialog-close]="false">Отмена</button>
+</mat-dialog-actions>
+
