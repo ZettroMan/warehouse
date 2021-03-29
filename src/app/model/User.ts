@@ -20,5 +20,4 @@ export class User {
     this.brands = brands;
     this.roles = roles;
   }
-
 }

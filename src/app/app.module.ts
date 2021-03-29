@@ -1,7 +1,5 @@
 import {BrowserModule} from '@angular/platform-browser';
 import {NgModule} from '@angular/core';
-
-import {RouterModule, Routes} from '@angular/router';
 import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {MaterialModule} from './material/material.module';
@@ -15,7 +13,6 @@ import {ReportsComponent} from './views/reports/reports.component';
 import {ProfileComponent} from './views/profile/profile.component';
 import {ShopsComponent} from './views/shops/shops.component';
 
-
 import {registerLocaleData} from '@angular/common';
 import localeRu from '@angular/common/locales/ru';
 import {DELIVERIES_URL_TOKEN} from './services/dao/impl/DeliveryService';
@@ -24,10 +21,9 @@ import {WAREHOUSES_URL_TOKEN} from './services/dao/impl/WarehouseService';
 import {SHOPS_URL_TOKEN} from './services/dao/impl/ShopService';
 import {USERS_URL_TOKEN} from './services/dao/impl/UserService';
 import {ROLES_URL_TOKEN} from './services/dao/impl/RoleService';
-import { EditUserDialogComponent } from './dialogs/edit-user-dialog/edit-user-dialog.component';
+import {EditUserDialogComponent} from './dialogs/edit-user-dialog/edit-user-dialog.component';
 import {FormsModule} from '@angular/forms';
 import {LoginComponent} from './views/security/login/login.component';
-import {FormsModule} from '@angular/forms';
 import {TokenInterceptor} from './token-interceptor';
 import {AppRoutingModule} from './app-routing.module';
 
@@ -43,16 +39,13 @@ registerLocaleData(localeRu);
     ReportsComponent,
     ProfileComponent,
     ShopsComponent,
-    EditUserDialogComponent
-    ShopsComponent,
-    LoginComponent,
+    EditUserDialogComponent,
+    LoginComponent
   ],
   imports: [
     BrowserModule,
     HttpClientModule,
     BrowserAnimationsModule,
-    MaterialModule,
-    FormsModule
     MaterialModule,
     FormsModule,
     AppRoutingModule
