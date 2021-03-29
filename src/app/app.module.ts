@@ -2,7 +2,7 @@ import {BrowserModule} from '@angular/platform-browser';
 import {NgModule} from '@angular/core';
 
 import {RouterModule, Routes} from '@angular/router';
-import {HttpClientModule} from '@angular/common/http';
+import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {MaterialModule} from './material/material.module';
 
@@ -26,18 +26,12 @@ import {USERS_URL_TOKEN} from './services/dao/impl/UserService';
 import {ROLES_URL_TOKEN} from './services/dao/impl/RoleService';
 import { EditUserDialogComponent } from './dialogs/edit-user-dialog/edit-user-dialog.component';
 import {FormsModule} from '@angular/forms';
+import {LoginComponent} from './views/security/login/login.component';
+import {FormsModule} from '@angular/forms';
+import {TokenInterceptor} from './token-interceptor';
+import {AppRoutingModule} from './app-routing.module';
 
 registerLocaleData(localeRu);
-
-const routes: Routes = [
-  {path: 'users', component: UsersComponent},
-  {path: 'brands', component: BrandsComponent},
-  {path: 'warehouses', component: WarehousesComponent},
-  {path: 'shops', component: ShopsComponent},
-  {path: 'deliveries', component: DeliveriesComponent},
-  {path: 'reports', component: ReportsComponent},
-  {path: 'profile', component: ProfileComponent},
-];
 
 @NgModule({
   declarations: [
@@ -50,16 +44,25 @@ const routes: Routes = [
     ProfileComponent,
     ShopsComponent,
     EditUserDialogComponent
+    ShopsComponent,
+    LoginComponent,
   ],
   imports: [
     BrowserModule,
-    RouterModule.forRoot(routes),
     HttpClientModule,
     BrowserAnimationsModule,
     MaterialModule,
     FormsModule
+    MaterialModule,
+    FormsModule,
+    AppRoutingModule
   ],
   providers: [
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: TokenInterceptor,
+      multi: true
+    },
     {
       provide: DELIVERIES_URL_TOKEN,
       // useValue: 'https://command-project-warehouse.herokuapp.com/api/v1/deliveries'
