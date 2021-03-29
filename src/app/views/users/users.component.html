@@ -1,5 +1,6 @@
 <div class="content">
   <div class="container-fluid">
+    <button mat-raised-button (click)="addUser()">Добавить пользователя</button>
     <div class="row">
       <div class="col-md-12">
         <div class="card">
@@ -8,51 +9,52 @@
           </div>
           <div class="card-body">
             <div class="table-responsive">
-              <table class="table">
-                <thead class=" text-primary">
-                <th>
-                  №
-                </th>
-                <th>
-                  Логин
-                </th>
-                <th>
-                  Ф.И.О.
-                </th>
-                <th>
-                  E-mail
-                </th>
-                <th>
-                  Телефон
-                </th>
-                <th>
-                  Бренды
-                </th>
-                <th>
-                  Права в системе
-                </th>
-                <!--                <th></th>-->
-                </thead>
-                <tbody>
-                <tr *ngFor="let user of users | async; let i = index">
-                  <td>{{i + 1}}</td>
-                  <td>{{user.username}}</td>
-                  <td>{{user.fullName}}</td>
-                  <td>{{user.email}}</td>
-                  <td>{{user.phone}}</td>
-                  <td>{{getFormattedBrands(user.brands)}}</td>
-                  <td>{{getFormattedRoles(user.roles)}}</td>
-                  <!--                  <td>-->
-                  <!--                    <button mat-icon-button color="primary">-->
-                  <!--                      <mat-icon>edit</mat-icon>-->
-                  <!--                    </button>-->
-                  <!--                    <button mat-icon-button type="button" color="warn">-->
-                  <!--                      <mat-icon>delete</mat-icon>-->
-                  <!--                    </button>-->
-                  <!--                  </td>-->
-                </tr>
-                </tbody>
-              </table>
+              <mat-table [dataSource]="users" class="mat-elevation-z8">
+                <!-- Id Column -->
+                <ng-container matColumnDef="No">
+                  <mat-header-cell *matHeaderCellDef> No. </mat-header-cell>
+                  <mat-cell *matCellDef="let element"> {{element.id}} </mat-cell>
+                </ng-container>
+
+                <!-- Username Column -->
+                <ng-container matColumnDef="username">
+                  <mat-header-cell *matHeaderCellDef> Логин </mat-header-cell>
+                  <mat-cell *matCellDef="let element"> {{element.username}} </mat-cell>
+                </ng-container>
+
+                <!--FullName Column -->
+                <ng-container matColumnDef="fullname">
+                  <mat-header-cell *matHeaderCellDef> Ф.И.О. </mat-header-cell>
+                  <mat-cell *matCellDef="let element"> {{element.fullName}} </mat-cell>
+                </ng-container>
+
+                <!-- E-mail Column -->
+                <ng-container matColumnDef="email">
+                  <mat-header-cell *matHeaderCellDef> E-mail </mat-header-cell>
+                  <mat-cell *matCellDef="let element"> {{element.email}} </mat-cell>
+                </ng-container>
+
+                <!-- Phone Column -->
+                <ng-container matColumnDef="phone">
+                  <mat-header-cell *matHeaderCellDef> Телефон </mat-header-cell>
+                  <mat-cell *matCellDef="let element"> {{element.phone}} </mat-cell>
+                </ng-container>
+
+                <!-- Brands Column -->
+                <ng-container matColumnDef="brands">
+                  <mat-header-cell *matHeaderCellDef> Бренды </mat-header-cell>
+                  <mat-cell *matCellDef="let element"> {{getFormattedBrands(element.brands)}} </mat-cell>
+                </ng-container>
+
+                <!-- Roles Column -->
+                <ng-container matColumnDef="roles">
+                  <mat-header-cell *matHeaderCellDef> Права в системе </mat-header-cell>
+                  <mat-cell *matCellDef="let element"> {{getFormattedRoles(element.roles)}} </mat-cell>
+                </ng-container>
+
+                <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+                <mat-row (click)="editUser(row)" *matRowDef="let row; columns: displayedColumns;"></mat-row>
+              </mat-table>
             </div>
           </div>
         </div>

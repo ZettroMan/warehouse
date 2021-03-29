@@ -17,15 +17,15 @@ export class CommonService<T> {
   }
 
   add(t: T): Observable<T> {
-    return this.httpClient.post<T>(`${this.url}/add`, t);
+    return this.httpClient.post<T>(this.url, t);
   }
 
-  delete(id: number): Observable<T> {
-    return this.httpClient.delete<T>(this.url + '/delete/' + id);
+  delete(t: T): Observable<T> {
+    return this.httpClient.delete<T>(this.url, t);
   }
 
   findById(id: number): Observable<T> {
-    return this.httpClient.get<T>(this.url + '/id/' + id);
+    return this.httpClient.get<T>(this.url + '/' + id);
   }
 
   findAll(): Observable<T[]> {
@@ -33,7 +33,7 @@ export class CommonService<T> {
   }
 
   update(t: T): Observable<T> {
-    return this.httpClient.put<T>(this.url + '/update', t);
+    return this.httpClient.post<T>(this.url, t);
   }
 
 

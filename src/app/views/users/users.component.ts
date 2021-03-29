@@ -1,9 +1,11 @@
 import {Component, OnInit} from '@angular/core';
 import {User} from '../../model/User';
-import {Observable} from 'rxjs';
 import {UserService} from '../../services/dao/impl/UserService';
+import {MatDialog} from '@angular/material/dialog';
+import {EditUserDialogComponent} from '../../dialogs/edit-user-dialog/edit-user-dialog.component';
 import {Role} from '../../model/Role';
 import {Brand} from '../../model/Brand';
+
 
 @Component({
   selector: 'app-users',
@@ -12,13 +14,43 @@ import {Brand} from '../../model/Brand';
 })
 export class UsersComponent implements OnInit {
 
-  users: Observable<User[]>;
+  displayedColumns: string[] = ['No', 'username', 'fullname', 'email', 'phone', 'brands', 'roles'];
+  users: User[];
+  private selectedRow: null;
+  private newUser: User;
 
-  constructor(private userService: UserService) {
+  constructor(private userService: UserService,
+              private dialog: MatDialog) {
   }
 
   ngOnInit(): void {
-    this.users = this.userService.findAll();
+    this.reloadData();
+  }
+
+  addUser(): void {
+    // this.newUser = new User();
+    // const dialogRef = this.dialog.open(EditUserDialogComponent, {data: this.selectedRow});
+    // dialogRef.afterClosed().subscribe(user => {
+    //   if (user) {
+    //     this.userService.update(user).subscribe(onloadeddata => this.reloadData());
+    //   }
+    // });
+
+  }
+
+  editUser(row): void {
+    console.log(row);
+    this.selectedRow = row;
+    const dialogRef = this.dialog.open(EditUserDialogComponent, {data: this.selectedRow});
+    dialogRef.afterClosed().subscribe(user => {
+      if (user) {
+        this.userService.update(user).subscribe(onloadeddata => this.reloadData());
+      }
+    });
+  }
+
+  reloadData(): void {
+    this.userService.findAll().subscribe(onloadeddata => { this.users = onloadeddata; });
   }
 
   getFormattedRoles(roles: Role[]): string {
