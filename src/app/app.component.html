@@ -6,19 +6,19 @@
     </a></div>
     <div>
       <mat-list>
-        <mat-list-item routerLink="/users" routerLinkActive="active">
+        <mat-list-item *ngIf="admin" routerLink="/users" routerLinkActive="active">
           <mat-icon matListIcon>groups</mat-icon>
           <h3 matLine>Пользователи</h3>
         </mat-list-item>
-        <mat-list-item routerLink="/brands" routerLinkActive="active">
+        <mat-list-item *ngIf="admin" routerLink="/brands" routerLinkActive="active">
           <mat-icon matListIcon>style</mat-icon>
           <h3 matLine>Бренды</h3>
         </mat-list-item>
-        <mat-list-item routerLink="/shops" routerLinkActive="active">
+        <mat-list-item *ngIf="admin" routerLink="/shops" routerLinkActive="active">
           <mat-icon matListIcon>storefront</mat-icon>
           <h3 matLine>Магазины</h3>
         </mat-list-item>
-        <mat-list-item routerLink="/warehouses" routerLinkActive="active">
+        <mat-list-item *ngIf="admin" routerLink="/warehouses" routerLinkActive="active">
           <mat-icon matListIcon>store</mat-icon>
           <h3 matLine>Склады</h3>
         </mat-list-item>
@@ -26,7 +26,7 @@
           <mat-icon matListIcon>local_shipping</mat-icon>
           <h3 matLine>График поставок</h3>
         </mat-list-item>
-        <mat-list-item routerLink="/reports" routerLinkActive="active">
+        <mat-list-item *ngIf="admin" routerLink="/reports" routerLinkActive="active">
           <mat-icon matListIcon>content_paste</mat-icon>
           <h3 matLine>Отчеты</h3>
         </mat-list-item>
