@@ -48,6 +48,8 @@ export class LoginComponent implements OnInit {
         this.isLoggedIn = true;
         this.roles = this.tokenStorage.getAuthorities();
         this.appComponent.authorized = true;
+        this.appComponent.warehouse = this.appComponent.isWarehouse();
+        this.appComponent.admin = this.appComponent.isAdmin();
       },
       error => {
         this.errorMessage = error.error.message;
@@ -64,5 +66,7 @@ export class LoginComponent implements OnInit {
     this.tokenStorage.signOut();
     this.isLoggedIn = false;
     this.appComponent.authorized = false;
+    this.appComponent.warehouse = false;
+    this.appComponent.admin = false;
   }
 }
