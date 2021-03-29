@@ -12,41 +12,60 @@ import {LoginComponent} from './views/security/login/login.component';
 
 const routes: Routes = [
   {
-    path: 'users', component: UsersComponent, canActivate: [AuthGuard],
+    path: 'users', component: UsersComponent,
+    canActivate: [AuthGuard],
     data: {
-      role: 'ROLE_ADMIN'
+      role: ['ROLE_ADMIN']
     }
   },
   {
-    path: 'brands', component: BrandsComponent, canActivate: [AuthGuard],
+    path: 'brands', component: BrandsComponent,
+    canActivate: [AuthGuard],
     data: {
-      role: 'ROLE_ADMIN'
+      role: ['ROLE_ADMIN']
     }
   },
   {
-    path: 'warehouses', component: WarehousesComponent, canActivate: [AuthGuard],
+    path: 'warehouses', component: WarehousesComponent,
+    canActivate: [AuthGuard],
     data: {
-      role: 'ROLE_ADMIN'
+      role: ['ROLE_ADMIN']
     }
   },
   {
-    path: 'shops', component: ShopsComponent, canActivate: [AuthGuard],
+    path: 'shops', component: ShopsComponent,
+    canActivate: [AuthGuard],
     data: {
-      role: 'ROLE_ADMIN'
+      role: ['ROLE_ADMIN']
     }
   },
-  {path: 'deliveries', component: DeliveriesComponent, canActivate: [AuthGuard]},
   {
-    path: 'reports', component: ReportsComponent, canActivate: [AuthGuard],
+    path: 'deliveries', component: DeliveriesComponent,
+    canActivate: [AuthGuard],
     data: {
-      role: 'ROLE_ADMIN'
+      role: ['ROLE_ADMIN', 'ROLE_WAREHOUSE']
     }
   },
-  {path: 'profile', component: ProfileComponent, canActivate: [AuthGuard]},
-  {path: 'auth', component: LoginComponent},
+  {
+    path: 'reports', component: ReportsComponent,
+    canActivate: [AuthGuard],
+    data: {
+      role: ['ROLE_ADMIN']
+    }
+  },
+  {
+    path: 'profile', component: ProfileComponent,
+    canActivate: [AuthGuard],
+    data: {
+      role: ['ROLE_ADMIN', 'ROLE_WAREHOUSE']
+    }
+  },
+  {
+    path: 'auth', component: LoginComponent
+  },
   {
     path: '',
-    redirectTo: 'deliveries',
+    redirectTo: 'auth',
     pathMatch: 'full'
   }
 ];
