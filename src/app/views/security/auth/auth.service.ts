@@ -1,10 +1,10 @@
-import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import {Injectable} from '@angular/core';
+import {HttpClient, HttpHeaders} from '@angular/common/http';
+import {Observable} from 'rxjs';
 
-import { JwtResponse } from './jwt-response';
-import { AuthLoginInfo } from './login-info';
-import { SignUpInfo } from './signup-info';
+import {JwtResponse} from './jwt-response';
+import {AuthLoginInfo} from './login-info';
+import {SignUpInfo} from './signup-info';
 
 const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' })
@@ -15,8 +15,10 @@ const httpOptions = {
 })
 export class AuthService {
 
-  private loginUrl = 'http://localhost:8189/api/v1/auth';
-  private signupUrl = 'http://localhost:8189/api/v1/signup';
+  private loginUrl = 'https://command-project-warehouse.herokuapp.com/api/v1/auth';
+  private signupUrl = 'https://command-project-warehouse.herokuapp.com/api/v1/signup';
+  // private loginUrl = 'http://localhost:8189/api/v1/auth';
+  // private signupUrl = 'http://localhost:8189/api/v1/signup';
 
   constructor(private http: HttpClient) {
   }
