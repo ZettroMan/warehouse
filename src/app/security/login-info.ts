@@ -1,4 +1,4 @@
-export class AuthLoginInfo {
+export class LoginInfo {
     username: string;
     password: string;
 

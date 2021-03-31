@@ -1,24 +1,24 @@
 <mat-sidenav-container style="height: 100%">
 
-  <mat-sidenav *ngIf="authorized" mode="side" [(opened)]="menuOpened">
+  <mat-sidenav *ngIf="_authService.loggedIn()" mode="side" [(opened)]="menuOpened">
     <div class="logo"><a href="#" class="simple-text">
       My Warehouse
     </a></div>
     <div>
       <mat-list>
-        <mat-list-item *ngIf="admin" routerLink="/users" routerLinkActive="active">
+        <mat-list-item routerLink="/users" routerLinkActive="active">
           <mat-icon matListIcon>groups</mat-icon>
           <h3 matLine>Пользователи</h3>
         </mat-list-item>
-        <mat-list-item *ngIf="admin" routerLink="/brands" routerLinkActive="active">
+        <mat-list-item routerLink="/brands" routerLinkActive="active">
           <mat-icon matListIcon>style</mat-icon>
           <h3 matLine>Бренды</h3>
         </mat-list-item>
-        <mat-list-item *ngIf="admin" routerLink="/shops" routerLinkActive="active">
+        <mat-list-item  routerLink="/shops" routerLinkActive="active">
           <mat-icon matListIcon>storefront</mat-icon>
           <h3 matLine>Магазины</h3>
         </mat-list-item>
-        <mat-list-item *ngIf="admin" routerLink="/warehouses" routerLinkActive="active">
+        <mat-list-item routerLink="/warehouses" routerLinkActive="active">
           <mat-icon matListIcon>store</mat-icon>
           <h3 matLine>Склады</h3>
         </mat-list-item>
@@ -26,7 +26,7 @@
           <mat-icon matListIcon>local_shipping</mat-icon>
           <h3 matLine>График поставок</h3>
         </mat-list-item>
-        <mat-list-item *ngIf="admin" routerLink="/reports" routerLinkActive="active">
+        <mat-list-item routerLink="/reports" routerLinkActive="active">
           <mat-icon matListIcon>content_paste</mat-icon>
           <h3 matLine>Отчеты</h3>
         </mat-list-item>
@@ -34,12 +34,10 @@
           <mat-icon matListIcon>person</mat-icon>
           <h3 matLine>Мой профиль</h3>
         </mat-list-item>
-
-        <mat-list-item routerLink="/auth" routerLinkActive="active">
+        <mat-list-item routerLink="/login" routerLinkActive="active">
           <mat-icon matListIcon>person</mat-icon>
           <h3 matLine>Выход</h3>
         </mat-list-item>
-
       </mat-list>
     </div>
   </mat-sidenav>
@@ -47,7 +45,7 @@
   <!--  основной контент-->
   <!--  ng-sidebar-content - над чем будет открываться слайд-меню-->
   <mat-sidenav-content>
-    <mat-toolbar *ngIf="authorized" class="topnavbar">
+    <mat-toolbar *ngIf="_authService.loggedIn()" class="topnavbar">
       <div class="col-8 text-left align-self-top">
         <button mat-icon-button disableRipple type="button" (click)="menuOpened=!menuOpened">
           <mat-icon>menu</mat-icon>
@@ -63,7 +61,6 @@
         </button>
       </div>
     </mat-toolbar>
-
 
     <div class="container-fluid">
       <router-outlet></router-outlet>

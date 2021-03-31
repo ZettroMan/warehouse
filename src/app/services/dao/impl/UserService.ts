@@ -10,10 +10,6 @@ import {User} from '../../../model/User';
 // глобальная переменная для хранения URL
 export const USERS_URL_TOKEN = new InjectionToken<string>('url');
 
-// класс реализует методы доступа к данным с помощью RESTful запросов в формате JSON
-
-// JSON формируется автоматически для параметров и результатов
-
 @Injectable({
   providedIn: 'root'
 })
@@ -29,8 +25,7 @@ export class UserService extends CommonService<User> implements UserDao {
   }
 
   // поиск поставок по любым параметрам
-  findUsers(searchObj: UserSearchValues): Observable<any> { // из backend получаем тип Page, поэтому указываем any
+  findUsers(searchObj: UserSearchValues): Observable<any> {   // из backend получаем тип Page, поэтому указываем any
     return this.http.post<any>(this.baseUrl + '/search', searchObj);
   }
-
 }
