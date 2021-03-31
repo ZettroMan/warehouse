@@ -1,12 +1,12 @@
 <div>
-  <div align="center" *ngIf="isLoggedIn">
-    Доброго времени суток {{username}}.
+  <div align="center" *ngIf="_authService.loggedIn()">
+    Доброго времени суток {{_authService.getUserName()}}.
     <div>
       Информация о Вас:
       <br>
       <br>
       <p>
-        <strong>Права:</strong> {{roles | json}}<br/>
+        <strong>Права:</strong> {{_authService.getUserAuthorities()}}<br/>
       </p>
       <button class="btn btn-outline-danger" (click)="logout()">Logout</button>
     </div>
@@ -14,7 +14,7 @@
 </div>
 
 
-<div *ngIf="!isLoggedIn" class="login-section">
+<div *ngIf="!_authService.loggedIn()" class="login-section">
   <div class="row justify-content-center">
     <div class="col-md-3"></div>
     <div class="col-md-6">
@@ -25,7 +25,7 @@
           <form name="form" (ngSubmit)="f.form.valid && onSubmit()" #f="ngForm" novalidate>
             <div class="form-group">
               <label for="username">Имя пользователя</label>
-              <input type="text" class="form-control" id="username" name="username" [(ngModel)]="form.username"
+              <input type="text" class="form-control" id="username" name="username" [(ngModel)]="loginInfo.username"
                      #username="ngModel"
                      required/>
               <div *ngIf="f.submitted && username.invalid">
@@ -34,7 +34,7 @@
             </div>
             <div class="form-group">
               <label for="password">Пароль</label>
-              <input type="password" class="form-control" id="password" name="password" [(ngModel)]="form.password"
+              <input type="password" class="form-control" id="password" name="password" [(ngModel)]="loginInfo.password"
                      #password="ngModel"
                      required minlength="6"/>
               <div *ngIf="f.submitted && password.invalid">
