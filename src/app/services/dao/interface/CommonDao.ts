@@ -12,10 +12,10 @@ export interface CommonDao<T> {
     findById(id: number): Observable<T>; // получение значения по уникальному id
 
     // обновить значение
-    update(obj: T): Observable<T>;
+    update(id: number, obj: T): Observable<T>;
 
     // удалить значение
-    delete(obj: T): Observable<T>; // удаление по id
+    delete(id: number): Observable<string>; // удаление по id
 
     // добавить значение
     add(obj: T): Observable<T>;

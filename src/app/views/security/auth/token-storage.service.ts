@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 
 const TOKEN_KEY = 'token';
 const USERNAME_KEY = 'username';
@@ -8,7 +8,7 @@ const AUTHORITIES_KEY = 'authorities';
   providedIn: 'root'
 })
 export class TokenStorageService {
-  private roles: Array<string> = [];
+
   constructor() { }
 
   signOut(): void {
@@ -39,14 +39,13 @@ export class TokenStorageService {
   }
 
   public getAuthorities(): string[] {
-    this.roles = [];
+    const roles: string[] = [];
 
     if (sessionStorage.getItem(TOKEN_KEY)) {
       JSON.parse(sessionStorage.getItem(AUTHORITIES_KEY)).forEach(authority => {
-        this.roles.push(authority);
+        roles.push(authority);
       });
     }
-
-    return this.roles;
+    return roles;
   }
 }

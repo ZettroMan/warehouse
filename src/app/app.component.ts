@@ -10,7 +10,7 @@ import {TokenStorageService} from './views/security/auth/token-storage.service';
 
 export class AppComponent implements OnInit {
   roles: string[];
-  authorized = false;
+  authorized: boolean;
   admin = false;
   warehouse = false;
   // тип устройства - на будущее
@@ -28,6 +28,7 @@ export class AppComponent implements OnInit {
   ngOnInit(): void {
     if (this.tokenStorage.getToken()) {
       this.roles = this.tokenStorage.getAuthorities();
+      this.authorized = true;
     } else {
       this.authorized = false;
     }
@@ -36,8 +37,8 @@ export class AppComponent implements OnInit {
   getUserRole(): string {
     this.roles = this.tokenStorage.getAuthorities();
     let role: string;
-    for (let i = 0; i < this.roles.length; i++) {
-      role = JSON.stringify(this.roles[i]).split('":"')[1];
+    for (const item of this.roles) {
+      role = JSON.stringify(item).split('":"')[1];
       role = role.substring(0, role.length - 2);
       if (role.startsWith('ROLE')) {
         return role;

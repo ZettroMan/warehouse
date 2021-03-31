@@ -44,7 +44,7 @@ export class UsersComponent implements OnInit {
     const dialogRef = this.dialog.open(EditUserDialogComponent, {data: this.selectedRow});
     dialogRef.afterClosed().subscribe(user => {
       if (user) {
-        this.userService.update(user).subscribe(onloadeddata => this.reloadData());
+        this.userService.update(user.id, user).subscribe(onloadeddata => this.reloadData());
       }
     });
   }

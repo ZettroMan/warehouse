@@ -21,11 +21,16 @@ import {WAREHOUSES_URL_TOKEN} from './services/dao/impl/WarehouseService';
 import {SHOPS_URL_TOKEN} from './services/dao/impl/ShopService';
 import {USERS_URL_TOKEN} from './services/dao/impl/UserService';
 import {ROLES_URL_TOKEN} from './services/dao/impl/RoleService';
+import {DELIVERY_TIMES_URL_TOKEN} from './services/dao/impl/DeliveryTimeService';
+import {DELIVERY_TYPES_URL_TOKEN} from './services/dao/impl/DeliveryTypeService';
 import {EditUserDialogComponent} from './dialogs/edit-user-dialog/edit-user-dialog.component';
 import {FormsModule} from '@angular/forms';
 import {LoginComponent} from './views/security/login/login.component';
 import {TokenInterceptor} from './token-interceptor';
 import {AppRoutingModule} from './app-routing.module';
+
+const BACKEND_ROOT_URL = 'https://command-project-warehouse.herokuapp.com/api/v1';
+// const BACKEND_ROOT_URL = 'http://localhost:8189/api/v1';
 
 registerLocaleData(localeRu);
 
@@ -58,33 +63,35 @@ registerLocaleData(localeRu);
     },
     {
       provide: DELIVERIES_URL_TOKEN,
-      useValue: 'https://command-project-warehouse.herokuapp.com/api/v1/deliveries'
-      // useValue: 'http://localhost:8189/api/v1/deliveries'
+      useValue: BACKEND_ROOT_URL + '/deliveries'
     },
     {
       provide: BRANDS_URL_TOKEN,
-      useValue: 'https://command-project-warehouse.herokuapp.com/api/v1/brands'
-      // useValue: 'http://localhost:8189/api/v1/brands'
+      useValue: BACKEND_ROOT_URL + '/brands'
     },
     {
       provide: WAREHOUSES_URL_TOKEN,
-      useValue: 'https://command-project-warehouse.herokuapp.com/api/v1/warehouses'
-      // useValue: 'http://localhost:8189/api/v1/warehouses'
+      useValue: BACKEND_ROOT_URL + '/warehouses'
     },
     {
       provide: SHOPS_URL_TOKEN,
-      useValue: 'https://command-project-warehouse.herokuapp.com/api/v1/shops'
-      // useValue: 'http://localhost:8189/api/v1/shops'
+      useValue: BACKEND_ROOT_URL + '/shops'
     },
     {
       provide: USERS_URL_TOKEN,
-      useValue: 'https://command-project-warehouse.herokuapp.com/api/v1/users'
-      // useValue: 'http://localhost:8189/api/v1/users'
+      useValue: BACKEND_ROOT_URL + '/users'
     },
     {
       provide: ROLES_URL_TOKEN,
-      useValue: 'https://command-project-warehouse.herokuapp.com/api/v1/roles'
-      // useValue: 'http://localhost:8189/api/v1/roles'
+      useValue: BACKEND_ROOT_URL + '/roles'
+    },
+    {
+      provide: DELIVERY_TIMES_URL_TOKEN,
+      useValue: BACKEND_ROOT_URL + '/delivery-times'
+    },
+    {
+      provide: DELIVERY_TYPES_URL_TOKEN,
+      useValue: BACKEND_ROOT_URL + '/delivery-types'
     },
   ],
   entryComponents: [

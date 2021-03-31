@@ -1,5 +1,5 @@
 import {NgModule} from '@angular/core';
-import {Routes, RouterModule} from '@angular/router';
+import {RouterModule, Routes} from '@angular/router';
 import {UsersComponent} from './views/users/users.component';
 import {BrandsComponent} from './views/brands/brands.component';
 import {WarehousesComponent} from './views/warehouses/warehouses.component';
@@ -15,49 +15,49 @@ const routes: Routes = [
     path: 'users', component: UsersComponent,
     canActivate: [AuthGuard],
     data: {
-      role: ['ROLE_ADMIN']
+      roles: ['ROLE_ADMIN']
     }
   },
   {
     path: 'brands', component: BrandsComponent,
     canActivate: [AuthGuard],
     data: {
-      role: ['ROLE_ADMIN']
+      roles: ['ROLE_ADMIN', 'ROLE_MANAGER']
     }
   },
   {
     path: 'warehouses', component: WarehousesComponent,
     canActivate: [AuthGuard],
     data: {
-      role: ['ROLE_ADMIN']
+      roles: ['ROLE_ADMIN']
     }
   },
   {
     path: 'shops', component: ShopsComponent,
     canActivate: [AuthGuard],
     data: {
-      role: ['ROLE_ADMIN']
+      roles: ['ROLE_ADMIN', 'ROLE_MANAGER']
     }
   },
   {
     path: 'deliveries', component: DeliveriesComponent,
     canActivate: [AuthGuard],
     data: {
-      role: ['ROLE_ADMIN', 'ROLE_WAREHOUSE']
+      roles: ['ROLE_ADMIN', 'ROLE_WAREHOUSE', 'ROLE_MANAGER']
     }
   },
   {
     path: 'reports', component: ReportsComponent,
     canActivate: [AuthGuard],
     data: {
-      role: ['ROLE_ADMIN']
+      roles: ['ROLE_ADMIN', 'ROLE_WAREHOUSE', 'ROLE_MANAGER']
     }
   },
   {
     path: 'profile', component: ProfileComponent,
     canActivate: [AuthGuard],
     data: {
-      role: ['ROLE_ADMIN', 'ROLE_WAREHOUSE']
+      roles: ['ROLE_ADMIN', 'ROLE_WAREHOUSE', 'ROLE_MANAGER']
     }
   },
   {
