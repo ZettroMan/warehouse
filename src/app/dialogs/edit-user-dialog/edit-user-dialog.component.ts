@@ -14,6 +14,7 @@ import {Role} from '../../model/Role';
 export class EditUserDialogComponent implements OnInit {
 
   user: User;
+  password: string;
   allBrands: Brand[];
   allRoles: Role[];
 

@@ -1,6 +1,6 @@
-
 <div class="content">
   <div class="container-fluid">
+    <button mat-raised-button (click)="addWarehouse()" color="primary">Добавить склад</button>
     <div class="row">
       <div class="col-md-12">
         <div class="card">
@@ -9,26 +9,28 @@
           </div>
           <div class="card-body">
             <div class="table-responsive">
-              <table class="table">
-                <thead class=" text-primary">
-                <th>
-                  №
-                </th>
-                <th>
-                  Название
-                </th>
-                <th>
-                  Аббревиатура
-                </th>
-                </thead>
-                <tbody>
-                <tr *ngFor="let warehouse of warehouses | async; let i = index">
-                  <td>{{i + 1}}</td>
-                  <td>{{warehouse.name}}</td>
-                  <td>{{warehouse.abbr}}</td>
-                </tr>
-                </tbody>
-              </table>
+              <mat-table [dataSource]="warehouses" class="mat-elevation-z8">
+                <!-- Id Column -->
+                <ng-container matColumnDef="No">
+                  <mat-header-cell *matHeaderCellDef> No. </mat-header-cell>
+                  <mat-cell *matCellDef="let element"> {{element.id}} </mat-cell>
+                </ng-container>
+
+                <!-- Warehouse name Column -->
+                <ng-container matColumnDef="name">
+                  <mat-header-cell *matHeaderCellDef> Наименование </mat-header-cell>
+                  <mat-cell *matCellDef="let element"> {{element.name}} </mat-cell>
+                </ng-container>
+
+                <!--Abbr Column -->
+                <ng-container matColumnDef="abbr">
+                  <mat-header-cell *matHeaderCellDef> Аббревиатура </mat-header-cell>
+                  <mat-cell *matCellDef="let element"> {{element.abbr}} </mat-cell>
+                </ng-container>
+
+                <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+                <mat-row (click)="editWarehouse(row)" *matRowDef="let row; columns: displayedColumns;"></mat-row>
+              </mat-table>
             </div>
           </div>
         </div>
@@ -36,4 +38,3 @@
     </div>
   </div>
 </div>
-

@@ -24,18 +24,17 @@ export class UsersComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.reloadData();
+    this.userService.findAll().subscribe(onloadeddata => { this.users = onloadeddata; });
   }
 
   addUser(): void {
-    // this.newUser = new User();
-    // const dialogRef = this.dialog.open(EditUserDialogComponent, {data: this.selectedRow});
-    // dialogRef.afterClosed().subscribe(user => {
-    //   if (user) {
-    //     this.userService.update(user).subscribe(onloadeddata => this.reloadData());
-    //   }
-    // });
-
+    this.newUser = new User(null, '', '', '', '', [], []);
+    const dialogRef = this.dialog.open(EditUserDialogComponent, {data: this.newUser});
+    dialogRef.afterClosed().subscribe(user => {
+      if (user) {
+        this.userService.add(user).subscribe(onloadeddata => this.reloadData());
+      }
+    });
   }
 
   editUser(row): void {
@@ -44,13 +43,14 @@ export class UsersComponent implements OnInit {
     const dialogRef = this.dialog.open(EditUserDialogComponent, {data: this.selectedRow});
     dialogRef.afterClosed().subscribe(user => {
       if (user) {
+        // !!!здесь нужно сделать проверку, чтобы админ не смог сам себя лишить админских прав ;))
         this.userService.update(user.id, user).subscribe(onloadeddata => this.reloadData());
       }
     });
   }
 
   reloadData(): void {
-    this.userService.findAll().subscribe(onloadeddata => { this.users = onloadeddata; });
+    this.userService.refresh().subscribe(onloadeddata => { this.users = onloadeddata; });
   }
 
   getFormattedRoles(roles: Role[]): string {

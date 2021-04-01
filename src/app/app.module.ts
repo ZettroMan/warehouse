@@ -30,6 +30,9 @@ import {LoginComponent} from './views/login/login.component';
 import {TokenInterceptor} from './security/token-interceptor';
 import {AppRoutingModule} from './app-routing.module';
 import {AuthGuard} from './security/auth.guard';
+import {EditBrandDialogComponent} from './dialogs/edit-brand-dialog/edit-brand-dialog.component';
+import {EditWarehouseDialogComponent} from './dialogs/edit-warehouse-dialog/edit-warehouse-dialog.component';
+import {EditShopDialogComponent} from './dialogs/edit-shop-dialog/edit-shop-dialog.component';
 
 const BACKEND_ROOT_URL = 'https://command-project-warehouse.herokuapp.com/api/v1';
 // const BACKEND_ROOT_URL = 'http://localhost:8189/api/v1';
@@ -47,6 +50,9 @@ registerLocaleData(localeRu);
     ProfileComponent,
     ShopsComponent,
     EditUserDialogComponent,
+    EditBrandDialogComponent,
+    EditWarehouseDialogComponent,
+    EditShopDialogComponent,
     LoginComponent
   ],
   imports: [
@@ -107,7 +113,10 @@ registerLocaleData(localeRu);
     },
   ],
   entryComponents: [
-    EditUserDialogComponent
+    EditUserDialogComponent,
+    EditBrandDialogComponent,
+    EditWarehouseDialogComponent,
+    EditShopDialogComponent,
   ],
   bootstrap: [AppComponent]
 })

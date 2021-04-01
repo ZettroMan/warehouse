@@ -20,8 +20,8 @@ export class CommonService<T> {
     return this.httpClient.post<T>(this.url, t);
   }
 
-  delete(id: number): Observable<string> {
-    return this.httpClient.delete<string>(this.url + '/' + id);
+  delete(id: number): Observable<boolean> {
+    return this.httpClient.delete<boolean>(this.url + '/' + id);
   }
 
   findById(id: number): Observable<T> {

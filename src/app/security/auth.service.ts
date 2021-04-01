@@ -1,5 +1,5 @@
 import {Inject, Injectable, InjectionToken} from '@angular/core';
-import {HttpClient} from '@angular/common/http';
+import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {Observable} from 'rxjs';
 import {RegisterInfo} from './register-info';
 import {Router} from '@angular/router';
@@ -8,9 +8,9 @@ import {Router} from '@angular/router';
 export const LOGIN_URL_TOKEN = new InjectionToken<string>('url');
 export const REGISTER_URL_TOKEN = new InjectionToken<string>('url');
 
-// const httpOptions = {
-//   headers: new HttpHeaders({'Content-Type': 'application/json'})
-// };
+const httpOptions = {
+  headers: new HttpHeaders({'Content-Type': 'application/json'})
+};
 
 @Injectable({
   providedIn: 'root'
@@ -22,11 +22,11 @@ export class AuthService {
   }
 
   loginUser(info): Observable<any> {
-    return this.http.post<any>(this.loginUrl, info);
+    return this.http.post<any>(this.loginUrl, info, httpOptions);
   }
 
   registerUser(info: RegisterInfo): Observable<any> {
-    return this.http.post<any>(this.registerUrl, info);
+    return this.http.post<any>(this.registerUrl, info, httpOptions);
   }
 
   logoutUser(): void {
@@ -58,4 +58,16 @@ export class AuthService {
     }
     return false;
   }
+
+  isRouteEnabled(link: string): boolean {
+    const ar: string[] = [];
+    const linkRoles = this.router.config.filter(value => {
+      if (value.path === link) {
+        return value;
+      }
+    });
+    linkRoles[0].data.roles.forEach(v => ar.push(v));
+    return this.checkUserRoles(ar);
+   }
+
 }
