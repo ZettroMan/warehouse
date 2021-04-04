@@ -1,41 +1,42 @@
-<h2 mat-dialog-title>Пользователь: {{user.fullName}}</h2>
-<mat-dialog-content>
+<h2 mat-dialog-title>Пользователь: {{form.value.username}} </h2>
+<mat-dialog-content [formGroup]="form">
 
   <mat-form-field>
     <mat-label>Логин</mat-label>
-    <input matInput required [(ngModel)]="user.username" readonly="{{user.id != null}}">
+    <input matInput formControlName="username">
+    <mat-error *ngIf="form.controls['username'].errors?.required">Укажите логин пользователя</mat-error>
   </mat-form-field>
 
-  <mat-form-field *ngIf="user.id == null">
+  <mat-form-field [hidden]="data.id != null">
     <mat-label>Пароль</mat-label>
-    <input matInput required [(ngModel)]="password" type="password">
+    <input matInput type="password" formControlName="password">
   </mat-form-field>
 
   <mat-form-field>
     <mat-label>Имя пользователя (ФИО)</mat-label>
-    <input matInput  [(ngModel)]="user.fullName">
+    <input matInput formControlName="fullName">
   </mat-form-field>
 
   <mat-form-field>
     <mat-label>E-mail</mat-label>
-    <input matInput  [(ngModel)]="user.email">
+    <input matInput formControlName="email">
   </mat-form-field>
 
   <mat-form-field>
     <mat-label>Телефон</mat-label>
-    <input matInput  [(ngModel)]="user.phone">
+    <input matInput formControlName="phone">
   </mat-form-field>
 
   <mat-form-field>
     <mat-label>Бренды</mat-label>
-    <mat-select [compareWith]="compareFn" [(ngModel)]="user.brands" multiple>
+    <mat-select formControlName="brands" [compareWith]="compareFn" multiple>
       <mat-option *ngFor="let brand of allBrands" [value]="brand">{{brand.abbr}}</mat-option>
     </mat-select>
   </mat-form-field>
 
   <mat-form-field>
     <mat-label>Роли в системе</mat-label>
-    <mat-select [compareWith]="compareFn" [(ngModel)]="user.roles" multiple required>
+    <mat-select formControlName="roles" [compareWith]="compareFn" multiple>
       <mat-option *ngFor="let role of allRoles" [value]="role">{{role.role}}</mat-option>
     </mat-select>
   </mat-form-field>
@@ -43,7 +44,11 @@
 
 </mat-dialog-content>
 <mat-dialog-actions>
-  <button mat-button [mat-dialog-close]="user">Сохранить</button>
-  <button mat-button [mat-dialog-close]="false">Отмена</button>
+  <div class="col-8 text-left align-self-top">
+    <button mat-raised-button (click)="save()" [disabled]="form.invalid">Сохранить</button>
+    <button mat-raised-button (click)="close()">Отмена</button>
+  </div>
+  <div class="col-4 text-right align-self-top">
+    <button mat-raised-button (click)="delete()" color="warn">Удалить</button>
+  </div>
 </mat-dialog-actions>
-

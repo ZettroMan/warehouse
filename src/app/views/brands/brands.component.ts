@@ -3,6 +3,7 @@ import {Brand} from '../../model/Brand';
 import {BrandService} from '../../services/dao/impl/BrandService';
 import {MatDialog} from '@angular/material/dialog';
 import {EditBrandDialogComponent} from '../../dialogs/edit-brand-dialog/edit-brand-dialog.component';
+import {MatTableDataSource} from '@angular/material/table';
 
 @Component({
   selector: 'app-brands',
@@ -13,6 +14,7 @@ export class BrandsComponent implements OnInit {
 
   displayedColumns: string[] = ['No', 'name', 'abbr'];
   brands: Brand[];
+  dataSource: MatTableDataSource<Brand>;
   private selectedRow: null;
   private newBrand: Brand;
 
@@ -23,6 +25,7 @@ export class BrandsComponent implements OnInit {
   ngOnInit(): void {
     this.brandService.findAll().subscribe(onloadeddata => {
       this.brands = onloadeddata;
+      this.dataSource = new MatTableDataSource(this.brands);
     });
   }
 
@@ -37,12 +40,13 @@ export class BrandsComponent implements OnInit {
   }
 
   editBrand(row): void {
-    console.log(row);
+    // console.log(row);
     this.selectedRow = row;
     const editedId = row.id;
     const dialogRef = this.dialog.open(EditBrandDialogComponent, {data: this.selectedRow});
     dialogRef.afterClosed().subscribe(brand => {
       if (brand) {
+        console.log(brand);
         if (typeof brand === 'string') {
           if (brand === 'delete') {
             this.brandService.delete(editedId).subscribe(() => this.reloadData(), error => this.reloadData());
@@ -50,13 +54,14 @@ export class BrandsComponent implements OnInit {
         } else {
           this.brandService.update(brand.id, brand).subscribe(() => this.reloadData(), error => this.reloadData());
         }
-      }
+      } else { this.reloadData(); }
     });
   }
 
   reloadData(): void {
     this.brandService.refresh().subscribe(onloadeddata => {
       this.brands = onloadeddata;
+      this.dataSource.data = this.brands;  // this forces mat-table to refresh data
     });
   }
 

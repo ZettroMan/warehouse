@@ -2,7 +2,7 @@ import {BrowserModule} from '@angular/platform-browser';
 import {NgModule} from '@angular/core';
 import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
-import {MaterialModule} from './material/material.module';
+import {MaterialModule} from './material.module';
 
 import {AppComponent} from './app.component';
 import {BrandsComponent} from './views/brands/brands.component';
@@ -25,7 +25,7 @@ import {DELIVERY_TIMES_URL_TOKEN, DeliveryTimeService} from './services/dao/impl
 import {DELIVERY_TYPES_URL_TOKEN, DeliveryTypeService} from './services/dao/impl/DeliveryTypeService';
 import {AuthService, LOGIN_URL_TOKEN, REGISTER_URL_TOKEN} from './security/auth.service';
 import {EditUserDialogComponent} from './dialogs/edit-user-dialog/edit-user-dialog.component';
-import {FormsModule} from '@angular/forms';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {LoginComponent} from './views/login/login.component';
 import {TokenInterceptor} from './security/token-interceptor';
 import {AppRoutingModule} from './app-routing.module';
@@ -33,6 +33,7 @@ import {AuthGuard} from './security/auth.guard';
 import {EditBrandDialogComponent} from './dialogs/edit-brand-dialog/edit-brand-dialog.component';
 import {EditWarehouseDialogComponent} from './dialogs/edit-warehouse-dialog/edit-warehouse-dialog.component';
 import {EditShopDialogComponent} from './dialogs/edit-shop-dialog/edit-shop-dialog.component';
+import {MatConfirmDialogComponent} from './dialogs/mat-confirm-dialog/mat-confirm-dialog.component';
 
 const BACKEND_ROOT_URL = 'https://command-project-warehouse.herokuapp.com/api/v1';
 // const BACKEND_ROOT_URL = 'http://localhost:8189/api/v1';
@@ -53,16 +54,18 @@ registerLocaleData(localeRu);
     EditBrandDialogComponent,
     EditWarehouseDialogComponent,
     EditShopDialogComponent,
+    MatConfirmDialogComponent,
     LoginComponent
   ],
-  imports: [
-    BrowserModule,
-    HttpClientModule,
-    BrowserAnimationsModule,
-    MaterialModule,
-    FormsModule,
-    AppRoutingModule
-  ],
+    imports: [
+        BrowserModule,
+        HttpClientModule,
+        BrowserAnimationsModule,
+        MaterialModule,
+        FormsModule,
+        AppRoutingModule,
+        ReactiveFormsModule
+    ],
   providers: [ AuthService, AuthGuard, BrandService, DeliveryService,
     DeliveryTimeService, DeliveryTypeService, RoleService, ShopService,
     UserService, WarehouseService,
@@ -117,6 +120,7 @@ registerLocaleData(localeRu);
     EditBrandDialogComponent,
     EditWarehouseDialogComponent,
     EditShopDialogComponent,
+    MatConfirmDialogComponent
   ],
   bootstrap: [AppComponent]
 })

@@ -8,7 +8,7 @@ import {CommonService} from './CommonService';
 
 export class CommonCachedService<T> extends CommonService<T> {
 
-  private entities: T[] = null;
+  entities: T[] = null;
 
   constructor(url: string, httpClient: HttpClient) {
     super(url, httpClient);

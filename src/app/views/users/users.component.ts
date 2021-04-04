@@ -1,11 +1,12 @@
 import {Component, OnInit} from '@angular/core';
 import {User} from '../../model/User';
 import {UserService} from '../../services/dao/impl/UserService';
-import {MatDialog} from '@angular/material/dialog';
+import {MatDialog, MatDialogConfig} from '@angular/material/dialog';
 import {EditUserDialogComponent} from '../../dialogs/edit-user-dialog/edit-user-dialog.component';
 import {Role} from '../../model/Role';
 import {Brand} from '../../model/Brand';
-
+import {MatTableDataSource} from '@angular/material/table';
+import {AuthService} from '../../security/auth.service';
 
 @Component({
   selector: 'app-users',
@@ -16,41 +17,58 @@ export class UsersComponent implements OnInit {
 
   displayedColumns: string[] = ['No', 'username', 'fullname', 'email', 'phone', 'brands', 'roles'];
   users: User[];
-  private selectedRow: null;
-  private newUser: User;
+  dataSource: MatTableDataSource<User>;
+  dialogConfig = new MatDialogConfig();
 
   constructor(private userService: UserService,
+              private authService: AuthService,
               private dialog: MatDialog) {
   }
 
   ngOnInit(): void {
-    this.userService.findAll().subscribe(onloadeddata => { this.users = onloadeddata; });
+    this.userService.findAll().subscribe(onloadeddata => {
+      this.users = onloadeddata;
+      this.dataSource = new MatTableDataSource(this.users);
+      // just not allow user to edit himself, he may do it in a "Profile" section
+      this.dataSource.filterPredicate = (user, filter: string): boolean => (user.username !== filter);
+      this.dataSource.filter = this.authService.getUserName();
+    });
+    this.dialogConfig.disableClose = true;
+    this.dialogConfig.autoFocus = true;
   }
 
   addUser(): void {
-    this.newUser = new User(null, '', '', '', '', [], []);
-    const dialogRef = this.dialog.open(EditUserDialogComponent, {data: this.newUser});
+    this.dialogConfig.data = new User(null, '', '', '', '', [], []);
+    const dialogRef = this.dialog.open(EditUserDialogComponent, this.dialogConfig);
     dialogRef.afterClosed().subscribe(user => {
       if (user) {
-        this.userService.add(user).subscribe(onloadeddata => this.reloadData());
+        this.userService.add(user).subscribe(onloadeddata => this.reloadData(), error => this.reloadData());
       }
     });
   }
 
   editUser(row): void {
-    console.log(row);
-    this.selectedRow = row;
-    const dialogRef = this.dialog.open(EditUserDialogComponent, {data: this.selectedRow});
+    this.dialogConfig.data = row;
+    const editedId = row.id;
+    const dialogRef = this.dialog.open(EditUserDialogComponent, this.dialogConfig);
     dialogRef.afterClosed().subscribe(user => {
       if (user) {
-        // !!!здесь нужно сделать проверку, чтобы админ не смог сам себя лишить админских прав ;))
-        this.userService.update(user.id, user).subscribe(onloadeddata => this.reloadData());
+        if (typeof user === 'string') {
+          if (user === 'delete') {
+            this.userService.delete(editedId).subscribe(() => this.reloadData(), error => this.reloadData());
+          }
+        } else {
+          this.userService.update(user.id, user).subscribe(() => this.reloadData(), error => this.reloadData());
+        }
       }
     });
   }
 
   reloadData(): void {
-    this.userService.refresh().subscribe(onloadeddata => { this.users = onloadeddata; });
+    this.userService.refresh().subscribe(onloadeddata => {
+      this.users = onloadeddata;
+      this.dataSource.data = this.users;  // this forces mat-table to refresh data
+    });
   }
 
   getFormattedRoles(roles: Role[]): string {
@@ -68,4 +86,5 @@ export class UsersComponent implements OnInit {
     }
     return brandsList;
   }
+
 }

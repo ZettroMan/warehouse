@@ -1,0 +1,20 @@
+<h2 mat-dialog-title>Бренд: {{brand.name}}</h2>
+<mat-dialog-content>
+
+  <mat-form-field>
+    <mat-label>Наименование бренда</mat-label>
+    <input matInput required [(ngModel)]="brand.name">
+  </mat-form-field>
+
+  <mat-form-field>
+    <mat-label>Аббревиатура</mat-label>
+    <input matInput  [(ngModel)]="brand.abbr">
+  </mat-form-field>
+
+</mat-dialog-content>
+<mat-dialog-actions>
+  <button mat-raised-button [mat-dialog-close]="brand">Сохранить</button>
+  <button mat-raised-button [mat-dialog-close]="false">Отмена</button>
+  <button mat-raised-button *ngIf="brand.id != null" [mat-dialog-close]="'delete'" color="warn">Удалить</button>
+</mat-dialog-actions>
+
