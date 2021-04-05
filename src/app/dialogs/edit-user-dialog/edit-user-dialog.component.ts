@@ -20,31 +20,34 @@ export class EditUserDialogComponent implements OnInit {
   allRoles: Role[];
   form: FormGroup;
 
-  constructor(@Inject(MAT_DIALOG_DATA) public data: User,
+  constructor(@Inject(MAT_DIALOG_DATA) public user: User,
               private dialogRef: MatDialogRef<EditUserDialogComponent>,
               private brandService: BrandService,
               private roleService: RoleService,
               private dialogService: DialogService,
               private fb: FormBuilder) {
     this.form = fb.group({
-      id: [data.id],
-      username: [data.username, Validators.required],
+      id: [user.id],
+      username: [user.username, Validators.required],
       password: [this.password],
-      fullName: [data.fullName],
-      email: [data.email],
-      phone: [data.phone],
-      brands: [data.brands],
-      roles: [data.roles, Validators.required]
+      fullName: [user.fullName],
+      email: [user.email],
+      phone: [user.phone],
+      brands: [user.brands],
+      roles: [user.roles, Validators.required]
     });
   }
 
   ngOnInit(): void {
     this.brandService.findAll().subscribe(onloadeddata => this.allBrands = onloadeddata);
     this.roleService.findAll().subscribe(onloadeddata => this.allRoles = onloadeddata);
-    console.log(this.data);
+    // console.log(this.user);
   }
 
   compareFn(o1: any, o2: any): boolean {
+    if (o1 === null || o2 === null) {
+      return false;
+    }
     return (o1.id === o2.id);
   }
 
@@ -57,7 +60,7 @@ export class EditUserDialogComponent implements OnInit {
   }
 
   delete(): void {
-    this.dialogService.openConfirmDialog('Удалить пользователя ' + this.data.username + '?')
+    this.dialogService.openConfirmDialog('Удалить пользователя ' + this.user.username + '?')
       .afterClosed().subscribe(res => {
       if (res) {
         this.dialogRef.close('delete');

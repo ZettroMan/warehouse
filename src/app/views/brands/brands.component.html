@@ -10,7 +10,7 @@
           <div class="card-body">
             <div class="table-responsive">
               <mat-table [dataSource]="dataSource" class="mat-elevation-z8">
-                <!-- Id Column -->
+                <!-- # Column -->
                 <ng-container matColumnDef="No">
                   <mat-header-cell *matHeaderCellDef>№ п/п</mat-header-cell>
                   <mat-cell *matCellDef="let i = index"> {{i + 1}} </mat-cell>
@@ -38,42 +38,3 @@
     </div>
   </div>
 </div>
-
-<!--<div class="content">-->
-<!--  <div class="container-fluid">-->
-<!--    <div class="row">-->
-<!--      <div class="col-md-12">-->
-<!--        <div class="card">-->
-<!--          <div class="card-header card-header-primary">-->
-<!--            <h4 class="card-title ">Бренды</h4>-->
-<!--          </div>-->
-<!--          <div class="card-body">-->
-<!--            <div class="table-responsive">-->
-<!--              <table class="table">-->
-<!--                <thead class=" text-primary">-->
-<!--                <th>-->
-<!--                  №-->
-<!--                </th>-->
-<!--                <th>-->
-<!--                  Название-->
-<!--                </th>-->
-<!--                <th>-->
-<!--                  Аббревиатура-->
-<!--                </th>-->
-<!--                </thead>-->
-<!--                <tbody>-->
-<!--                <tr *ngFor="let brand of brands | async; let i = index">-->
-<!--                  <td>{{i + 1}}</td>-->
-<!--                  <td>{{brand.name}}</td>-->
-<!--                  <td>{{brand.abbr}}</td>-->
-<!--                 </tr>-->
-<!--                </tbody>-->
-<!--              </table>-->
-<!--            </div>-->
-<!--          </div>-->
-<!--        </div>-->
-<!--      </div>-->
-<!--    </div>-->
-<!--  </div>-->
-<!--</div>-->
-

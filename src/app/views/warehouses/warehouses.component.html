@@ -9,22 +9,22 @@
           </div>
           <div class="card-body">
             <div class="table-responsive">
-              <mat-table [dataSource]="warehouses" class="mat-elevation-z8">
-                <!-- Id Column -->
+              <mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+                <!-- # Column -->
                 <ng-container matColumnDef="No">
-                  <mat-header-cell *matHeaderCellDef> No. </mat-header-cell>
-                  <mat-cell *matCellDef="let element"> {{element.id}} </mat-cell>
+                  <mat-header-cell *matHeaderCellDef>№ п/п</mat-header-cell>
+                  <mat-cell *matCellDef="let i = index"> {{i + 1}} </mat-cell>
                 </ng-container>
 
                 <!-- Warehouse name Column -->
                 <ng-container matColumnDef="name">
-                  <mat-header-cell *matHeaderCellDef> Наименование </mat-header-cell>
+                  <mat-header-cell *matHeaderCellDef> Наименование</mat-header-cell>
                   <mat-cell *matCellDef="let element"> {{element.name}} </mat-cell>
                 </ng-container>
 
                 <!--Abbr Column -->
                 <ng-container matColumnDef="abbr">
-                  <mat-header-cell *matHeaderCellDef> Аббревиатура </mat-header-cell>
+                  <mat-header-cell *matHeaderCellDef> Аббревиатура</mat-header-cell>
                   <mat-cell *matCellDef="let element"> {{element.abbr}} </mat-cell>
                 </ng-container>
 

@@ -18,7 +18,6 @@ export class UsersComponent implements OnInit {
   displayedColumns: string[] = ['No', 'username', 'fullname', 'email', 'phone', 'brands', 'roles'];
   dataSource = new MatTableDataSource<User>();
   dialogConfig = new MatDialogConfig();
-  private username: string;
 
   constructor(private userService: UserService,
               private authService: AuthService,
@@ -28,7 +27,8 @@ export class UsersComponent implements OnInit {
   ngOnInit(): void {
     this.dialogConfig.disableClose = true;
     this.dialogConfig.autoFocus = true;
-    this.username = this.authService.getUserName();
+    this.dataSource.filterPredicate = (user, filter: string): boolean => (user.username !== filter);
+    this.dataSource.filter = this.authService.getUserName();
     this.reloadData();
   }
 
@@ -37,20 +37,19 @@ export class UsersComponent implements OnInit {
     const dialogRef = this.dialog.open(EditUserDialogComponent, this.dialogConfig);
     dialogRef.afterClosed().subscribe(user => {
       if (user) {
-        this.userService.add(user).subscribe(onloadeddata => this.reloadData(), error => this.reloadData());
+        this.userService.add(user).subscribe(() => this.reloadData(), error => this.reloadData());
       }
     });
   }
 
   editUser(row): void {
     this.dialogConfig.data = row;
-    const editedId = row.id;
     const dialogRef = this.dialog.open(EditUserDialogComponent, this.dialogConfig);
     dialogRef.afterClosed().subscribe(user => {
       if (user) {
         if (typeof user === 'string') {
           if (user === 'delete') {
-            this.userService.delete(editedId).subscribe(() => this.reloadData(), error => this.reloadData());
+            this.userService.delete(row.id).subscribe(() => this.reloadData(), error => this.reloadData());
           }
         } else {
           this.userService.update(user.id, user).subscribe(() => this.reloadData(), error => this.reloadData());
@@ -61,15 +60,8 @@ export class UsersComponent implements OnInit {
 
   reloadData(): void {
     this.userService.refresh().subscribe(onloadeddata => {
-      this.dataSource = new MatTableDataSource(onloadeddata);
-      // just not allow user to edit himself, he may do it in a "Profile" section
-      this.dataSource.filterPredicate = (user, filter: string): boolean => (user.username !== filter);
-      this.dataSource.filter = this.username;
+      this.dataSource.data = onloadeddata;  // this forces mat-table to refresh data
     });
-    // .subscribe(onloadeddata => {
-    //   this.users = onloadeddata;
-    //   this.dataSource.data = this.users;  // this forces mat-table to refresh data
-    // });
   }
 
   getFormattedRoles(roles: Role[]): string {

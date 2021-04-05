@@ -1,7 +1,8 @@
 import {Component, OnInit} from '@angular/core';
 import {Shop} from '../../model/Shop';
 import {ShopService} from '../../services/dao/impl/ShopService';
-import {MatDialog} from '@angular/material/dialog';
+import {MatDialog, MatDialogConfig} from '@angular/material/dialog';
+import {MatTableDataSource} from '@angular/material/table';
 import {EditShopDialogComponent} from '../../dialogs/edit-shop-dialog/edit-shop-dialog.component';
 
 @Component({
@@ -12,40 +13,37 @@ import {EditShopDialogComponent} from '../../dialogs/edit-shop-dialog/edit-shop-
 export class ShopsComponent implements OnInit {
 
   displayedColumns: string[] = ['No', 'name', 'abbr', 'brand'];
-  shops: Shop[];
-  private selectedRow: null;
-  private newShop: Shop;
+  dataSource = new MatTableDataSource<Shop>();
+  dialogConfig = new MatDialogConfig();
 
   constructor(private shopService: ShopService,
               private dialog: MatDialog) {
   }
 
   ngOnInit(): void {
-    this.shopService.findAll().subscribe(onloadeddata => {
-      this.shops = onloadeddata;
-    });
+    this.dialogConfig.disableClose = true;
+    this.dialogConfig.autoFocus = true;
+    this.reloadData();
   }
 
   addShop(): void {
-    this.newShop = new Shop(null, '', '', null);
-    const dialogRef = this.dialog.open(EditShopDialogComponent, {data: this.newShop});
+    this.dialogConfig.data = new Shop(null, '', '', null);
+    const dialogRef = this.dialog.open(EditShopDialogComponent, this.dialogConfig);
     dialogRef.afterClosed().subscribe(shop => {
       if (shop) {
-        this.shopService.add(shop).subscribe(onloadeddata => this.reloadData(), error => this.reloadData());
+        this.shopService.add(shop).subscribe(() => this.reloadData(), error => this.reloadData());
       }
     });
   }
 
   editShop(row): void {
-    console.log(row);
-    this.selectedRow = row;
-    const editedId = row.id;
-    const dialogRef = this.dialog.open(EditShopDialogComponent, {data: this.selectedRow});
+    this.dialogConfig.data = row;
+    const dialogRef = this.dialog.open(EditShopDialogComponent, this.dialogConfig);
     dialogRef.afterClosed().subscribe(shop => {
       if (shop) {
         if (typeof shop === 'string') {
           if (shop === 'delete') {
-            this.shopService.delete(editedId).subscribe(() => this.reloadData(), error => this.reloadData());
+            this.shopService.delete(row.id).subscribe(() => this.reloadData(), error => this.reloadData());
           }
         } else {
           this.shopService.update(shop.id, shop).subscribe(() => this.reloadData(), error => this.reloadData());
@@ -56,7 +54,7 @@ export class ShopsComponent implements OnInit {
 
   reloadData(): void {
     this.shopService.refresh().subscribe(onloadeddata => {
-      this.shops = onloadeddata;
+      this.dataSource.data = onloadeddata;  // this forces mat-table to refresh data
     });
   }
 

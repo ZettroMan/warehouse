@@ -1,6 +1,8 @@
 import {Component, Inject, OnInit} from '@angular/core';
-import {MAT_DIALOG_DATA} from '@angular/material/dialog';
+import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
 import {Warehouse} from '../../model/Warehouse';
+import {DialogService} from '../../services/dialog.service';
+import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 
 @Component({
   selector: 'app-edit-warehouse-dialog',
@@ -9,13 +11,36 @@ import {Warehouse} from '../../model/Warehouse';
 })
 export class EditWarehouseDialogComponent implements OnInit {
 
-  warehouse: Warehouse;
+  form: FormGroup;
 
-  constructor(@Inject(MAT_DIALOG_DATA) public data: any) {
+  constructor(@Inject(MAT_DIALOG_DATA) public warehouse: Warehouse,
+              private dialogRef: MatDialogRef<EditWarehouseDialogComponent>,
+              private dialogService: DialogService,
+              private fb: FormBuilder) {
+    this.form = fb.group({
+      id: [warehouse.id],
+      name: [warehouse.name, Validators.required],
+      abbr: [warehouse.abbr],
+    });
   }
 
   ngOnInit(): void {
-    this.warehouse = new Warehouse(this.data.id, this.data.name, this.data.abbr);
   }
 
+  save(): void {
+    this.dialogRef.close(this.form.value);
+  }
+
+  close(): void {
+    this.dialogRef.close();
+  }
+
+  delete(): void {
+    this.dialogService.openConfirmDialog('Удалить склад ' + this.warehouse.name + '?')
+      .afterClosed().subscribe(res => {
+      if (res) {
+        this.dialogRef.close('delete');
+      }
+    });
+  }
 }

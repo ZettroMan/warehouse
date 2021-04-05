@@ -7,7 +7,7 @@
     <mat-error *ngIf="form.controls['username'].errors?.required">Укажите логин пользователя</mat-error>
   </mat-form-field>
 
-  <mat-form-field [hidden]="data.id != null">
+  <mat-form-field [hidden]="user.id != null">
     <mat-label>Пароль</mat-label>
     <input matInput type="password" formControlName="password">
   </mat-form-field>
@@ -44,11 +44,17 @@
 
 </mat-dialog-content>
 <mat-dialog-actions>
-  <div class="col-8 text-left align-self-top">
-    <button mat-raised-button (click)="save()" [disabled]="form.invalid">Сохранить</button>
-    <button mat-raised-button (click)="close()">Отмена</button>
-  </div>
-  <div class="col-4 text-right align-self-top">
-    <button mat-raised-button (click)="delete()" color="warn">Удалить</button>
+  <div class="container">
+    <div class="row">
+      <div class="col-sm">
+        <button mat-raised-button (click)="save()" color="primary" [disabled]="form.invalid">Сохранить</button>
+      </div>
+      <div class="col-sm">
+        <button mat-raised-button (click)="close()">Отмена</button>
+      </div>
+      <div class="col-sm">
+        <button mat-raised-button (click)="delete()" [hidden]="user.id == null" color="warn">Удалить</button>
+      </div>
+    </div>
   </div>
 </mat-dialog-actions>
