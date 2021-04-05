@@ -16,9 +16,9 @@ import {AuthService} from '../../security/auth.service';
 export class UsersComponent implements OnInit {
 
   displayedColumns: string[] = ['No', 'username', 'fullname', 'email', 'phone', 'brands', 'roles'];
-  users: User[];
-  dataSource: MatTableDataSource<User>;
+  dataSource = new MatTableDataSource<User>();
   dialogConfig = new MatDialogConfig();
+  private username: string;
 
   constructor(private userService: UserService,
               private authService: AuthService,
@@ -26,15 +26,10 @@ export class UsersComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.userService.findAll().subscribe(onloadeddata => {
-      this.users = onloadeddata;
-      this.dataSource = new MatTableDataSource(this.users);
-      // just not allow user to edit himself, he may do it in a "Profile" section
-      this.dataSource.filterPredicate = (user, filter: string): boolean => (user.username !== filter);
-      this.dataSource.filter = this.authService.getUserName();
-    });
     this.dialogConfig.disableClose = true;
     this.dialogConfig.autoFocus = true;
+    this.username = this.authService.getUserName();
+    this.reloadData();
   }
 
   addUser(): void {
@@ -66,9 +61,15 @@ export class UsersComponent implements OnInit {
 
   reloadData(): void {
     this.userService.refresh().subscribe(onloadeddata => {
-      this.users = onloadeddata;
-      this.dataSource.data = this.users;  // this forces mat-table to refresh data
+      this.dataSource = new MatTableDataSource(onloadeddata);
+      // just not allow user to edit himself, he may do it in a "Profile" section
+      this.dataSource.filterPredicate = (user, filter: string): boolean => (user.username !== filter);
+      this.dataSource.filter = this.username;
     });
+    // .subscribe(onloadeddata => {
+    //   this.users = onloadeddata;
+    //   this.dataSource.data = this.users;  // this forces mat-table to refresh data
+    // });
   }
 
   getFormattedRoles(roles: Role[]): string {

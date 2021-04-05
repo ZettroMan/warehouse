@@ -32,6 +32,10 @@ export class CommonService<T> {
     return this.httpClient.get<T[]>(this.url);
   }
 
+  refresh(): Observable<T[]> {
+    return this.findAll();
+  }
+
   update(id: number, t: T): Observable<T> {
     return this.httpClient.put<T>(this.url + '/' + id, t);
   }
