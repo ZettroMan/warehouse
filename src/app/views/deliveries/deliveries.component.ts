@@ -1,9 +1,12 @@
 import {Component, OnInit} from '@angular/core';
-import {Observable} from 'rxjs';
 import {Delivery} from '../../model/Delivery';
 import {DeliveryService} from '../../services/dao/impl/DeliveryService';
 import {MatTableDataSource} from '@angular/material/table';
 import {DeliveryDto} from '../../model/DeliveryDto';
+import {MatDialog, MatDialogConfig} from '@angular/material/dialog';
+import {User} from '../../model/User';
+import {UserService} from '../../services/dao/impl/UserService';
+import {EditDeliveryDialogComponent} from '../../dialogs/edit-delivery-dialog/edit-delivery-dialog.component';
 
 @Component({
   selector: 'app-deliveries',
@@ -12,25 +15,77 @@ import {DeliveryDto} from '../../model/DeliveryDto';
 })
 export class DeliveriesComponent implements OnInit {
 
-  deliveries: Observable<Delivery[]>;
-  displayedColumns: string[];
-  dataSource: MatTableDataSource<any[]>;
+  displayedColumns: string[] = ['No', 'id', 'date', 'time', 'car', 'driver', 'brand', 'order',
+    'type', 'sender', 'comment', 'shop', 'places', 'torg', 'invoice', 'warehouse'];
+  dataSource = new MatTableDataSource<Delivery>();
+  dialogConfig = new MatDialogConfig();
+  private currentUser: User;
+  displayedColumns2: string[];
+
+// ----------------------------
   dataToSend: DeliveryDto[];
   stringRows: string[];
 
-  constructor(private deliveryService: DeliveryService) {}
+// ----------------------------
+
+  constructor(private deliveryService: DeliveryService,
+              private userService: UserService,
+              private dialog: MatDialog) {
+  }
 
   ngOnInit(): void {
+    this.dialogConfig.disableClose = true;
+    this.dialogConfig.autoFocus = true;
+    this.dialogConfig.width = '60%';
+    this.dialogConfig.height = 'auto';
+
+    this.userService.findAll().toPromise().then(() => {this.currentUser = this.userService.getCurrentUser(); });
+    this.currentUser = this.userService.getCurrentUser();
+    this.deliveryService.findAll().subscribe(deliveries => {
+      // console.log(deliveries);
+      this.dataSource.data = deliveries;  // this forces mat-table to refresh data
+    });
     const title = 'Дата прибытия на склад\tПлановое время прибытия на склад\tМарка и номер ТС\tФИО водителя, телефон\tБренд\tВЗ\t' +
       'Тип поставки\tПоставщик\tКомментарий\tМагазин\tКол-во мест\t№ Торг\t№ счет-фактуры';
-    this.displayedColumns = title.split('\t');
-    this.reloadData();
+    this.displayedColumns2 = title.split('\t');
   }
+
+  addDelivery(): void {
+    this.dialogConfig.data = new Delivery(null, new Date(), null, '', '',
+      null, '', null, '', '', null, '',
+      '', '', this.currentUser, null);
+    const dialogRef = this.dialog.open(EditDeliveryDialogComponent, this.dialogConfig);
+    dialogRef.afterClosed().subscribe(delivery => {
+      if (delivery) {
+        this.deliveryService.add(delivery).subscribe(() => this.reloadData(), error => this.reloadData());
+      }
+    });
+  }
+
+  editDelivery(row): void {
+    this.dialogConfig.data = row;
+    const dialogRef = this.dialog.open(EditDeliveryDialogComponent, this.dialogConfig);
+    dialogRef.afterClosed().subscribe(delivery => {
+      if (delivery) {
+        if (typeof delivery === 'string') {
+          if (delivery === 'delete') {
+            this.deliveryService.delete(row.id).subscribe(() => this.reloadData(), error => this.reloadData());
+          }
+        } else {
+          this.deliveryService.update(delivery.id, delivery).subscribe(() => this.reloadData(), error => this.reloadData());
+        }
+      }
+    });
+  }
+
 
   private reloadData(): void {
-    this.deliveries = this.deliveryService.findAll();
+    this.deliveryService.refresh().subscribe(deliveries => {
+      this.dataSource.data = deliveries;  // this forces mat-table to refresh data
+    });
   }
 
+  // ---------------------------------------------------------
   data(event: ClipboardEvent): void {
     this.stringRows = [];
     const clipboardData = event.clipboardData;

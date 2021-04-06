@@ -2,6 +2,7 @@
 @import "assets/css/material-dashboard.css";
 @import '~@angular/material/prebuilt-themes/deeppurple-amber.css';
 
+
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 
@@ -20,6 +21,15 @@ mat-footer-row mat-footer-cell{
   font-style: italic;
 }
 
+.mat-header-cell {
+  color: #4d0744 !important;
+  font-size: 1rem !important;
+}
+
+.mat-cell {
+  font-size: 0.9rem !important;
+}
+
 .card {
   font-size: .8rem !important;
   line-height: 1em;
@@ -31,6 +41,15 @@ mat-footer-row mat-footer-cell{
 
 .card-header-primary {
   padding: 8px 16px !important;
+}
+
+.controls-container{
+  width: 100%;
+  padding: 5%;
+}
+
+.controls-container > * {
+  width: 100%;
 }
 
 /* This styles are from To-Do */

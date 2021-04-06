@@ -1,4 +1,26 @@
-tbody tr:hover {
-  background: #bea5c1; /* Цвет фона при наведении */
-  cursor: pointer;
+.mat-cell,
+.mat-header-cell {
+  display: flex;
+  justify-content: center;
+  padding: 0 5px;
+  font-size: 12px;
+  text-align: center;
+
+}
+
+.mat-header-cell {
+  color: #4d0744 !important;
+  font-size: 0.85rem !important;
+}
+
+.mat-cell {
+  font-size: 0.75rem !important;
+}
+
+.mat-column-No {
+  flex: 0 0 3% !important;
+}
+
+.mat-column-type {
+  flex: 0 0 9% !important;
 }

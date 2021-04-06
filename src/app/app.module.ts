@@ -33,6 +33,7 @@ import {AuthGuard} from './security/auth.guard';
 import {EditBrandDialogComponent} from './dialogs/edit-brand-dialog/edit-brand-dialog.component';
 import {EditWarehouseDialogComponent} from './dialogs/edit-warehouse-dialog/edit-warehouse-dialog.component';
 import {EditShopDialogComponent} from './dialogs/edit-shop-dialog/edit-shop-dialog.component';
+import {EditDeliveryDialogComponent} from './dialogs/edit-delivery-dialog/edit-delivery-dialog.component';
 import {MatConfirmDialogComponent} from './dialogs/mat-confirm-dialog/mat-confirm-dialog.component';
 
 const BACKEND_ROOT_URL = 'https://command-project-warehouse.herokuapp.com/api/v1';
@@ -54,6 +55,7 @@ registerLocaleData(localeRu);
     EditBrandDialogComponent,
     EditWarehouseDialogComponent,
     EditShopDialogComponent,
+    EditDeliveryDialogComponent,
     MatConfirmDialogComponent,
     LoginComponent
   ],
@@ -120,6 +122,7 @@ registerLocaleData(localeRu);
     EditBrandDialogComponent,
     EditWarehouseDialogComponent,
     EditShopDialogComponent,
+    EditDeliveryDialogComponent,
     MatConfirmDialogComponent
   ],
   bootstrap: [AppComponent]

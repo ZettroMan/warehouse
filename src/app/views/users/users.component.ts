@@ -29,7 +29,9 @@ export class UsersComponent implements OnInit {
     this.dialogConfig.autoFocus = true;
     this.dataSource.filterPredicate = (user, filter: string): boolean => (user.username !== filter);
     this.dataSource.filter = this.authService.getUserName();
-    this.reloadData();
+    this.userService.findAll().subscribe(users => {
+      this.dataSource.data = users;  // this forces mat-table to refresh data
+    });
   }
 
   addUser(): void {
@@ -59,8 +61,8 @@ export class UsersComponent implements OnInit {
   }
 
   reloadData(): void {
-    this.userService.refresh().subscribe(onloadeddata => {
-      this.dataSource.data = onloadeddata;  // this forces mat-table to refresh data
+    this.userService.refresh().subscribe(users => {
+      this.dataSource.data = users;  // this forces mat-table to refresh data
     });
   }
 

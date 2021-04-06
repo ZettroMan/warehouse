@@ -24,7 +24,9 @@ export class BrandsComponent implements OnInit {
     this.dialogConfig.disableClose = true;
     this.dialogConfig.autoFocus = true;
     this.dataSource = new MatTableDataSource<Brand>();
-    this.reloadData();
+    this.brandService.findAll().subscribe(brands => {
+      this.dataSource.data = brands;  // this forces mat-table to refresh data
+    });
   }
 
   addBrand(): void {

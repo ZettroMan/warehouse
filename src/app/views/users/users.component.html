@@ -53,20 +53,14 @@
                 </ng-container>
 
                 <ng-container matColumnDef="loading">
-                  <mat-footer-cell *matFooterCellDef colspan="7">
-                    Идет загрузка данных....
-                  </mat-footer-cell>
-                </ng-container>
-                <ng-container matColumnDef="noData">
-                  <mat-footer-cell *matFooterCellDef colspan="7">
-                    Данные отсутствуют.
+                  <mat-footer-cell *matFooterCellDef colspan="0">
+                    Данные загружаются....
                   </mat-footer-cell>
                 </ng-container>
 
                 <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
                 <mat-row (click)="editUser(row)" *matRowDef="let row; columns: displayedColumns;"></mat-row>
-                <mat-footer-row *matFooterRowDef="['loading']" [ngClass]="{'hide':dataSource!=null}"></mat-footer-row>
-                <mat-footer-row *matFooterRowDef="['noData']" [ngClass]="{'hide':!(dataSource!=null && dataSource.data.length==0)}"></mat-footer-row>
+                <mat-footer-row *matFooterRowDef="['loading']" [ngClass]="{'hide':dataSource!=null && dataSource.data.length!=0}"></mat-footer-row>
               </mat-table>
             </div>
           </div>

@@ -4,7 +4,7 @@ import {BrandSearchValues} from '../search/SearchObjects';
 import {Observable} from 'rxjs';
 import {BrandDao} from '../interface/BrandDao';
 import {Brand} from '../../../model/Brand';
-import {CommonService} from './CommonService';
+import {CommonCachedService} from './CommonCachedService';
 
 // глобальная переменная для хранения URL
 export const BRANDS_URL_TOKEN = new InjectionToken<string>('url');
@@ -13,7 +13,7 @@ export const BRANDS_URL_TOKEN = new InjectionToken<string>('url');
   providedIn: 'root'
 })
 
-export class BrandService extends CommonService<Brand> implements BrandDao {
+export class BrandService extends CommonCachedService<Brand> implements BrandDao {
 
   constructor(@Inject(BRANDS_URL_TOKEN) private baseUrl,
               private http: HttpClient // для выполнения HTTP запросов

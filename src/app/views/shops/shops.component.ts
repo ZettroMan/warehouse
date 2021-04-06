@@ -23,7 +23,9 @@ export class ShopsComponent implements OnInit {
   ngOnInit(): void {
     this.dialogConfig.disableClose = true;
     this.dialogConfig.autoFocus = true;
-    this.reloadData();
+    this.shopService.findAll().subscribe(shops => {
+      this.dataSource.data = shops;  // this forces mat-table to refresh data
+    });
   }
 
   addShop(): void {

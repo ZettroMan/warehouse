@@ -24,7 +24,9 @@ export class WarehousesComponent implements OnInit {
     this.dialogConfig.disableClose = true;
     this.dialogConfig.autoFocus = true;
     this.dataSource = new MatTableDataSource<Warehouse>();
-    this.reloadData();
+    this.warehouseService.findAll().subscribe(warehouses => {
+      this.dataSource.data = warehouses;  // this forces mat-table to refresh data
+    });
   }
 
   addWarehouse(): void {
