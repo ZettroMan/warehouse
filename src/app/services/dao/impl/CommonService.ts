@@ -17,6 +17,10 @@ export class CommonService<T> implements CommonDao<T> {
     this.url = url;
   }
 
+  addAll(obj: T[]): Observable<boolean> {
+    return this.httpClient.post<boolean>(this.url, obj);
+  }
+
   add(t: T): Observable<T> {
     return this.httpClient.post<T>(this.url, t);
   }
@@ -40,6 +44,4 @@ export class CommonService<T> implements CommonDao<T> {
   update(id: number, t: T): Observable<T> {
     return this.httpClient.put<T>(this.url + '/' + id, t);
   }
-
-
 }

@@ -10,6 +10,17 @@ import {EditDeliveryDialogComponent} from '../../dialogs/edit-delivery-dialog/ed
 import {DateAdapter} from '@angular/material/core';
 import {MatSort} from '@angular/material/sort';
 import {MatPaginator} from '@angular/material/paginator';
+import {DeliveryTypeService} from '../../services/dao/impl/DeliveryTypeService';
+import {DeliveryTimeService} from '../../services/dao/impl/DeliveryTimeService';
+import {WarehouseService} from '../../services/dao/impl/WarehouseService';
+import {ShopService} from '../../services/dao/impl/ShopService';
+import {BrandService} from '../../services/dao/impl/BrandService';
+import {DeliveryType} from '../../model/DeliveryType';
+import {DeliveryTime} from '../../model/DeliveryTime';
+import {Warehouse} from '../../model/Warehouse';
+import {Shop} from '../../model/Shop';
+import {Brand} from '../../model/Brand';
+import {NgForm} from '@angular/forms';
 
 @Component({
   selector: 'app-deliveries',
@@ -29,15 +40,27 @@ export class DeliveriesComponent implements OnInit {
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
 // ----------------------------
-  dataToSend: DeliveryDto[];
-  stringRows: string[];
-
+  pasteTableDisplayedColumns: string[] = ['deliveryDate', 'deliveryTime', 'carInfo', 'driverInfo', 'brand', 'orderNumber',
+    'deliveryType', 'sender', 'comment', 'shop', 'numberOfPlaces', 'torgNumber', 'invoice', 'warehouse'];
+  pasteTableDataSource = new MatTableDataSource<Delivery>();
+  todaysDate: any;
 // ----------------------------
+  allBrands: Brand[];
+  allShops: Shop[];
+  allWarehouses: Warehouse[];
+  allTimes: DeliveryTime[];
+  allTypes: DeliveryType[];
+
 
   constructor(private deliveryService: DeliveryService,
               private userService: UserService,
               private dialog: MatDialog,
-              private dateAdapter: DateAdapter<any>) {
+              private dateAdapter: DateAdapter<any>,
+              private brandService: BrandService,
+              private shopService: ShopService,
+              private warehouseService: WarehouseService,
+              private deliveryTimeService: DeliveryTimeService,
+              private deliveryTypeService: DeliveryTypeService) {
     this.dateAdapter.setLocale('ru-RU');
   }
 
@@ -86,9 +109,6 @@ export class DeliveriesComponent implements OnInit {
         });
       };
     });
-    const title = 'Дата прибытия на склад\tПлановое время прибытия на склад\tМарка и номер ТС\tФИО водителя, телефон\tБренд\tВЗ\t' +
-      'Тип поставки\tПоставщик\tКомментарий\tМагазин\tКол-во мест\t№ Торг\t№ счет-фактуры';
-    this.displayedColumns2 = title.split('\t');
   }
 
   addDelivery(): void {
@@ -128,65 +148,80 @@ export class DeliveriesComponent implements OnInit {
 
   // ---------------------------------------------------------
   data(event: ClipboardEvent): void {
-    this.stringRows = [];
     const clipboardData = event.clipboardData;
     const pastedText = clipboardData.getData('text');
     const rowData = pastedText.split('\n');
-    const data = [];
+    const dataObject = [];
 
     rowData.forEach(rd => {
-      const row = {};
-      this.displayedColumns.forEach((a, index) => {
-        row[a] = rd.split('\t')[index];
-      });
-      data.push(row);
+      if (rd !== '') {
+        const row = {};
+        this.pasteTableDisplayedColumns.forEach((a, index) => {
+          // Идекс =4 , это столбец с названием бренда (делаем так, чтобы можно было вводить бренд большими и мал. буквами
+          if (index === 4) {
+            row[a] = rd.toUpperCase().split('\t')[index];
+          } else {
+            row[a] = rd.split('\t')[index];
+          }
+        });
+        dataObject.push(row);
+      }
     });
-    this.stringRows = rowData;
-    //   this.dataSource = new MatTableDataSource(data);
+    this.pasteTableDataSource = new MatTableDataSource(dataObject);
+    console.log(this.pasteTableDataSource);
   }
 
-  sendDeliveriesEvent(): void {
-    console.log(this.tableToDeliveries(this.stringRows));
-    const delivery: Delivery[] = [];
-    // console.log(this.dataToSend.length);
-    // for (let i = 0; i < this.dataToSend.length; i++) {
-    //   delivery.push(this.dataToSend[i].buildDelivery(this.dataToSend[i]));
-    // }
-    console.log(delivery);
-    // this.deliveryService.add(delivery[0]);
-    //  this.dataSource = null;
-    this.reloadData();
-  }
-
-  tableToDeliveries(data: string[]): DeliveryDto[] {
-    this.dataToSend = [];
-    for (let i = 0; i < data.length - 1; i++) {
-      const delivery: DeliveryDto = new DeliveryDto();
-      // Разбиваем строковое значение даты по точкам и указываем значения явно в объект Date
-      const rowData = data[i].split('\t');
-      // const date: Date = new Date();
-      // // const partsOfDate = data[0].split('.');
-      // // date.setDate(Number(partsOfDate[0]));
-      // // date.setMonth(Number(partsOfDate[1]));
-      // // date.setFullYear(Number(partsOfDate[2]));
-      // console.log(date);
-      delivery.deliveryDate = rowData[0];
-      // Закончили с датой, заполняем остальные поля
-      delivery.deliveryTime = rowData[1];
-      delivery.carInfo = rowData[2];
-      delivery.driverInfo = rowData[3];
-      delivery.brand = rowData[4];
-      delivery.orderNumber = rowData[5];
-      delivery.deliveryType = rowData[6];
-      delivery.sender = rowData[7];
-      delivery.comment = rowData[8];
-      delivery.shop = rowData[9];
-      delivery.numberOfPlaces = rowData[10];
-      delivery.torgNumber = rowData[11];
-      delivery.invoice = rowData[12];
-      this.dataToSend.push(delivery);
+  send(form: NgForm): void {
+    if (form.valid) {
+      const deliveries: Delivery[] = this.tableToDeliveries(this.pasteTableDataSource);
+      console.log(deliveries);
+      this.deliveryService.addAll(deliveries).subscribe((data: boolean) => {
+        if (data) {
+          this.reloadData();
+        }
+        console.log(data);
+      }, error => this.reloadData());
     }
-    return this.dataToSend;
+  }
+
+  tableToDeliveries(table: MatTableDataSource<Delivery>): Delivery[] {
+    let delivery: Delivery;
+    const deliveriesToSend: Delivery[] = [];
+    for (let i = 0; i < table.data.length; i++) {
+      console.log('prepare to send data: ');
+      delivery = new Delivery(
+        null,
+        this.toDate(String(table.data[i].deliveryDate)),
+        table.data[i].deliveryTime,
+        table.data[i].carInfo,
+        table.data[i].driverInfo,
+        new Brand(null, '', String(table.data[i].brand)),
+        table.data[i].orderNumber,
+        new DeliveryType(null, String(table.data[i].deliveryType)),
+        table.data[i].sender,
+        table.data[i].comment,
+        new Shop(null, String(table.data[i].shop), '', null),
+        table.data[i].numberOfPlaces,
+        table.data[i].torgNumber,
+        table.data[i].invoice,
+        this.currentUser,
+        new Warehouse(null, String(table.data[i].warehouse), ''));
+      deliveriesToSend.push(delivery);
+    }
+    return deliveriesToSend;
+  }
+
+  toDate(stringDate: string): Date {
+    const dateParts = stringDate.split('.');
+    const date = new Date(Number(dateParts[2]), Number(dateParts[1]), Number(dateParts[0]));
+    return date;
+  }
+
+  compareFn(o1: any, o2: any): boolean {
+    if (o1 === null || o2 === null) {
+      return false;
+    }
+    return (o1.id === o2.id);
   }
 
   applyFilter(): void {
