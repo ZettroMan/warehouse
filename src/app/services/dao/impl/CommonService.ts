@@ -1,12 +1,13 @@
 import {Observable} from 'rxjs';
 import {HttpClient} from '@angular/common/http';
+import {CommonDao} from '../interface/CommonDao';
 
 // базовые методы доступа к данным, одинаковые для всех классов,
 // чтобы не нужно было дублировать весь этот код в каждом классе-сервисе
 
 // JSON формируется автоматически для параметров и результатов
 
-export class CommonService<T> {
+export class CommonService<T> implements CommonDao<T> {
 
   private readonly url: string;
 
@@ -20,8 +21,8 @@ export class CommonService<T> {
     return this.httpClient.post<T>(this.url, t);
   }
 
-  delete(id: number): Observable<string> {
-    return this.httpClient.delete<string>(this.url + '/' + id);
+  delete(id: number): Observable<boolean> {
+    return this.httpClient.delete<boolean>(this.url + '/' + id);
   }
 
   findById(id: number): Observable<T> {
@@ -30,6 +31,10 @@ export class CommonService<T> {
 
   findAll(): Observable<T[]> {
     return this.httpClient.get<T[]>(this.url);
+  }
+
+  refresh(): Observable<T[]> {
+    return this.findAll();
   }
 
   update(id: number, t: T): Observable<T> {

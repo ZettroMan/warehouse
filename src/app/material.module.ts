@@ -11,12 +11,15 @@ import {MatPaginatorModule} from '@angular/material/paginator';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatInputModule} from '@angular/material/input';
 import {MatSelectModule} from '@angular/material/select';
+import {MatGridListModule} from '@angular/material/grid-list';
+import {MatNativeDateModule} from '@angular/material/core';
+import {MatDatepickerModule} from '@angular/material/datepicker';
 
 const MaterialComponents = [
   MatButtonModule, MatIconModule, MatTableModule, MatSortModule,
   MatPaginatorModule, MatSidenavModule, MatToolbarModule,
   MatListModule, MatDialogModule, MatFormFieldModule, MatInputModule,
-  MatSelectModule
+  MatSelectModule, MatGridListModule, MatNativeDateModule, MatDatepickerModule
 ];
 
 @NgModule({

@@ -1,125 +1,166 @@
 <div class="content">
-  <div class="container-fluid">
+  <div class="search-div">
+    <button mat-raised-button (click)="addDelivery()" class="btn-secondary">
+      <mat-icon>add</mat-icon>Записаться
+    </button>
+    <mat-form-field class="search-form-field" floatLabel="never">
+      <input matInput [(ngModel)]="searchKey" (keyup)="applyFilter()" placeholder="Поиск" autocomplete="off">
+      <button mat-button matSuffix mat-icon-button aria-label="Clear" (click)="resetFilter()" *ngIf="searchKey">
+        <mat-icon>close</mat-icon>
+      </button>
+    </mat-form-field>
     <div class="row">
       <div class="col-md-12">
         <div class="card">
           <div class="card-header card-header-primary">
             <h4 class="card-title ">Поставки</h4>
-            <p class="card-category"></p>
           </div>
           <div class="card-body">
             <div class="table-responsive">
-              <table class="table">
-                <thead class=" text-primary">
-                <th>
-                  ID
-                </th>
-                <th>
-                  Дата
-                </th>
-                <th>
-                  Время
-                </th>
-                <th>
-                  Авто
-                </th>
-                <th>
-                  Водитель
-                </th>
-                <th>
-                  Бренд
-                </th>
-                <th>
-                  Номер заказа
-                </th>
-                <th>
-                  Тип поставки
-                </th>
-                <th>
-                  Отправитель
-                </th>
-                <th>
-                  Комментарий
-                </th>
-                <th>
-                  Магазин
-                </th>
-                <th>
-                  Кол-во мест
-                </th>
-                <th>
-                  Торг
-                </th>
-                <th>
-                  Счет-фактура
-                </th>
-                <th>
-                  Склад
-                </th>
-                </thead>
-                <tbody>
-                <tr *ngFor="let delivery of deliveries | async">
-                  <td>{{delivery.id}}</td>
-                  <td>{{delivery.deliveryDate}}</td>
-                  <td>{{delivery.deliveryTime.deliveryTime}}</td>
-                  <td>{{delivery.carInfo}}</td>
-                  <td>{{delivery.driverInfo}}</td>
-                  <td>{{delivery.brand.name}}</td>
-                  <td>{{delivery.orderNumber}}</td>
-                  <td>{{delivery.deliveryType.type}}</td>
-                  <td>{{delivery.sender}}</td>
-                  <td>{{delivery.comment}}</td>
-                  <td>{{delivery.shop.name}}</td>
-                  <td>{{delivery.numberOfPlaces}}</td>
-                  <td>{{delivery.torgNumber}}</td>
-                  <td>{{delivery.invoice}}</td>
-                  <td>{{delivery.warehouse.name}}</td>
-                </tr>
-                </tbody>
-              </table>
+              <mat-table [dataSource]="dataSource" class="mat-elevation-z8" matSort>
+                <!-- # Column -->
+                <ng-container matColumnDef="No">
+                  <mat-header-cell *matHeaderCellDef>№<br>п/п</mat-header-cell>
+                  <mat-cell *matCellDef="let i = index"> {{i + 1}}</mat-cell>
+                </ng-container>
+
+                <!-- Id Column -->
+                <ng-container matColumnDef="id">
+                  <mat-header-cell *matHeaderCellDef mat-sort-header>Номер<br>поставки</mat-header-cell>
+                  <mat-cell *matCellDef="let element"> {{element.id}}</mat-cell>
+                </ng-container>
+
+                <!-- Date Column -->
+                <ng-container matColumnDef="deliveryDate">
+                  <mat-header-cell *matHeaderCellDef mat-sort-header>Дата</mat-header-cell>
+                  <mat-cell *matCellDef="let element"> {{element.deliveryDate | date:'dd.MM.yyyy'}}</mat-cell>
+                </ng-container>
+
+                <!-- Time Column -->
+                <ng-container matColumnDef="deliveryTime">
+                  <mat-header-cell *matHeaderCellDef mat-sort-header>Время</mat-header-cell>
+                  <mat-cell *matCellDef="let element"> {{element.deliveryTime.deliveryTime}}</mat-cell>
+                </ng-container>
+
+                <!-- Car Info Column -->
+                <ng-container matColumnDef="carInfo">
+                  <mat-header-cell *matHeaderCellDef mat-sort-header>Авто</mat-header-cell>
+                  <mat-cell *matCellDef="let element"> {{element.carInfo}}</mat-cell>
+                </ng-container>
+
+                <!-- Driver Column -->
+                <ng-container matColumnDef="driverInfo">
+                  <mat-header-cell *matHeaderCellDef mat-sort-header>Водитель</mat-header-cell>
+                  <mat-cell *matCellDef="let element"> {{element.driverInfo}}</mat-cell>
+                </ng-container>
+
+                <!-- Brand Column -->
+                <ng-container matColumnDef="brand">
+                  <mat-header-cell *matHeaderCellDef mat-sort-header>Бренд</mat-header-cell>
+                  <mat-cell *matCellDef="let element"> {{element.brand.name}}</mat-cell>
+                </ng-container>
+
+                <!-- Order Column -->
+                <ng-container matColumnDef="orderNumber">
+                  <mat-header-cell *matHeaderCellDef mat-sort-header>Заказ</mat-header-cell>
+                  <mat-cell *matCellDef="let element"> {{element.orderNumber}}</mat-cell>
+                </ng-container>
+
+                <!-- Delivery Type Column -->
+                <ng-container matColumnDef="deliveryType">
+                  <mat-header-cell *matHeaderCellDef mat-sort-header>Тип<br>поставки</mat-header-cell>
+                  <mat-cell *matCellDef="let element"> {{element.deliveryType.type}}</mat-cell>
+                </ng-container>
+
+                <!-- Sender Column -->
+                <ng-container matColumnDef="sender">
+                  <mat-header-cell *matHeaderCellDef mat-sort-header>Отпра-<br>витель</mat-header-cell>
+                  <mat-cell *matCellDef="let element"> {{element.sender}}</mat-cell>
+                </ng-container>
+
+                <!-- Comment Column -->
+                <ng-container matColumnDef="comment">
+                  <mat-header-cell *matHeaderCellDef mat-sort-header>Коммен-<br>тарий</mat-header-cell>
+                  <mat-cell *matCellDef="let element"> {{element.comment}}</mat-cell>
+                </ng-container>
+
+                <!-- Shop Column -->
+                <ng-container matColumnDef="shop">
+                  <mat-header-cell *matHeaderCellDef mat-sort-header>Магазин</mat-header-cell>
+                  <mat-cell *matCellDef="let element"> {{element.shop.name}}</mat-cell>
+                </ng-container>
+
+                <!-- Places Column -->
+                <ng-container matColumnDef="numberOfPlaces">
+                  <mat-header-cell *matHeaderCellDef mat-sort-header>Кол-во<br>мест</mat-header-cell>
+                  <mat-cell *matCellDef="let element"> {{element.numberOfPlaces}}</mat-cell>
+                </ng-container>
+
+                <!-- Torg Column -->
+                <ng-container matColumnDef="torgNumber">
+                  <mat-header-cell *matHeaderCellDef mat-sort-header>Торг</mat-header-cell>
+                  <mat-cell *matCellDef="let element"> {{element.torgNumber}}</mat-cell>
+                </ng-container>
+
+                <!-- Invoice Column -->
+                <ng-container matColumnDef="invoice">
+                  <mat-header-cell *matHeaderCellDef mat-sort-header>Счет-фактура</mat-header-cell>
+                  <mat-cell *matCellDef="let element"> {{element.invoice}}</mat-cell>
+                </ng-container>
+
+                <!-- Warehouse Column -->
+                <ng-container matColumnDef="warehouse">
+                  <mat-header-cell *matHeaderCellDef mat-sort-header>Склад</mat-header-cell>
+                  <mat-cell *matCellDef="let element"> {{element.warehouse.name}}</mat-cell>
+                </ng-container>
+
+                <ng-container matColumnDef="loading">
+                  <mat-footer-cell *matFooterCellDef colspan="0">
+                    Данные загружаются....
+                  </mat-footer-cell>
+                </ng-container>
+
+                <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+                <mat-row (click)="editDelivery(row)" *matRowDef="let row; columns: displayedColumns;"></mat-row>
+                <mat-footer-row *matFooterRowDef="['loading']" [ngClass]="{'hide':dataSource!=null && dataSource.data.length!=0}"></mat-footer-row>
+              </mat-table>
+              <mat-paginator [pageSizeOptions]="[2, 3, 4, 5, 10]" [pageSize]="3" showFirstLastButtons ></mat-paginator>
             </div>
           </div>
         </div>
-      </div>
-    </div>
-  </div>
 
-  <div class="content">
-    <div class="container-fluid">
-      <div class="row">
-        <div class="col-md-12">
-          <div class="card">
+        <div class="card">
 
-            <div class="card-header card-header-primary" (paste)="data($event)">
-              <h4 class="card-title ">Нажмите левой кнопкой мыши на эту надпись и вставьте Вашу excel таблицу (ctrl + v)</h4>
-            </div>
+          <div class="card-header card-header-primary" (paste)="data($event)">
+            <h4 class="card-title ">Нажмите левой кнопкой мыши на эту надпись и вставьте Вашу excel таблицу (ctrl + v)</h4>
+          </div>
 
-            <div class="card-body">
-              <div class="table-responsive">
+          <div class="card-body">
+            <div class="table-responsive">
 
-                <table mat-table [dataSource]="dataSource" class="table">
-                  <ng-container *ngFor="let column of displayedColumns" [matColumnDef]="column">
-                    <th class=" text-primary" contenteditable="false" mat-header-cell
-                        *matHeaderCellDef><b>{{column}}</b></th>
-                    <td contenteditable="false" mat-cell *matCellDef="let element"> {{element[column]}} </td>
-                  </ng-container>
-                  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-                  <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-                </table>
+              <mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+                <ng-container *ngFor="let column of displayedColumns2" [matColumnDef]="column">
+                  <mat-header-cell class="text-primary" contenteditable="false"
+                                   *matHeaderCellDef><b>{{column}}</b></mat-header-cell>
+                  <mat-cell contenteditable="false" *matCellDef="let element"> {{element[column]}}</mat-cell>
+                </ng-container>
+                <mat-header-row *matHeaderRowDef="displayedColumns2"></mat-header-row>
+                <mat-row *matRowDef="let row; columns: displayedColumns2;"></mat-row>
+              </mat-table>
 
-                <div style="text-align:center">
-                  <button mat-flat-button color=”accent” (click)="sendDeliveriesEvent()">
-                    Подтвердить корректность данных и отправить
-                  </button>
-                </div>
-
+              <div style="text-align:center">
+                <button mat-flat-button color=”accent” (click)="sendDeliveriesEvent()">
+                  Подтвердить корректность данных и отправить
+                </button>
               </div>
+
             </div>
           </div>
         </div>
       </div>
 
     </div>
+
   </div>
 
 </div>

@@ -1,7 +1,9 @@
 import {Component, OnInit} from '@angular/core';
 import {Shop} from '../../model/Shop';
-import {Observable} from 'rxjs';
 import {ShopService} from '../../services/dao/impl/ShopService';
+import {MatDialog, MatDialogConfig} from '@angular/material/dialog';
+import {MatTableDataSource} from '@angular/material/table';
+import {EditShopDialogComponent} from '../../dialogs/edit-shop-dialog/edit-shop-dialog.component';
 
 @Component({
   selector: 'app-shops',
@@ -10,12 +12,52 @@ import {ShopService} from '../../services/dao/impl/ShopService';
 })
 export class ShopsComponent implements OnInit {
 
-  shops: Observable<Shop[]>;
+  displayedColumns: string[] = ['No', 'name', 'abbr', 'brand'];
+  dataSource = new MatTableDataSource<Shop>();
+  dialogConfig = new MatDialogConfig();
 
-  constructor(private shopService: ShopService) { }
+  constructor(private shopService: ShopService,
+              private dialog: MatDialog) {
+  }
 
   ngOnInit(): void {
-    this.shops = this.shopService.findAll();
+    this.dialogConfig.disableClose = true;
+    this.dialogConfig.autoFocus = true;
+    this.shopService.findAll().subscribe(shops => {
+      this.dataSource.data = shops;  // this forces mat-table to refresh data
+    });
+  }
+
+  addShop(): void {
+    this.dialogConfig.data = new Shop(null, '', '', null);
+    const dialogRef = this.dialog.open(EditShopDialogComponent, this.dialogConfig);
+    dialogRef.afterClosed().subscribe(shop => {
+      if (shop) {
+        this.shopService.add(shop).subscribe(() => this.reloadData(), error => this.reloadData());
+      }
+    });
+  }
+
+  editShop(row): void {
+    this.dialogConfig.data = row;
+    const dialogRef = this.dialog.open(EditShopDialogComponent, this.dialogConfig);
+    dialogRef.afterClosed().subscribe(shop => {
+      if (shop) {
+        if (typeof shop === 'string') {
+          if (shop === 'delete') {
+            this.shopService.delete(row.id).subscribe(() => this.reloadData(), error => this.reloadData());
+          }
+        } else {
+          this.shopService.update(shop.id, shop).subscribe(() => this.reloadData(), error => this.reloadData());
+        }
+      }
+    });
+  }
+
+  reloadData(): void {
+    this.shopService.refresh().subscribe(onloadeddata => {
+      this.dataSource.data = onloadeddata;  // this forces mat-table to refresh data
+    });
   }
 
 }

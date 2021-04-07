@@ -1,6 +1,6 @@
-
 <div class="content">
   <div class="container-fluid">
+    <button mat-raised-button (click)="addBrand()" color="primary">Добавить бренд</button>
     <div class="row">
       <div class="col-md-12">
         <div class="card">
@@ -9,26 +9,35 @@
           </div>
           <div class="card-body">
             <div class="table-responsive">
-              <table class="table">
-                <thead class=" text-primary">
-                <th>
-                  №
-                </th>
-                <th>
-                  Название
-                </th>
-                <th>
-                  Аббревиатура
-                </th>
-                </thead>
-                <tbody>
-                <tr *ngFor="let brand of brands | async; let i = index">
-                  <td>{{i + 1}}</td>
-                  <td>{{brand.name}}</td>
-                  <td>{{brand.abbr}}</td>
-                 </tr>
-                </tbody>
-              </table>
+              <mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+                <!-- # Column -->
+                <ng-container matColumnDef="No">
+                  <mat-header-cell *matHeaderCellDef>№ п/п</mat-header-cell>
+                  <mat-cell *matCellDef="let i = index"> {{i + 1}} </mat-cell>
+                </ng-container>
+
+                <!-- Brand name Column -->
+                <ng-container matColumnDef="name">
+                  <mat-header-cell *matHeaderCellDef> Наименование</mat-header-cell>
+                  <mat-cell *matCellDef="let element"> {{element.name}} </mat-cell>
+                </ng-container>
+
+                <!--Abbr Column -->
+                <ng-container matColumnDef="abbr">
+                  <mat-header-cell *matHeaderCellDef> Аббревиатура</mat-header-cell>
+                  <mat-cell *matCellDef="let element"> {{element.abbr}} </mat-cell>
+                </ng-container>
+
+                <ng-container matColumnDef="loading">
+                  <mat-footer-cell *matFooterCellDef colspan="0">
+                    Данные загружаются....
+                  </mat-footer-cell>
+                </ng-container>
+
+                <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+                <mat-row (click)="editBrand(row)" *matRowDef="let row; columns: displayedColumns;"></mat-row>
+                <mat-footer-row *matFooterRowDef="['loading']" [ngClass]="{'hide':dataSource!=null && dataSource.data.length!=0}"></mat-footer-row>
+              </mat-table>
             </div>
           </div>
         </div>
@@ -36,4 +45,3 @@
     </div>
   </div>
 </div>
-
