@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, ViewChild} from '@angular/core';
 import {Delivery} from '../../model/Delivery';
 import {DeliveryService} from '../../services/dao/impl/DeliveryService';
 import {MatTableDataSource} from '@angular/material/table';
@@ -7,6 +7,9 @@ import {MatDialog, MatDialogConfig} from '@angular/material/dialog';
 import {User} from '../../model/User';
 import {UserService} from '../../services/dao/impl/UserService';
 import {EditDeliveryDialogComponent} from '../../dialogs/edit-delivery-dialog/edit-delivery-dialog.component';
+import {DateAdapter} from '@angular/material/core';
+import {MatSort} from '@angular/material/sort';
+import {MatPaginator} from '@angular/material/paginator';
 
 @Component({
   selector: 'app-deliveries',
@@ -15,12 +18,15 @@ import {EditDeliveryDialogComponent} from '../../dialogs/edit-delivery-dialog/ed
 })
 export class DeliveriesComponent implements OnInit {
 
-  displayedColumns: string[] = ['No', 'id', 'date', 'time', 'car', 'driver', 'brand', 'order',
-    'type', 'sender', 'comment', 'shop', 'places', 'torg', 'invoice', 'warehouse'];
+  displayedColumns: string[] = ['No', 'id', 'deliveryDate', 'deliveryTime', 'carInfo', 'driverInfo', 'brand', 'orderNumber',
+    'deliveryType', 'sender', 'comment', 'shop', 'numberOfPlaces', 'torgNumber', 'invoice', 'warehouse'];
   dataSource = new MatTableDataSource<Delivery>();
   dialogConfig = new MatDialogConfig();
   private currentUser: User;
   displayedColumns2: string[];
+  searchKey = '';
+  @ViewChild(MatSort) sort: MatSort;
+  @ViewChild(MatPaginator) paginator: MatPaginator;
 
 // ----------------------------
   dataToSend: DeliveryDto[];
@@ -30,7 +36,9 @@ export class DeliveriesComponent implements OnInit {
 
   constructor(private deliveryService: DeliveryService,
               private userService: UserService,
-              private dialog: MatDialog) {
+              private dialog: MatDialog,
+              private dateAdapter: DateAdapter<any>) {
+    this.dateAdapter.setLocale('ru-RU');
   }
 
   ngOnInit(): void {
@@ -39,11 +47,44 @@ export class DeliveriesComponent implements OnInit {
     this.dialogConfig.width = '60%';
     this.dialogConfig.height = 'auto';
 
-    this.userService.findAll().toPromise().then(() => {this.currentUser = this.userService.getCurrentUser(); });
-    this.currentUser = this.userService.getCurrentUser();
+    this.userService.findAll().toPromise().then(() => {
+      this.currentUser = this.userService.getCurrentUser();
+    });
     this.deliveryService.findAll().subscribe(deliveries => {
       // console.log(deliveries);
       this.dataSource.data = deliveries;  // this forces mat-table to refresh data
+      this.dataSource.sortingDataAccessor = (item, property) => {
+        switch (property) {
+          case 'deliveryTime':
+            return item.deliveryTime.deliveryTime;
+          case 'brand':
+            return item.brand.name;
+          case 'deliveryType':
+            return item.deliveryType.type;
+          case 'shop':
+            return item.shop.name;
+          case 'warehouse':
+            return item.warehouse.name;
+          default:
+            return item[property];
+        }
+      };
+      this.dataSource.sort = this.sort;
+      this.dataSource.paginator = this.paginator;
+      this.paginator._intl.itemsPerPageLabel = 'Поставок на странице:';
+      this.dataSource.filterPredicate = (data, filter) => {
+        return this.displayedColumns.some(ele => {
+          console.log(ele);
+          if (ele === 'No') {
+            return false;
+          }
+          console.log(ele);
+          if (typeof data[ele] === 'string') {
+            return data[ele].toLowerCase().indexOf(filter) !== -1;
+          }
+          return false;
+        });
+      };
     });
     const title = 'Дата прибытия на склад\tПлановое время прибытия на склад\tМарка и номер ТС\tФИО водителя, телефон\tБренд\tВЗ\t' +
       'Тип поставки\tПоставщик\tКомментарий\tМагазин\tКол-во мест\t№ Торг\t№ счет-фактуры';
@@ -101,7 +142,7 @@ export class DeliveriesComponent implements OnInit {
       data.push(row);
     });
     this.stringRows = rowData;
-    this.dataSource = new MatTableDataSource(data);
+    //   this.dataSource = new MatTableDataSource(data);
   }
 
   sendDeliveriesEvent(): void {
@@ -113,7 +154,7 @@ export class DeliveriesComponent implements OnInit {
     // }
     console.log(delivery);
     // this.deliveryService.add(delivery[0]);
-    this.dataSource = null;
+    //  this.dataSource = null;
     this.reloadData();
   }
 
@@ -146,5 +187,14 @@ export class DeliveriesComponent implements OnInit {
       this.dataToSend.push(delivery);
     }
     return this.dataToSend;
+  }
+
+  applyFilter(): void {
+    this.dataSource.filter = this.searchKey.trim().toLocaleLowerCase();
+  }
+
+  resetFilter(): void {
+    this.searchKey = '';
+    this.applyFilter();
   }
 }

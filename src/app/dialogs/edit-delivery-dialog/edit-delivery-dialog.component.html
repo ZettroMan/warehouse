@@ -1,15 +1,14 @@
-<h2 mat-dialog-title [hidden]="delivery.id != null">Поставка № {{delivery.id}} </h2>
-<h2 mat-dialog-title [hidden]="delivery.user != null">Создана пользователем: {{delivery.user.username}} </h2>
+<h2 mat-dialog-title style="display: inline-block" [hidden]="delivery.id == null">Поставка № {{delivery.id}} </h2>
+<h3 mat-dialog-title style="display: inline-block; margin-left: 3rem" [hidden]="delivery.user == null">Создана пользователем: {{delivery.user.fullName}} </h3>
 <mat-dialog-content [formGroup]="form">
   <mat-grid-list cols="2">
     <mat-grid-tile>
       <div class="controls-container">
         <mat-form-field>
           <mat-label>Дата поставки</mat-label>
-          <input matInput formControlName="deliveryDate">
-<!--                 [matDatepicker]="picker">-->
-<!--          <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>-->
-<!--          <mat-datepicker #picker></mat-datepicker>-->
+          <input matInput formControlName="deliveryDate" [matDatepicker]="picker">
+          <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+          <mat-datepicker #picker></mat-datepicker>
         </mat-form-field>
 
         <mat-form-field>
@@ -85,7 +84,7 @@
         </mat-form-field>
 
         <mat-form-field>
-          <mat-label>Счет</mat-label>
+          <mat-label>Счет-фактура</mat-label>
           <input matInput formControlName="invoice">
         </mat-form-field>
 

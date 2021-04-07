@@ -15,7 +15,6 @@ import {DialogService} from '../../services/dialog.service';
 })
 export class EditUserDialogComponent implements OnInit {
 
-  password = '';
   allBrands: Brand[];
   allRoles: Role[];
   form: FormGroup;
@@ -29,7 +28,7 @@ export class EditUserDialogComponent implements OnInit {
     this.form = fb.group({
       id: [user.id],
       username: [user.username, Validators.required],
-      password: [this.password],
+      password: [user.password],
       fullName: [user.fullName],
       email: [user.email],
       phone: [user.phone],

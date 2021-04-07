@@ -35,10 +35,12 @@ export class UsersComponent implements OnInit {
   }
 
   addUser(): void {
-    this.dialogConfig.data = new User(null, '', '', '', '', [], []);
+    this.dialogConfig.data = new User(null, '', '', '', '', '', [], []);
     const dialogRef = this.dialog.open(EditUserDialogComponent, this.dialogConfig);
     dialogRef.afterClosed().subscribe(user => {
       if (user) {
+        console.log('Created');
+        console.log(user);
         this.userService.add(user).subscribe(() => this.reloadData(), error => this.reloadData());
       }
     });
@@ -54,6 +56,8 @@ export class UsersComponent implements OnInit {
             this.userService.delete(row.id).subscribe(() => this.reloadData(), error => this.reloadData());
           }
         } else {
+          console.log('Updated');
+          console.log(user);
           this.userService.update(user.id, user).subscribe(() => this.reloadData(), error => this.reloadData());
         }
       }
