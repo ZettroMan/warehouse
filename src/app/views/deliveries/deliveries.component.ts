@@ -51,7 +51,6 @@ export class DeliveriesComponent implements OnInit {
   allTimes: DeliveryTime[];
   allTypes: DeliveryType[];
 
-
   constructor(private deliveryService: DeliveryService,
               private userService: UserService,
               private dialog: MatDialog,
@@ -62,6 +61,7 @@ export class DeliveriesComponent implements OnInit {
               private deliveryTimeService: DeliveryTimeService,
               private deliveryTypeService: DeliveryTypeService) {
     this.dateAdapter.setLocale('ru-RU');
+    this.todaysDate = new Date();
   }
 
   ngOnInit(): void {
@@ -69,6 +69,12 @@ export class DeliveriesComponent implements OnInit {
     this.dialogConfig.autoFocus = true;
     this.dialogConfig.width = '60%';
     this.dialogConfig.height = 'auto';
+
+    this.brandService.findAll().subscribe(onloadeddata => this.allBrands = onloadeddata);
+    this.shopService.findAll().subscribe(onloadeddata => this.allShops = onloadeddata);
+    this.warehouseService.findAll().subscribe(onloadeddata => this.allWarehouses = onloadeddata);
+    this.deliveryTimeService.findAll().subscribe(onloadeddata => this.allTimes = onloadeddata);
+    this.deliveryTypeService.findAll().subscribe(onloadeddata => this.allTypes = onloadeddata);
 
     this.userService.findAll().toPromise().then(() => {
       this.currentUser = this.userService.getCurrentUser();
@@ -156,12 +162,22 @@ export class DeliveriesComponent implements OnInit {
     rowData.forEach(rd => {
       if (rd !== '') {
         const row = {};
-        this.pasteTableDisplayedColumns.forEach((a, index) => {
-          // Идекс =4 , это столбец с названием бренда (делаем так, чтобы можно было вводить бренд большими и мал. буквами
-          if (index === 4) {
-            row[a] = rd.toUpperCase().split('\t')[index];
+        this.pasteTableDisplayedColumns.forEach((str, index) => {
+          // Идекс =0 , это столбец с датой
+          if (index === 0) {
+            row[str] = this.toDate(rd.split('\t')[index]);
+          } else if (index === 1) {
+            row[str] = this.deliveryTimeService.toDeliveryTime(rd.split('\t')[index]);
+          } else if (index === 4) {
+            row[str] = this.brandService.toBrand(rd.split('\t')[index]);
+          } else if (index === 6) {
+            row[str] = this.deliveryTypeService.toDeliveryType(rd.split('\t')[index]);
+          } else if (index === 9) {
+            row[str] = this.shopService.toShop(rd.split('\t')[index]);
+          } else if (index === 13) {
+            row[str] = this.warehouseService.toWarehouse(rd.split('\t')[index]);
           } else {
-            row[a] = rd.split('\t')[index];
+            row[str] = rd.split('\t')[index];
           }
         });
         dataObject.push(row);
@@ -173,39 +189,33 @@ export class DeliveriesComponent implements OnInit {
 
   send(form: NgForm): void {
     if (form.valid) {
-      const deliveries: Delivery[] = this.tableToDeliveries(this.pasteTableDataSource);
-      console.log(deliveries);
-      this.deliveryService.addAll(deliveries).subscribe((data: boolean) => {
-        if (data) {
-          this.reloadData();
-        }
-        console.log(data);
-      }, error => this.reloadData());
+      this.deliveryService.addAll(this.tableToDeliveries(this.pasteTableDataSource)).subscribe(() => this.reloadData(), () => this.reloadData());
     }
+    this.pasteTableDataSource = null;
   }
 
   tableToDeliveries(table: MatTableDataSource<Delivery>): Delivery[] {
     let delivery: Delivery;
     const deliveriesToSend: Delivery[] = [];
     for (let i = 0; i < table.data.length; i++) {
-      console.log('prepare to send data: ');
+      // console.log('prepare to send data: ');
       delivery = new Delivery(
         null,
-        this.toDate(String(table.data[i].deliveryDate)),
+        table.data[i].deliveryDate,
         table.data[i].deliveryTime,
         table.data[i].carInfo,
         table.data[i].driverInfo,
-        new Brand(null, '', String(table.data[i].brand)),
+        table.data[i].brand,
         table.data[i].orderNumber,
-        new DeliveryType(null, String(table.data[i].deliveryType)),
+        table.data[i].deliveryType,
         table.data[i].sender,
         table.data[i].comment,
-        new Shop(null, String(table.data[i].shop), '', null),
+        table.data[i].shop,
         table.data[i].numberOfPlaces,
         table.data[i].torgNumber,
         table.data[i].invoice,
         this.currentUser,
-        new Warehouse(null, String(table.data[i].warehouse), ''));
+        table.data[i].warehouse);
       deliveriesToSend.push(delivery);
     }
     return deliveriesToSend;
@@ -213,15 +223,9 @@ export class DeliveriesComponent implements OnInit {
 
   toDate(stringDate: string): Date {
     const dateParts = stringDate.split('.');
-    const date = new Date(Number(dateParts[2]), Number(dateParts[1]), Number(dateParts[0]));
+    const date = new Date(Number(dateParts[2]), Number(dateParts[1]) - 1, Number(dateParts[0]));
+    // console.log(date);
     return date;
-  }
-
-  compareFn(o1: any, o2: any): boolean {
-    if (o1 === null || o2 === null) {
-      return false;
-    }
-    return (o1.id === o2.id);
   }
 
   applyFilter(): void {
@@ -231,5 +235,12 @@ export class DeliveriesComponent implements OnInit {
   resetFilter(): void {
     this.searchKey = '';
     this.applyFilter();
+  }
+
+  compareFn(o1: any, o2: any): boolean {
+    if (o1 === null || o2 === null) {
+      return false;
+    }
+    return (o1.id === o2.id);
   }
 }

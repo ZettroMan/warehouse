@@ -5,7 +5,6 @@
   padding: 0 5px;
   font-size: 12px;
   text-align: center;
-
 }
 
 .mat-header-cell {
@@ -22,5 +21,38 @@
 }
 
 .mat-column-type {
-  flex: 0 0 9% !important;
+  flex: 0 0 12% !important;
 }
+
+
+.myStyle {
+  min-width: 1450px;
+  overflow: auto;
+}
+
+.myStyleCP {
+  min-width: 1800px;
+  overflow: auto;
+}
+
+/*CopyPasteTable style here down*/
+
+.myCopyPasteField {
+  display: flex;
+  justify-content: center;
+  padding: 0 5px;
+  font-size: 11px;
+  text-align: center;
+}
+
+.mat-column-deliveryDate {
+  flex: 0 0 13% !important;
+}
+
+.mat-column-deliveryTime {
+  flex: 0 0 13% !important;
+}
+
+
+
+
