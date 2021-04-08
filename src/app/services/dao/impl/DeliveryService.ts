@@ -6,6 +6,7 @@ import {DeliveryDao} from '../interface/DeliveryDao';
 import {Delivery} from '../../../model/Delivery';
 import {DeliverySearchValues} from '../search/SearchObjects';
 import {Observable} from 'rxjs';
+import {User} from '../../../model/User';
 
 // глобальная переменная для хранения URL
 export const DELIVERIES_URL_TOKEN = new InjectionToken<string>('url');
@@ -26,5 +27,4 @@ export class DeliveryService extends CommonService<Delivery> implements Delivery
   findDeliveries(searchObj: DeliverySearchValues): Observable<any> { // из backend получаем тип Page, поэтому указываем any
     return this.http.post<any>(this.baseUrl + '/search', searchObj);
   }
-
 }

@@ -5,6 +5,7 @@ import {Observable} from 'rxjs';
 import {BrandDao} from '../interface/BrandDao';
 import {Brand} from '../../../model/Brand';
 import {CommonCachedService} from './CommonCachedService';
+import {DeliveryTime} from '../../../model/DeliveryTime';
 
 // глобальная переменная для хранения URL
 export const BRANDS_URL_TOKEN = new InjectionToken<string>('url');
@@ -24,6 +25,15 @@ export class BrandService extends CommonCachedService<Brand> implements BrandDao
   // поиск брендов по любым параметрам
   findBrands(searchObj: BrandSearchValues): Observable<any> { // из backend получаем тип Page, поэтому указываем any
     return this.http.post<any>(this.baseUrl + '/search', searchObj);
+  }
+
+  toBrand(text: string): Brand {
+    if (this.entities === null) { return null; }
+    const result = this.entities.filter(entity => entity.name === text);
+    if (result.length > 0) {
+      return result[0];
+    }
+    return null;
   }
 
 }

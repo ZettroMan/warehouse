@@ -35,6 +35,7 @@ import {EditWarehouseDialogComponent} from './dialogs/edit-warehouse-dialog/edit
 import {EditShopDialogComponent} from './dialogs/edit-shop-dialog/edit-shop-dialog.component';
 import {EditDeliveryDialogComponent} from './dialogs/edit-delivery-dialog/edit-delivery-dialog.component';
 import {MatConfirmDialogComponent} from './dialogs/mat-confirm-dialog/mat-confirm-dialog.component';
+import {MatCardModule} from '@angular/material/card';
 
 const BACKEND_ROOT_URL = 'https://command-project-warehouse.herokuapp.com/api/v1';
 // const BACKEND_ROOT_URL = 'http://localhost:8189/api/v1';
@@ -59,15 +60,16 @@ registerLocaleData(localeRu);
     MatConfirmDialogComponent,
     LoginComponent
   ],
-    imports: [
-        BrowserModule,
-        HttpClientModule,
-        BrowserAnimationsModule,
-        MaterialModule,
-        FormsModule,
-        AppRoutingModule,
-        ReactiveFormsModule
-    ],
+  imports: [
+    BrowserModule,
+    HttpClientModule,
+    BrowserAnimationsModule,
+    MaterialModule,
+    FormsModule,
+    AppRoutingModule,
+    ReactiveFormsModule,
+    MatCardModule
+  ],
   providers: [ AuthService, AuthGuard, BrandService, DeliveryService,
     DeliveryTimeService, DeliveryTypeService, RoleService, ShopService,
     UserService, WarehouseService,
