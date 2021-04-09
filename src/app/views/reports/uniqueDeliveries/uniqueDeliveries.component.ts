@@ -4,10 +4,10 @@ import {DateAdapter} from '@angular/material/core';
 
 @Component({
   selector: 'app-reports',
-  templateUrl: './reports.component.html',
-  styleUrls: ['./reports.component.css']
+  templateUrl: './uniqueDeliveries.component.html',
+  styleUrls: ['./uniqueDeliveries.component.css']
 })
-export class ReportsComponent implements OnInit {
+export class UniqueDeliveriesComponent implements OnInit {
   range = new FormGroup({
     start: new FormControl(),
     end: new FormControl()

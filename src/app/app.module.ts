@@ -9,7 +9,7 @@ import {BrandsComponent} from './views/brands/brands.component';
 import {WarehousesComponent} from './views/warehouses/warehouses.component';
 import {UsersComponent} from './views/users/users.component';
 import {DeliveriesComponent} from './views/deliveries/deliveries.component';
-import {ReportsComponent} from './views/reports/reports.component';
+import {UniqueDeliveriesComponent} from './views/reports/uniqueDeliveries/uniqueDeliveries.component';
 import {ProfileComponent} from './views/profile/profile.component';
 import {ShopsComponent} from './views/shops/shops.component';
 
@@ -50,7 +50,7 @@ registerLocaleData(localeRu);
     WarehousesComponent,
     UsersComponent,
     DeliveriesComponent,
-    ReportsComponent,
+    UniqueDeliveriesComponent,
     ProfileComponent,
     ShopsComponent,
     EditUserDialogComponent,
@@ -72,7 +72,7 @@ registerLocaleData(localeRu);
     ReactiveFormsModule,
     MatCardModule
   ],
-  providers: [AuthService, AuthGuard, BrandService, DeliveryService,
+  providers: [ AuthService, AuthGuard, BrandService, DeliveryService,
     DeliveryTimeService, DeliveryTypeService, RoleService, ShopService,
     UserService, WarehouseService,
     {
@@ -88,7 +88,7 @@ registerLocaleData(localeRu);
       provide: REGISTER_URL_TOKEN,
       useValue: BACKEND_ROOT_URL + '/register'
     },
-    {
+     {
       provide: DELIVERIES_URL_TOKEN,
       useValue: BACKEND_ROOT_URL + '/deliveries'
     },
