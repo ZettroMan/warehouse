@@ -26,8 +26,10 @@
     "@angular/router": "~11.2.5",
     "bootstrap": "^4.6.0",
     "compression": "^1.7.4",
+    "echarts": "^5.0.2",
     "express": "^4.17.1",
     "ng-sidebar": "^9.4.2",
+    "ngx-echarts": "^6.0.1",
     "rxjs": "~6.6.0",
     "tslib": "^2.0.0",
     "zone.js": "~0.11.3"

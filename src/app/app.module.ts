@@ -72,7 +72,7 @@ registerLocaleData(localeRu);
     ReactiveFormsModule,
     MatCardModule
   ],
-  providers: [ AuthService, AuthGuard, BrandService, DeliveryService,
+  providers: [AuthService, AuthGuard, BrandService, DeliveryService,
     DeliveryTimeService, DeliveryTypeService, RoleService, ShopService,
     UserService, WarehouseService,
     {
@@ -88,7 +88,7 @@ registerLocaleData(localeRu);
       provide: REGISTER_URL_TOKEN,
       useValue: BACKEND_ROOT_URL + '/register'
     },
-     {
+    {
       provide: DELIVERIES_URL_TOKEN,
       useValue: BACKEND_ROOT_URL + '/deliveries'
     },
