@@ -29,19 +29,18 @@
   </mat-form-field>
 
   <mat-form-field>
-    <mat-label>Бренды</mat-label>
-    <mat-select formControlName="brands" [compareWith]="compareFn" multiple>
-      <mat-option *ngFor="let brand of allBrands" [value]="brand">{{brand.abbr}}</mat-option>
-    </mat-select>
-  </mat-form-field>
-
-  <mat-form-field>
     <mat-label>Роли в системе</mat-label>
     <mat-select formControlName="roles" [compareWith]="compareFn" multiple>
       <mat-option *ngFor="let role of allRoles" [value]="role">{{role.role}}</mat-option>
     </mat-select>
   </mat-form-field>
 
+  <mat-form-field [hidden]="!isUserWithBrand()">
+    <mat-label>Бренды</mat-label>
+    <mat-select formControlName="brands" [compareWith]="compareFn" multiple>
+      <mat-option *ngFor="let brand of allBrands" [value]="brand">{{brand.name}}</mat-option>
+    </mat-select>
+  </mat-form-field>
 
 </mat-dialog-content>
 <mat-dialog-actions>

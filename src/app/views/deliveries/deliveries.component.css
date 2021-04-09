@@ -46,13 +46,15 @@
 }
 
 .mat-column-deliveryDate {
-  flex: 0 0 13% !important;
+  flex: 0 0 7% !important;
 }
 
 .mat-column-deliveryTime {
-  flex: 0 0 13% !important;
+  flex: 0 0 7% !important;
 }
 
-
+.mat-paginator {
+  margin-top: 0.9rem;
+}
 
 
