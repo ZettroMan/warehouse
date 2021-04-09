@@ -51,6 +51,9 @@ export class EditUserDialogComponent implements OnInit {
   }
 
   save(): void {
+    if (!this.isUserWithBrand()) {
+      this.form.value.brands = [];
+    }
     this.dialogRef.close(this.form.value);
   }
 
@@ -65,5 +68,12 @@ export class EditUserDialogComponent implements OnInit {
         this.dialogRef.close('delete');
       }
     });
+  }
+
+  isUserWithBrand(): boolean {
+    for (const role of this.form.value.roles) {
+      if (role.role === 'ROLE_ADMIN' || role.role === 'ROLE_BRAND_MANAGER') { return true; }
+    }
+    return false;
   }
 }

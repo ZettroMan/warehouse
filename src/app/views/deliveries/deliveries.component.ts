@@ -2,7 +2,6 @@ import {Component, OnInit, ViewChild} from '@angular/core';
 import {Delivery} from '../../model/Delivery';
 import {DeliveryService} from '../../services/dao/impl/DeliveryService';
 import {MatTableDataSource} from '@angular/material/table';
-import {DeliveryDto} from '../../model/DeliveryDto';
 import {MatDialog, MatDialogConfig} from '@angular/material/dialog';
 import {User} from '../../model/User';
 import {UserService} from '../../services/dao/impl/UserService';
@@ -124,7 +123,7 @@ export class DeliveriesComponent implements OnInit {
     const dialogRef = this.dialog.open(EditDeliveryDialogComponent, this.dialogConfig);
     dialogRef.afterClosed().subscribe(delivery => {
       if (delivery) {
-        this.deliveryService.add(delivery).subscribe(() => this.reloadData(), error => this.reloadData());
+        this.deliveryService.add(delivery).subscribe(() => this.reloadData(), () => this.reloadData());
       }
     });
   }
@@ -136,10 +135,10 @@ export class DeliveriesComponent implements OnInit {
       if (delivery) {
         if (typeof delivery === 'string') {
           if (delivery === 'delete') {
-            this.deliveryService.delete(row.id).subscribe(() => this.reloadData(), error => this.reloadData());
+            this.deliveryService.delete(row.id).subscribe(() => this.reloadData(), () => this.reloadData());
           }
         } else {
-          this.deliveryService.update(delivery.id, delivery).subscribe(() => this.reloadData(), error => this.reloadData());
+          this.deliveryService.update(delivery.id, delivery).subscribe(() => this.reloadData(), () => this.reloadData());
         }
       }
     });
@@ -150,6 +149,11 @@ export class DeliveriesComponent implements OnInit {
     this.deliveryService.refresh().subscribe(deliveries => {
       this.dataSource.data = deliveries;  // this forces mat-table to refresh data
     });
+  }
+
+
+  loadToExcel(): void {
+      this.deliveryService.loadToExcel(this.dataSource.filteredData,  this.displayedColumns);
   }
 
   // ---------------------------------------------------------
@@ -163,7 +167,7 @@ export class DeliveriesComponent implements OnInit {
       if (rd !== '') {
         const row = {};
         this.pasteTableDisplayedColumns.forEach((str, index) => {
-          // Идекс =0 , это столбец с датой
+          // Индекс = 0 , это столбец с датой
           if (index === 0) {
             row[str] = this.toDate(rd.split('\t')[index]);
           } else if (index === 1) {
@@ -189,7 +193,8 @@ export class DeliveriesComponent implements OnInit {
 
   send(form: NgForm): void {
     if (form.valid) {
-      this.deliveryService.addAll(this.tableToDeliveries(this.pasteTableDataSource)).subscribe(() => this.reloadData(), () => this.reloadData());
+      this.deliveryService.addAll(this.tableToDeliveries(this.pasteTableDataSource))
+        .subscribe(() => this.reloadData(), () => this.reloadData());
     }
     this.pasteTableDataSource = null;
   }
@@ -197,25 +202,25 @@ export class DeliveriesComponent implements OnInit {
   tableToDeliveries(table: MatTableDataSource<Delivery>): Delivery[] {
     let delivery: Delivery;
     const deliveriesToSend: Delivery[] = [];
-    for (let i = 0; i < table.data.length; i++) {
+    for (const item of table.data) {
       // console.log('prepare to send data: ');
       delivery = new Delivery(
         null,
-        table.data[i].deliveryDate,
-        table.data[i].deliveryTime,
-        table.data[i].carInfo,
-        table.data[i].driverInfo,
-        table.data[i].brand,
-        table.data[i].orderNumber,
-        table.data[i].deliveryType,
-        table.data[i].sender,
-        table.data[i].comment,
-        table.data[i].shop,
-        table.data[i].numberOfPlaces,
-        table.data[i].torgNumber,
-        table.data[i].invoice,
+        item.deliveryDate,
+        item.deliveryTime,
+        item.carInfo,
+        item.driverInfo,
+        item.brand,
+        item.orderNumber,
+        item.deliveryType,
+        item.sender,
+        item.comment,
+        item.shop,
+        item.numberOfPlaces,
+        item.torgNumber,
+        item.invoice,
         this.currentUser,
-        table.data[i].warehouse);
+        item.warehouse);
       deliveriesToSend.push(delivery);
     }
     return deliveriesToSend;
@@ -243,4 +248,6 @@ export class DeliveriesComponent implements OnInit {
     }
     return (o1.id === o2.id);
   }
+
+
 }

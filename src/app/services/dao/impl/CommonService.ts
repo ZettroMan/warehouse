@@ -17,10 +17,6 @@ export class CommonService<T> implements CommonDao<T> {
     this.url = url;
   }
 
-  addAll(obj: T[]): Observable<boolean> {
-    return this.httpClient.post<boolean>('https://command-project-warehouse.herokuapp.com/api/v1/grouped-deliveries', obj);
-  }
-
   add(t: T): Observable<T> {
     return this.httpClient.post<T>(this.url, t);
   }

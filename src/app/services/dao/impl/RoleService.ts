@@ -19,4 +19,13 @@ export class RoleService extends CommonCachedService<Role> implements RoleDao {
     super(baseUrl, http);
   }
 
+  toRole(text: string): Role {
+    if (this.entities === null) { return null; }
+    const result = this.entities.filter(entity => entity.role === text);
+    if (result.length > 0) {
+      return result[0];
+    }
+    return null;
+  }
+
 }

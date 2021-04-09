@@ -20,6 +20,4 @@ export interface CommonDao<T> {
   // добавить значение
   add(obj: T): Observable<T>;
 
-  // добавить массив значений
-  addAll(obj: T[]): Observable<boolean>;
 }
