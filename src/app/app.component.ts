@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, EventEmitter, OnInit, Output} from '@angular/core';
 import {AuthService} from './security/auth.service';
 
 
@@ -9,6 +9,7 @@ import {AuthService} from './security/auth.service';
 })
 
 export class AppComponent implements OnInit {
+  @Output() sidenavClose = new EventEmitter();
 
   // тип устройства - на будущее
   isMobile: boolean;
@@ -26,6 +27,10 @@ export class AppComponent implements OnInit {
 
   ngOnInit(): void {
    }
+
+  public onSidenavClose = () => {
+    this.sidenavClose.emit();
+  }
 
   // getUserRole(): string {
   //   this.roles = this.tokenStorage.getAuthorities();

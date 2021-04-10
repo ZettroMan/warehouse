@@ -18,22 +18,41 @@
           <mat-icon matListIcon>storefront</mat-icon>
           <h3 matLine>Магазины</h3>
         </mat-list-item>
-        <mat-list-item *ngIf="_authService.isRouteEnabled('warehouses')" routerLink="/warehouses" routerLinkActive="active">
+        <mat-list-item *ngIf="_authService.isRouteEnabled('warehouses')" routerLink="/warehouses"
+                       routerLinkActive="active">
           <mat-icon matListIcon>store</mat-icon>
           <h3 matLine>Склады</h3>
         </mat-list-item>
-        <mat-list-item *ngIf="_authService.isRouteEnabled('deliveries')" routerLink="/deliveries" routerLinkActive="active">
-          <mat-icon matListIcon>local_shipping</mat-icon>
-          <h3 matLine>График поставок</h3>
+        <mat-list-item *ngIf="_authService.isRouteEnabled('add-deliveries')" routerLink="/add-deliveries"
+                       routerLinkActive="active">
+          <mat-icon matListIcon>add_box</mat-icon>
+          <h3 matLine>Создать приход</h3>
         </mat-list-item>
-        <mat-list-item *ngIf="_authService.isRouteEnabled('reports')" routerLink="/reports" routerLinkActive="active">
+        <mat-list-item *ngIf="_authService.isRouteEnabled('deliveries')" routerLink="/deliveries"
+                       routerLinkActive="active">
+          <mat-icon matListIcon>local_shipping</mat-icon>
+          <h3 matLine>График приходов</h3>
+        </mat-list-item>
+        <mat-list-item *ngIf="_authService.isRouteEnabled('reports')" [matMenuTriggerFor]="report"
+                       routerLinkActive="active">
           <mat-icon matListIcon>content_paste</mat-icon>
           <h3 matLine>Отчеты</h3>
         </mat-list-item>
+        <mat-menu #report="matMenu">
+          <button class="my-menu-button" mat-menu-item routerLink="/reports" (click)="onSidenavClose()">
+            <p class="mat-menu-item-submenu-trigger my-sub-menu">
+            Отчёт по уникальным поставкам
+          </p></button>
+          <button class="my-menu-button" mat-menu-item routerLink="/reports" (click)="onSidenavClose()">
+            <p class="mat-menu-item-submenu-trigger my-sub-menu">
+            Отчёт на будущее...
+            </p></button>
+        </mat-menu>
         <mat-list-item *ngIf="_authService.isRouteEnabled('profile')" routerLink="/profile" routerLinkActive="active">
           <mat-icon matListIcon>person</mat-icon>
           <h3 matLine>Мой профиль</h3>
         </mat-list-item>
+<!--        add_box-->
         <mat-list-item routerLink="/login" routerLinkActive="active">
           <mat-icon matListIcon>person</mat-icon>
           <h3 matLine>Выход</h3>

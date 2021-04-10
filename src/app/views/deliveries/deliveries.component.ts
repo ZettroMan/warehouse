@@ -39,26 +39,15 @@ export class DeliveriesComponent implements OnInit {
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
 // ----------------------------
-  pasteTableDisplayedColumns: string[] = ['deliveryDate', 'deliveryTime', 'carInfo', 'driverInfo', 'brand', 'orderNumber',
-    'deliveryType', 'sender', 'comment', 'shop', 'numberOfPlaces', 'torgNumber', 'invoice', 'warehouse'];
-  pasteTableDataSource = new MatTableDataSource<Delivery>();
   todaysDate: any;
+
 // ----------------------------
-  allBrands: Brand[];
-  allShops: Shop[];
-  allWarehouses: Warehouse[];
-  allTimes: DeliveryTime[];
-  allTypes: DeliveryType[];
+
 
   constructor(private deliveryService: DeliveryService,
               private userService: UserService,
               private dialog: MatDialog,
-              private dateAdapter: DateAdapter<any>,
-              private brandService: BrandService,
-              private shopService: ShopService,
-              private warehouseService: WarehouseService,
-              private deliveryTimeService: DeliveryTimeService,
-              private deliveryTypeService: DeliveryTypeService) {
+              private dateAdapter: DateAdapter<any>) {
     this.dateAdapter.setLocale('ru-RU');
     this.todaysDate = new Date();
   }
@@ -68,12 +57,6 @@ export class DeliveriesComponent implements OnInit {
     this.dialogConfig.autoFocus = true;
     this.dialogConfig.width = '60%';
     this.dialogConfig.height = 'auto';
-
-    this.brandService.findAll().subscribe(onloadeddata => this.allBrands = onloadeddata);
-    this.shopService.findAll().subscribe(onloadeddata => this.allShops = onloadeddata);
-    this.warehouseService.findAll().subscribe(onloadeddata => this.allWarehouses = onloadeddata);
-    this.deliveryTimeService.findAll().subscribe(onloadeddata => this.allTimes = onloadeddata);
-    this.deliveryTypeService.findAll().subscribe(onloadeddata => this.allTypes = onloadeddata);
 
     this.userService.findAll().toPromise().then(() => {
       this.currentUser = this.userService.getCurrentUser();
@@ -144,93 +127,14 @@ export class DeliveriesComponent implements OnInit {
     });
   }
 
-
   private reloadData(): void {
     this.deliveryService.refresh().subscribe(deliveries => {
       this.dataSource.data = deliveries;  // this forces mat-table to refresh data
     });
   }
 
-
   loadToExcel(): void {
-      this.deliveryService.loadToExcel(this.dataSource.filteredData,  this.displayedColumns);
-  }
-
-  // ---------------------------------------------------------
-  data(event: ClipboardEvent): void {
-    const clipboardData = event.clipboardData;
-    const pastedText = clipboardData.getData('text');
-    const rowData = pastedText.split('\n');
-    const dataObject = [];
-
-    rowData.forEach(rd => {
-      if (rd !== '') {
-        const row = {};
-        this.pasteTableDisplayedColumns.forEach((str, index) => {
-          // Индекс = 0 , это столбец с датой
-          if (index === 0) {
-            row[str] = this.toDate(rd.split('\t')[index]);
-          } else if (index === 1) {
-            row[str] = this.deliveryTimeService.toDeliveryTime(rd.split('\t')[index]);
-          } else if (index === 4) {
-            row[str] = this.brandService.toBrand(rd.split('\t')[index]);
-          } else if (index === 6) {
-            row[str] = this.deliveryTypeService.toDeliveryType(rd.split('\t')[index]);
-          } else if (index === 9) {
-            row[str] = this.shopService.toShop(rd.split('\t')[index]);
-          } else if (index === 13) {
-            row[str] = this.warehouseService.toWarehouse(rd.split('\t')[index]);
-          } else {
-            row[str] = rd.split('\t')[index];
-          }
-        });
-        dataObject.push(row);
-      }
-    });
-    this.pasteTableDataSource = new MatTableDataSource(dataObject);
-    console.log(this.pasteTableDataSource);
-  }
-
-  send(form: NgForm): void {
-    if (form.valid) {
-      this.deliveryService.addAll(this.tableToDeliveries(this.pasteTableDataSource))
-        .subscribe(() => this.reloadData(), () => this.reloadData());
-    }
-    this.pasteTableDataSource = null;
-  }
-
-  tableToDeliveries(table: MatTableDataSource<Delivery>): Delivery[] {
-    let delivery: Delivery;
-    const deliveriesToSend: Delivery[] = [];
-    for (const item of table.data) {
-      // console.log('prepare to send data: ');
-      delivery = new Delivery(
-        null,
-        item.deliveryDate,
-        item.deliveryTime,
-        item.carInfo,
-        item.driverInfo,
-        item.brand,
-        item.orderNumber,
-        item.deliveryType,
-        item.sender,
-        item.comment,
-        item.shop,
-        item.numberOfPlaces,
-        item.torgNumber,
-        item.invoice,
-        this.currentUser,
-        item.warehouse);
-      deliveriesToSend.push(delivery);
-    }
-    return deliveriesToSend;
-  }
-
-  toDate(stringDate: string): Date {
-    const dateParts = stringDate.split('.');
-    const date = new Date(Number(dateParts[2]), Number(dateParts[1]) - 1, Number(dateParts[0]));
-    // console.log(date);
-    return date;
+    this.deliveryService.loadToExcel(this.dataSource.filteredData, this.displayedColumns);
   }
 
   applyFilter(): void {
@@ -241,13 +145,4 @@ export class DeliveriesComponent implements OnInit {
     this.searchKey = '';
     this.applyFilter();
   }
-
-  compareFn(o1: any, o2: any): boolean {
-    if (o1 === null || o2 === null) {
-      return false;
-    }
-    return (o1.id === o2.id);
-  }
-
-
 }

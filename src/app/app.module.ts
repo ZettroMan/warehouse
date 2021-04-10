@@ -9,7 +9,7 @@ import {BrandsComponent} from './views/brands/brands.component';
 import {WarehousesComponent} from './views/warehouses/warehouses.component';
 import {UsersComponent} from './views/users/users.component';
 import {DeliveriesComponent} from './views/deliveries/deliveries.component';
-import {ReportsComponent} from './views/reports/reports.component';
+import {UniqueDeliveriesComponent} from './views/reports/uniqueDeliveries/uniqueDeliveries.component';
 import {ProfileComponent} from './views/profile/profile.component';
 import {ShopsComponent} from './views/shops/shops.component';
 
@@ -37,6 +37,7 @@ import {EditDeliveryDialogComponent} from './dialogs/edit-delivery-dialog/edit-d
 import {MatConfirmDialogComponent} from './dialogs/mat-confirm-dialog/mat-confirm-dialog.component';
 import {MatCardModule} from '@angular/material/card';
 import {MatPasswordDialogComponent} from './dialogs/mat-password-dialog/mat-password-dialog.component';
+import {AddDeliveriesComponent} from './views/add-deliveries/add-deliveries.component';
 
 const BACKEND_ROOT_URL = 'https://command-project-warehouse.herokuapp.com/api/v1';
 // const BACKEND_ROOT_URL = 'http://localhost:8189/api/v1';
@@ -50,7 +51,7 @@ registerLocaleData(localeRu);
     WarehousesComponent,
     UsersComponent,
     DeliveriesComponent,
-    ReportsComponent,
+    UniqueDeliveriesComponent,
     ProfileComponent,
     ShopsComponent,
     EditUserDialogComponent,
@@ -60,7 +61,8 @@ registerLocaleData(localeRu);
     EditDeliveryDialogComponent,
     MatConfirmDialogComponent,
     MatPasswordDialogComponent,
-    LoginComponent
+    LoginComponent,
+    AddDeliveriesComponent
   ],
   imports: [
     BrowserModule,

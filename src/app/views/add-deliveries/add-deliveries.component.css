@@ -1,0 +1,60 @@
+.mat-cell,
+.mat-header-cell {
+  display: flex;
+  justify-content: center;
+  padding: 0 5px;
+  font-size: 12px;
+  text-align: center;
+}
+
+.mat-header-cell {
+  color: #4d0744 !important;
+  font-size: 0.85rem !important;
+}
+
+.mat-cell {
+  font-size: 0.75rem !important;
+}
+
+.mat-column-No {
+  flex: 0 0 3% !important;
+}
+
+.mat-column-type {
+  flex: 0 0 12% !important;
+}
+
+
+.myStyle {
+  min-width: 1450px;
+  overflow: auto;
+}
+
+.myStyleCP {
+  min-width: 1800px;
+  overflow: auto;
+}
+
+/*CopyPasteTable style here down*/
+
+.myCopyPasteField {
+  display: flex;
+  justify-content: center;
+  padding: 0 5px;
+  font-size: 11px;
+  text-align: center;
+}
+
+.mat-column-deliveryDate {
+  flex: 0 0 7% !important;
+}
+
+.mat-column-deliveryTime {
+  flex: 0 0 7% !important;
+}
+
+.mat-paginator {
+  margin-top: 0.9rem;
+}
+
+

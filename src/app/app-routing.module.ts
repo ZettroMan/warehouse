@@ -5,10 +5,11 @@ import {BrandsComponent} from './views/brands/brands.component';
 import {WarehousesComponent} from './views/warehouses/warehouses.component';
 import {ShopsComponent} from './views/shops/shops.component';
 import {DeliveriesComponent} from './views/deliveries/deliveries.component';
-import {ReportsComponent} from './views/reports/reports.component';
+import {UniqueDeliveriesComponent} from './views/reports/uniqueDeliveries/uniqueDeliveries.component';
 import {ProfileComponent} from './views/profile/profile.component';
 import {AuthGuard} from './security/auth.guard';
 import {LoginComponent} from './views/login/login.component';
+import {AddDeliveriesComponent} from './views/add-deliveries/add-deliveries.component';
 
 const routes: Routes = [
   {
@@ -47,7 +48,14 @@ const routes: Routes = [
     }
   },
   {
-    path: 'reports', component: ReportsComponent,
+    path: 'add-deliveries', component: AddDeliveriesComponent,
+    canActivate: [AuthGuard],
+    data: {
+      roles: ['ROLE_ADMIN', 'ROLE_BRAND_MANAGER']
+    }
+  },
+  {
+    path: 'reports', component: UniqueDeliveriesComponent,
     canActivate: [AuthGuard],
     data: {
       roles: ['ROLE_ADMIN', 'ROLE_WAREHOUSE', 'ROLE_BRAND_MANAGER']
