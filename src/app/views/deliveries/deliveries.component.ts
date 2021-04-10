@@ -9,17 +9,6 @@ import {EditDeliveryDialogComponent} from '../../dialogs/edit-delivery-dialog/ed
 import {DateAdapter} from '@angular/material/core';
 import {MatSort} from '@angular/material/sort';
 import {MatPaginator} from '@angular/material/paginator';
-import {DeliveryTypeService} from '../../services/dao/impl/DeliveryTypeService';
-import {DeliveryTimeService} from '../../services/dao/impl/DeliveryTimeService';
-import {WarehouseService} from '../../services/dao/impl/WarehouseService';
-import {ShopService} from '../../services/dao/impl/ShopService';
-import {BrandService} from '../../services/dao/impl/BrandService';
-import {DeliveryType} from '../../model/DeliveryType';
-import {DeliveryTime} from '../../model/DeliveryTime';
-import {Warehouse} from '../../model/Warehouse';
-import {Shop} from '../../model/Shop';
-import {Brand} from '../../model/Brand';
-import {NgForm} from '@angular/forms';
 
 @Component({
   selector: 'app-deliveries',
