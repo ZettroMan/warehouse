@@ -10,6 +10,7 @@
         <mat-icon>close</mat-icon>
       </button>
     </mat-form-field>
+    <button mat-raised-button color="primary" style="height: 40px; margin-left: 1rem" (click)="loadToExcel()">Сохранить в файл</button>
     <div class="row">
       <div class="col-md-12">
         <div class="card">
@@ -126,9 +127,8 @@
                 <mat-footer-row *matFooterRowDef="['loading']"
                                 [ngClass]="{'hide':dataSource!=null && dataSource.data.length!=0}"></mat-footer-row>
               </mat-table>
-              <mat-paginator [pageSizeOptions]="[15, 20, 30]" [pageSize]="15" showFirstLastButtons></mat-paginator>
+              <mat-paginator [pageSizeOptions]="[5, 10, 15, 25, 50]" [pageSize]="15" showFirstLastButtons></mat-paginator>
             </div>
-            <button mat-raised-button color="primary" style="height: 40px; margin-top: 0.9rem" (click)="loadToExcel()">Сохранить в файл</button>
           </div>
         </div>
       </div>
