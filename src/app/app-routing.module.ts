@@ -9,6 +9,7 @@ import {UniqueDeliveriesComponent} from './views/reports/uniqueDeliveries/unique
 import {ProfileComponent} from './views/profile/profile.component';
 import {AuthGuard} from './security/auth.guard';
 import {LoginComponent} from './views/login/login.component';
+import {AddDeliveriesComponent} from './views/add-deliveries/add-deliveries.component';
 
 const routes: Routes = [
   {
@@ -44,6 +45,13 @@ const routes: Routes = [
     canActivate: [AuthGuard],
     data: {
       roles: ['ROLE_ADMIN', 'ROLE_WAREHOUSE', 'ROLE_BRAND_MANAGER']
+    }
+  },
+  {
+    path: 'add-deliveries', component: AddDeliveriesComponent,
+    canActivate: [AuthGuard],
+    data: {
+      roles: ['ROLE_ADMIN', 'ROLE_BRAND_MANAGER']
     }
   },
   {

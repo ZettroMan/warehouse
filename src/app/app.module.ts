@@ -37,6 +37,7 @@ import {EditDeliveryDialogComponent} from './dialogs/edit-delivery-dialog/edit-d
 import {MatConfirmDialogComponent} from './dialogs/mat-confirm-dialog/mat-confirm-dialog.component';
 import {MatCardModule} from '@angular/material/card';
 import {MatPasswordDialogComponent} from './dialogs/mat-password-dialog/mat-password-dialog.component';
+import {AddDeliveriesComponent} from './views/add-deliveries/add-deliveries.component';
 
 const BACKEND_ROOT_URL = 'https://command-project-warehouse.herokuapp.com/api/v1';
 // const BACKEND_ROOT_URL = 'http://localhost:8189/api/v1';
@@ -60,7 +61,8 @@ registerLocaleData(localeRu);
     EditDeliveryDialogComponent,
     MatConfirmDialogComponent,
     MatPasswordDialogComponent,
-    LoginComponent
+    LoginComponent,
+    AddDeliveriesComponent
   ],
   imports: [
     BrowserModule,

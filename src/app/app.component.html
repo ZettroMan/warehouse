@@ -23,10 +23,15 @@
           <mat-icon matListIcon>store</mat-icon>
           <h3 matLine>Склады</h3>
         </mat-list-item>
+        <mat-list-item *ngIf="_authService.isRouteEnabled('add-deliveries')" routerLink="/add-deliveries"
+                       routerLinkActive="active">
+          <mat-icon matListIcon>add_box</mat-icon>
+          <h3 matLine>Создать приход</h3>
+        </mat-list-item>
         <mat-list-item *ngIf="_authService.isRouteEnabled('deliveries')" routerLink="/deliveries"
                        routerLinkActive="active">
           <mat-icon matListIcon>local_shipping</mat-icon>
-          <h3 matLine>График поставок</h3>
+          <h3 matLine>График приходов</h3>
         </mat-list-item>
         <mat-list-item *ngIf="_authService.isRouteEnabled('reports')" [matMenuTriggerFor]="report"
                        routerLinkActive="active">
@@ -47,6 +52,7 @@
           <mat-icon matListIcon>person</mat-icon>
           <h3 matLine>Мой профиль</h3>
         </mat-list-item>
+<!--        add_box-->
         <mat-list-item routerLink="/login" routerLinkActive="active">
           <mat-icon matListIcon>person</mat-icon>
           <h3 matLine>Выход</h3>
