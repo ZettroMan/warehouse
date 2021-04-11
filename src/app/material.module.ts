@@ -14,13 +14,15 @@ import {MatSelectModule} from '@angular/material/select';
 import {MatGridListModule} from '@angular/material/grid-list';
 import {MatNativeDateModule} from '@angular/material/core';
 import {MatDatepickerModule} from '@angular/material/datepicker';
-import { MatMenuModule } from '@angular/material/menu';
+import {MatMenuModule} from '@angular/material/menu';
+import {MatSnackBarModule} from '@angular/material/snack-bar';
 
 const MaterialComponents = [
   MatButtonModule, MatIconModule, MatTableModule, MatSortModule,
   MatPaginatorModule, MatSidenavModule, MatToolbarModule,
   MatListModule, MatDialogModule, MatFormFieldModule, MatInputModule,
-  MatSelectModule, MatGridListModule, MatNativeDateModule, MatDatepickerModule, MatMenuModule
+  MatSelectModule, MatGridListModule, MatNativeDateModule,
+  MatDatepickerModule, MatMenuModule, MatSnackBarModule
 ];
 
 @NgModule({

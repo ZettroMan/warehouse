@@ -1,11 +1,11 @@
 import {Inject, Injectable, InjectionToken} from '@angular/core';
-import {HttpClient} from '@angular/common/http';
+import {HttpClient, HttpParams} from '@angular/common/http';
 
 import {CommonService} from './CommonService';
 import {DeliveryDao} from '../interface/DeliveryDao';
 import {Delivery} from '../../../model/Delivery';
 import {DeliverySearchValues} from '../search/SearchObjects';
-import {Observable} from 'rxjs';
+import {Observable, Subscription} from 'rxjs';
 import {saveAs} from 'file-saver';
 
 // глобальная переменная для хранения URL
@@ -28,8 +28,14 @@ export class DeliveryService extends CommonService<Delivery> implements Delivery
     return this.http.post<any>(this.baseUrl + '/search', searchObj);
   }
 
+  findByRange(startDate: string, endDate: string): Subscription {
+    const params = new HttpParams().set('first', startDate).set('last', endDate);
+    return this.http.get<Delivery[]>('https://command-project-warehouse.herokuapp.com/api/v1/deliveries', {params})
+      .subscribe(value => console.log(value), () => console.log('error'), () => console.log('xz'));
+  }
+
   addAll(obj: Delivery[]): Observable<boolean> {
-    return this.http.post<boolean>('https://command-project-warehouse.herokuapp.com/api/v1/grouped-deliveries', obj);
+    return this.http.post<boolean>('https://command-project-warehouse.herokuapp.com/api/v1/deliveries/grouped-save', obj);
   }
 
   loadToExcel(data: Delivery[], displayedColumns: string[]): void {

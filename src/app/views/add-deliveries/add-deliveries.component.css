@@ -16,20 +16,6 @@
   font-size: 0.75rem !important;
 }
 
-.mat-column-No {
-  flex: 0 0 3% !important;
-}
-
-.mat-column-type {
-  flex: 0 0 12% !important;
-}
-
-
-.myStyle {
-  min-width: 1450px;
-  overflow: auto;
-}
-
 .myStyleCP {
   min-width: 1800px;
   overflow: auto;
@@ -46,15 +32,32 @@
 }
 
 .mat-column-deliveryDate {
-  flex: 0 0 7% !important;
+  flex: 0 0 12% !important;
 }
 
 .mat-column-deliveryTime {
-  flex: 0 0 7% !important;
+  flex: 0 0 11% !important;
+}
+
+.mat-column-carInfo {
+  flex: 0 0 8% !important;
+}
+
+.mat-column-driverInfo {
+  flex: 0 0 8% !important;
+}
+
+.mat-column-numberOfPlaces {
+  flex: 0 0 4% !important;
+}
+
+.mat-column-sender {
+  flex: 0 0 10% !important;
 }
 
 .mat-paginator {
   margin-top: 0.9rem;
 }
+
 
 
