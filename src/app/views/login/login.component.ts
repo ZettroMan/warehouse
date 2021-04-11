@@ -38,6 +38,7 @@ export class LoginComponent implements OnInit {
         localStorage.setItem('authorities', authorities);
         this.loaderService.load();
         this.isLoginFailed = false;
+        this.router.navigate(['/profile']);
       },
       error => {
         this.errorMessage = error.error.message;
@@ -46,9 +47,9 @@ export class LoginComponent implements OnInit {
     );
   }
 
-  logout(): void {
-    this.authService.logoutUser();
-    this.isLoginFailed = false;
-
-  }
+  // logout(): void {
+  //   this.authService.logoutUser();
+  //   this.isLoginFailed = false;
+  //
+  // }
 }

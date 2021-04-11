@@ -1,11 +1,8 @@
 import {Inject, Injectable, InjectionToken} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
-import {ShopSearchValues} from '../search/SearchObjects';
-import {Observable} from 'rxjs';
 import {ShopDao} from '../interface/ShopDao';
 import {Shop} from '../../../model/Shop';
 import {CommonCachedService} from './CommonCachedService';
-import {Brand} from '../../../model/Brand';
 
 // глобальная переменная для хранения URL
 export const SHOPS_URL_TOKEN = new InjectionToken<string>('url');
@@ -22,13 +19,10 @@ export class ShopService extends CommonCachedService<Shop> implements ShopDao {
     super(baseUrl, http);
   }
 
-  // поиск поставок по любым параметрам
-  findShops(searchObj: ShopSearchValues): Observable<any> { // из backend получаем тип Page, поэтому указываем any
-    return this.http.post<any>(this.baseUrl + '/search', searchObj);
-  }
-
   toShop(text: string): Shop {
-    if (this.entities === null) { return null; }
+    if (this.entities === null) {
+      return null;
+    }
     const result = this.entities.filter(entity => entity.name === text);
     if (result.length > 0) {
       return result[0];

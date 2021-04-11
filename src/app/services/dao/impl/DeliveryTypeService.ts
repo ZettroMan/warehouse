@@ -3,7 +3,6 @@ import {HttpClient} from '@angular/common/http';
 import {DeliveryType} from '../../../model/DeliveryType';
 import {DeliveryTypeDao} from '../interface/DeliveryTypeDao';
 import {CommonCachedService} from './CommonCachedService';
-import {Warehouse} from '../../../model/Warehouse';
 
 // глобальная переменная для хранения URL
 export const DELIVERY_TYPES_URL_TOKEN = new InjectionToken<string>('url');

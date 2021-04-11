@@ -35,6 +35,10 @@
   overflow: auto;
 }
 
+.date-form-field {
+  margin-left: 10px;
+}
+
 /*CopyPasteTable style here down*/
 
 .myCopyPasteField {

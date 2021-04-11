@@ -9,6 +9,7 @@ import {EditDeliveryDialogComponent} from '../../dialogs/edit-delivery-dialog/ed
 import {DateAdapter} from '@angular/material/core';
 import {MatSort} from '@angular/material/sort';
 import {MatPaginator} from '@angular/material/paginator';
+import {FormControl, FormGroup} from '@angular/forms';
 
 @Component({
   selector: 'app-deliveries',
@@ -24,21 +25,22 @@ export class DeliveriesComponent implements OnInit {
   private currentUser: User;
   displayedColumns2: string[];
   searchKey = '';
+  startDate  = new Date();
+  endDate = new Date();
   @ViewChild(MatSort) sort: MatSort;
   @ViewChild(MatPaginator) paginator: MatPaginator;
-
-// ----------------------------
-  todaysDate: any;
-
-// ----------------------------
-
+  range = new FormGroup({
+    start: new FormControl(this.startDate),
+    end: new FormControl(this.endDate)
+  });
 
   constructor(private deliveryService: DeliveryService,
               private userService: UserService,
               private dialog: MatDialog,
               private dateAdapter: DateAdapter<any>) {
     this.dateAdapter.setLocale('ru-RU');
-    this.todaysDate = new Date();
+    this.endDate.setMonth(this.startDate.getMonth() + 1);
+
   }
 
   ngOnInit(): void {
@@ -47,11 +49,12 @@ export class DeliveriesComponent implements OnInit {
     this.dialogConfig.width = '60%';
     this.dialogConfig.height = 'auto';
 
-    this.userService.findAll().toPromise().then(() => {
+    this.userService.findAll().subscribe(() => {
       this.currentUser = this.userService.getCurrentUser();
     });
-    this.deliveryService.findAll().subscribe(deliveries => {
-      // console.log(deliveries);
+    this.deliveryService.findByDateRange(this.range.controls.start.value, this.range.controls.end.value)
+      .subscribe(deliveries => {
+      console.log(deliveries);
       this.dataSource.data = deliveries;  // this forces mat-table to refresh data
       this.dataSource.sortingDataAccessor = (item, property) => {
         switch (property) {
@@ -72,19 +75,6 @@ export class DeliveriesComponent implements OnInit {
       this.dataSource.sort = this.sort;
       this.dataSource.paginator = this.paginator;
       this.paginator._intl.itemsPerPageLabel = 'Поставок на странице:';
-      this.dataSource.filterPredicate = (data, filter) => {
-        return this.displayedColumns.some(ele => {
-          console.log(ele);
-          if (ele === 'No') {
-            return false;
-          }
-          console.log(ele);
-          if (typeof data[ele] === 'string') {
-            return data[ele].toLowerCase().indexOf(filter) !== -1;
-          }
-          return false;
-        });
-      };
     });
   }
 
@@ -116,22 +106,54 @@ export class DeliveriesComponent implements OnInit {
     });
   }
 
-  private reloadData(): void {
-    this.deliveryService.refresh().subscribe(deliveries => {
+  reloadData(): void {
+    this.deliveryService.findByDateRange(this.range.controls.start.value, this.range.controls.end.value)
+      .subscribe(deliveries => {
       this.dataSource.data = deliveries;  // this forces mat-table to refresh data
-    });
+      // console.log(deliveries);
+      });
   }
 
-  loadToExcel(): void {
+ loadToExcel(): void {
     this.deliveryService.loadToExcel(this.dataSource.filteredData, this.displayedColumns);
   }
 
-  applyFilter(): void {
-    this.dataSource.filter = this.searchKey.trim().toLocaleLowerCase();
-  }
-
-  resetFilter(): void {
-    this.searchKey = '';
-    this.applyFilter();
+  resetDateFilter(): void {
+    this.range.controls.start.setValue(this.startDate);
+    this.range.controls.end.setValue(this.endDate);
+    this.reloadData();
   }
 }
+
+
+// Прочие фрагменты кода использовавшиеся ранее
+
+// resetFilter(): void {
+//   this.searchKey = '';
+//   this.applyFilter();
+// }
+
+// this.dataSource.filterPredicate = (data) => {
+//   return (data.deliveryDate >= (this.range.controls.start.value as Date)) &&
+//     (data.deliveryDate <= (this.range.controls.end.value as Date));
+// };
+
+// это из FilterPredicate
+
+// return this.displayedColumns.some(ele => {
+//   console.log(ele);
+//   if (ele === 'No') {
+//     return false;
+//   }
+//   console.log(ele);
+//   if (typeof data[ele] === 'string') {
+//     return data[ele].toLowerCase().indexOf(filter) !== -1;
+//   }
+//   return false;
+// });
+
+
+// startDate = new Date();
+// endDate = new Date(this.startDate.getDate() + 21);
+// startDate: any;
+// endDate: any;
