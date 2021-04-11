@@ -6,6 +6,7 @@ import {Role} from '../../model/Role';
 import {FormBuilder, FormGroup} from '@angular/forms';
 import {MatDialog, MatDialogConfig} from '@angular/material/dialog';
 import {MatPasswordDialogComponent} from '../../dialogs/mat-password-dialog/mat-password-dialog.component';
+import {AuthService} from '../../security/auth.service';
 
 @Component({
   selector: 'app-profile',
@@ -20,7 +21,8 @@ export class ProfileComponent implements OnInit {
 
   constructor(private userService: UserService,
               private fb: FormBuilder,
-              private dialog: MatDialog ) {
+              private authService: AuthService,
+              private dialog: MatDialog) {
   }
 
   ngOnInit(): void {
@@ -82,5 +84,12 @@ export class ProfileComponent implements OnInit {
     }
     return brandsList;
   }
+
+  logout(): void {
+    this.authService.logoutUser();
+    // this.isLoginFailed = false;
+
+  }
+
 
 }

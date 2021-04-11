@@ -2,6 +2,7 @@ import {MatConfirmDialogComponent} from '../dialogs/mat-confirm-dialog/mat-confi
 import {MatDialog, MatDialogRef} from '@angular/material/dialog';
 import {Injectable} from '@angular/core';
 
+// Сервис предназначенный для отображения разных диалогов пользователю
 @Injectable({
   providedIn: 'root'
 })

@@ -22,17 +22,8 @@ export class UniqueDeliveriesComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  toStringDate(stringDate: string): string {
-    const dateParts = stringDate.split('.');
-    const date = dateParts[2] + '-' + (dateParts[1]) + '-' + dateParts[0];
-    return date;
-  }
-
   send(): void {
-    const start = this.toStringDate(this.range.controls.start.value.toLocaleString().split(',')[0]);
-    const end = this.toStringDate(this.range.controls.end.value.toLocaleString().split(',')[0]);
-    console.log(start);
-    console.log(end);
-    this.deliveryService.findByRange(start, end);
+    this.deliveryService.findByDateRange(this.range.controls.start.value, this.range.controls.end.value)
+      .subscribe(value => console.log(value), () => console.log('error'), () => console.log('xz'));
   }
 }

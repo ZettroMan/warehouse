@@ -1,18 +1,17 @@
-<div>
-  <div align="center" *ngIf="_authService.loggedIn()">
-    Доброго времени суток {{_authService.getUserName()}}.
-    <div>
-      Информация о Вас:
-      <br>
-      <br>
-      <p>
-        <strong>Права:</strong> {{_authService.getUserAuthorities()}}<br/>
-      </p>
-      <button class="btn btn-outline-danger" (click)="logout()">Logout</button>
-    </div>
-  </div>
-</div>
-
+<!--<div>-->
+<!--  <div align="center" *ngIf="_authService.loggedIn()">-->
+<!--    Доброго времени суток {{_authService.getUserName()}}.-->
+<!--    <div>-->
+<!--      Информация о Вас:-->
+<!--      <br>-->
+<!--      <br>-->
+<!--      <p>-->
+<!--        <strong>Права:</strong> {{_authService.getUserAuthorities()}}<br/>-->
+<!--      </p>-->
+<!--      <button class="btn btn-outline-danger" (click)="logout()">Logout</button>-->
+<!--    </div>-->
+<!--  </div>-->
+<!--</div>-->
 
 <div *ngIf="!_authService.loggedIn()" class="login-section">
   <div class="row justify-content-center">

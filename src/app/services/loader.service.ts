@@ -6,6 +6,10 @@ import {WarehouseService} from './dao/impl/WarehouseService';
 import {DeliveryTimeService} from './dao/impl/DeliveryTimeService';
 import {DeliveryTypeService} from './dao/impl/DeliveryTypeService';
 
+
+// Сервис, загружающий все справочники при старте приложения.
+// Все используемые здесь сервисы наследуются от CommonCachedService
+// и имеют внутренний кэш сущностей (справочников)
 @Injectable({
   providedIn: 'root'
 })

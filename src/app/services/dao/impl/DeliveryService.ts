@@ -4,8 +4,7 @@ import {HttpClient, HttpParams} from '@angular/common/http';
 import {CommonService} from './CommonService';
 import {DeliveryDao} from '../interface/DeliveryDao';
 import {Delivery} from '../../../model/Delivery';
-import {DeliverySearchValues} from '../search/SearchObjects';
-import {Observable, Subscription} from 'rxjs';
+import {Observable} from 'rxjs';
 import {saveAs} from 'file-saver';
 
 // глобальная переменная для хранения URL
@@ -23,19 +22,24 @@ export class DeliveryService extends CommonService<Delivery> implements Delivery
     super(baseUrl, http);
   }
 
-  // поиск поставок по любым параметрам
-  findDeliveries(searchObj: DeliverySearchValues): Observable<any> { // из backend получаем тип Page, поэтому указываем any
-    return this.http.post<any>(this.baseUrl + '/search', searchObj);
+  findByDateRange(startDate: any, endDate: any): Observable<Delivery[]> {
+    let params = new HttpParams();
+    if (startDate) {
+      params = params.set('first', this.toStringDate(startDate));
+    }
+    if (endDate) {
+      params = params.append('last', this.toStringDate(endDate));
+    }
+    return this.http.get<Delivery[]>(this.baseUrl, {params});
   }
 
-  findByRange(startDate: string, endDate: string): Subscription {
-    const params = new HttpParams().set('first', startDate).set('last', endDate);
-    return this.http.get<Delivery[]>('https://command-project-warehouse.herokuapp.com/api/v1/deliveries', {params})
-      .subscribe(value => console.log(value), () => console.log('error'), () => console.log('xz'));
+  toStringDate(dateValue: any): string {
+    const dateParts = dateValue.toLocaleDateString().split('.');
+    return dateParts[2] + '-' + (dateParts[1]) + '-' + dateParts[0];
   }
 
   addAll(obj: Delivery[]): Observable<boolean> {
-    return this.http.post<boolean>('https://command-project-warehouse.herokuapp.com/api/v1/deliveries/grouped-save', obj);
+    return this.http.post<boolean>(this.baseUrl + '/grouped-save', obj);
   }
 
   loadToExcel(data: Delivery[], displayedColumns: string[]): void {
@@ -54,5 +58,6 @@ export class DeliveryService extends CommonService<Delivery> implements Delivery
     // const url = window.URL.createObjectURL(data);
     // window.open(url);
   }
+
 
 }

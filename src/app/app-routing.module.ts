@@ -23,7 +23,7 @@ const routes: Routes = [
     path: 'brands', component: BrandsComponent,
     canActivate: [AuthGuard],
     data: {
-      roles: ['ROLE_ADMIN', 'ROLE_BRAND_MANAGER']
+      roles: ['ROLE_ADMIN']
     }
   },
   {
@@ -37,7 +37,7 @@ const routes: Routes = [
     path: 'shops', component: ShopsComponent,
     canActivate: [AuthGuard],
     data: {
-      roles: ['ROLE_ADMIN', 'ROLE_BRAND_MANAGER']
+      roles: ['ROLE_ADMIN']
     }
   },
   {
