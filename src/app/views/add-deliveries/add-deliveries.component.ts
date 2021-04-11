@@ -1,14 +1,11 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {Delivery} from '../../model/Delivery';
 import {DeliveryService} from '../../services/dao/impl/DeliveryService';
 import {MatTableDataSource} from '@angular/material/table';
-import {MatDialog, MatDialogConfig} from '@angular/material/dialog';
+import {MatDialog} from '@angular/material/dialog';
 import {User} from '../../model/User';
 import {UserService} from '../../services/dao/impl/UserService';
-import {EditDeliveryDialogComponent} from '../../dialogs/edit-delivery-dialog/edit-delivery-dialog.component';
 import {DateAdapter} from '@angular/material/core';
-import {MatSort} from '@angular/material/sort';
-import {MatPaginator} from '@angular/material/paginator';
 import {DeliveryTypeService} from '../../services/dao/impl/DeliveryTypeService';
 import {DeliveryTimeService} from '../../services/dao/impl/DeliveryTimeService';
 import {WarehouseService} from '../../services/dao/impl/WarehouseService';
@@ -20,6 +17,7 @@ import {Warehouse} from '../../model/Warehouse';
 import {Shop} from '../../model/Shop';
 import {Brand} from '../../model/Brand';
 import {NgForm} from '@angular/forms';
+import {MatSnackBar} from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-deliveries',
@@ -47,7 +45,8 @@ export class AddDeliveriesComponent implements OnInit {
               private shopService: ShopService,
               private warehouseService: WarehouseService,
               private deliveryTimeService: DeliveryTimeService,
-              private deliveryTypeService: DeliveryTypeService) {
+              private deliveryTypeService: DeliveryTypeService,
+              private snackBar: MatSnackBar) {
     this.dateAdapter.setLocale('ru-RU');
     this.todaysDate = new Date();
   }
@@ -60,6 +59,22 @@ export class AddDeliveriesComponent implements OnInit {
     this.deliveryTypeService.findAll().subscribe(onloadeddata => this.allTypes = onloadeddata);
     this.userService.findAll().toPromise().then(() => {
       this.currentUser = this.userService.getCurrentUser();
+    });
+  }
+
+  // Snackbar that opens with success background
+  openSuccessSnackBar(): void {
+    this.snackBar.open('Приходы успешно добавлены в график!', 'OK', {
+      duration: 3000,
+      panelClass: ['green-snackbar', 'login-snackbar'],
+    });
+  }
+
+  // Snackbar that opens with failure background
+  openFailureSnackBar(): void {
+    this.snackBar.open('Ошибка при добавлении приходов в график!', 'Попробуйте ещё раз!', {
+      duration: 3000,
+      panelClass: ['red-snackbar', 'login-snackbar'],
     });
   }
 
@@ -101,7 +116,7 @@ export class AddDeliveriesComponent implements OnInit {
   send(form: NgForm): void {
     if (form.valid) {
       this.deliveryService.addAll(this.tableToDeliveries(this.pasteTableDataSource))
-        .subscribe(() => console.log('OK') , () => console.log('NOT OK') );
+        .subscribe(() => this.openSuccessSnackBar(), () => this.openFailureSnackBar());
     }
     this.pasteTableDataSource = null;
   }

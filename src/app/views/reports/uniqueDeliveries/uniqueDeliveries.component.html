@@ -26,6 +26,13 @@
 
               <p>Выбранный диапазон: {{range.value | json}}</p>
 
+              <mat-card-actions>
+                <button mat-raised-button color="primary"
+                        (click)="send()">
+                  Отправить
+                </button>
+              </mat-card-actions>
+
             </div>
           </div>
         </div>
