@@ -4,9 +4,8 @@ import {UserService} from '../../services/dao/impl/UserService';
 import {Brand} from '../../model/Brand';
 import {Role} from '../../model/Role';
 import {FormBuilder, FormGroup} from '@angular/forms';
-import {MatDialog, MatDialogConfig} from '@angular/material/dialog';
-import {MatPasswordDialogComponent} from '../../dialogs/mat-password-dialog/mat-password-dialog.component';
 import {AuthService} from '../../security/auth.service';
+import {DialogService} from '../../services/dialog.service';
 
 @Component({
   selector: 'app-profile',
@@ -17,17 +16,15 @@ export class ProfileComponent implements OnInit {
 
   user: User;
   form: FormGroup;
-  dialogConfig = new MatDialogConfig();
 
   constructor(private userService: UserService,
               private fb: FormBuilder,
               private authService: AuthService,
-              private dialog: MatDialog) {
+              private dialogService: DialogService) {
   }
 
   ngOnInit(): void {
-    this.dialogConfig.disableClose = true;
-    this.dialogConfig.autoFocus = true;
+
     this.userService.findAll().subscribe(() => {
       this.user = this.userService.getCurrentUser();
       this.form = this.fb.group({
@@ -40,14 +37,18 @@ export class ProfileComponent implements OnInit {
   }
 
   saveProfile(): void {
-    this.userService.update(this.user.id, this.user).subscribe(() => this.loadUser());
+    this.user.fullName = this.form.controls.fullName.value;
+    this.user.email = this.form.controls.email.value;
+    this.user.phone = this.form.controls.phone.value;
+    this.userService.update(this.user.id, this.user)
+      .subscribe(() => this.loadUser(), error => console.log(error));
   }
 
   reset(): void {
-    this.userService.refresh().subscribe(() => {
-      this.user = this.userService.getCurrentUser();
+      this.form.controls.fullName.setValue(this.user.fullName);
+      this.form.controls.email.setValue(this.user.email);
+      this.form.controls.phone.setValue(this.user.phone);
       this.form.markAsPristine();
-    });
   }
 
   private loadUser(): void {
@@ -59,11 +60,11 @@ export class ProfileComponent implements OnInit {
 
   changePassword(): void {
     console.log('Change password');
-    const dialogRef = this.dialog.open(MatPasswordDialogComponent, this.dialogConfig);
-    dialogRef.afterClosed().subscribe(password => {
+    this.dialogService.openPasswordDialog().afterClosed().subscribe(password => {
       if (password) {
         this.user.password = password;
-        this.userService.update(this.user.id, this.user);
+        this.userService.update(this.user.id, this.user)
+          .subscribe(() => console.log('Password has been changed'), error => console.log(error));
       }
     });
 

@@ -20,7 +20,9 @@ export class BrandService extends CommonCachedService<Brand> implements BrandDao
   }
 
   toBrand(text: string): Brand {
-    if (this.entities === null) { return null; }
+    if (this.entities === null) {
+      return null;
+    }
     const result = this.entities.filter(entity => entity.name === text);
     if (result.length > 0) {
       return result[0];

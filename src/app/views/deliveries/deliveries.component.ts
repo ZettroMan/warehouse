@@ -10,6 +10,7 @@ import {DateAdapter} from '@angular/material/core';
 import {MatSort} from '@angular/material/sort';
 import {MatPaginator} from '@angular/material/paginator';
 import {FormControl, FormGroup} from '@angular/forms';
+import {DialogService} from '../../services/dialog.service';
 
 @Component({
   selector: 'app-deliveries',
@@ -37,6 +38,7 @@ export class DeliveriesComponent implements OnInit {
   constructor(private deliveryService: DeliveryService,
               private userService: UserService,
               private dialog: MatDialog,
+              private dialogService: DialogService,
               private dateAdapter: DateAdapter<any>) {
     this.dateAdapter.setLocale('ru-RU');
     this.endDate.setMonth(this.startDate.getMonth() + 1);
@@ -115,7 +117,13 @@ export class DeliveriesComponent implements OnInit {
   }
 
  loadToExcel(): void {
-    this.deliveryService.loadToExcel(this.dataSource.filteredData, this.displayedColumns);
+   this.dialogService.openColumnSelectDialog(this.displayedColumns).afterClosed().subscribe(result => {
+     if (result) {
+       this.deliveryService.loadToExcel(this.dataSource.data, result);
+     }
+   });
+
+   // this.deliveryService.loadToExcel(this.dataSource.filteredData, this.displayedColumns);
   }
 
   resetDateFilter(): void {
