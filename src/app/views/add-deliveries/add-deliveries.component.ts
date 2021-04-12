@@ -87,23 +87,27 @@ export class AddDeliveriesComponent implements OnInit {
 
     rowData.forEach(rd => {
       if (rd !== '') {
+        console.log(rd);
+        const rowValues = rd.split('\t');
+        console.log(rowValues);
+        rowValues[rowValues.length - 1] = rowValues[rowValues.length - 1].trim();
         const row = {};
         this.pasteTableDisplayedColumns.forEach((str, index) => {
           // Индекс = 0 , это столбец с датой
           if (index === 0) {
-            row[str] = this.toDate(rd.split('\t')[index]);
+            row[str] = this.toDate(rowValues[index]);
           } else if (index === 1) {
-            row[str] = this.deliveryTimeService.toDeliveryTime(rd.split('\t')[index]);
+            row[str] = this.deliveryTimeService.toDeliveryTime(rowValues[index]);
           } else if (index === 4) {
-            row[str] = this.brandService.toBrand(rd.split('\t')[index]);
+            row[str] = this.brandService.toBrand(rowValues[index]);
           } else if (index === 6) {
-            row[str] = this.deliveryTypeService.toDeliveryType(rd.split('\t')[index]);
+            row[str] = this.deliveryTypeService.toDeliveryType(rowValues[index]);
           } else if (index === 9) {
-            row[str] = this.shopService.toShop(rd.split('\t')[index]);
+            row[str] = this.shopService.toShop(rowValues[index]);
           } else if (index === 13) {
-            row[str] = this.warehouseService.toWarehouse(rd.split('\t')[index]);
+            row[str] = this.warehouseService.toWarehouse(rowValues[index]);
           } else {
-            row[str] = rd.split('\t')[index];
+            row[str] = rowValues[index];
           }
         });
         dataObject.push(row);

@@ -8,13 +8,13 @@ import {FormControl, FormGroup, Validators} from '@angular/forms';
 })
 export class MatPasswordDialogComponent implements OnInit {
 
-  form: FormGroup;
+  form = new FormGroup({
+    passEdit1: new FormControl('', [Validators.required,  Validators.minLength(6)]),
+    passEdit2: new FormControl('', [Validators.required, Validators.minLength(6)]),
+  });
+  hide = true;
 
   constructor() {
-    this.form = new FormGroup({
-      passEdit1: new FormControl('', Validators.required),
-      passEdit2: new FormControl('', Validators.required),
-    });
   }
 
   ngOnInit(): void {

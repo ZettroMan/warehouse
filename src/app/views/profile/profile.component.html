@@ -5,17 +5,17 @@
 
   <mat-form-field>
     <mat-label>Имя пользователя (ФИО)</mat-label>
-    <input matInput [(ngModel)]="user.fullName" formControlName="fullName">
+    <input matInput formControlName="fullName">
   </mat-form-field>
 
   <mat-form-field>
     <mat-label>E-mail</mat-label>
-    <input matInput [(ngModel)]="user.email" formControlName="email">
+    <input matInput formControlName="email">
   </mat-form-field>
 
   <mat-form-field>
     <mat-label>Телефон</mat-label>
-    <input matInput [(ngModel)]="user.phone" formControlName="phone">
+    <input matInput formControlName="phone">
   </mat-form-field>
 
     <h3>Бренды: {{getFormattedBrands(user.brands)}}</h3>

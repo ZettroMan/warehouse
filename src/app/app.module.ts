@@ -38,6 +38,7 @@ import {MatConfirmDialogComponent} from './dialogs/mat-confirm-dialog/mat-confir
 import {MatCardModule} from '@angular/material/card';
 import {MatPasswordDialogComponent} from './dialogs/mat-password-dialog/mat-password-dialog.component';
 import {AddDeliveriesComponent} from './views/add-deliveries/add-deliveries.component';
+import {MatColumnSelectDialogComponent} from './dialogs/mat-column-select-dialog/mat-column-select-dialog.component';
 
 const BACKEND_ROOT_URL = 'https://command-project-warehouse.herokuapp.com/api/v1';
 // const BACKEND_ROOT_URL = 'http://localhost:8189/api/v1';
@@ -61,6 +62,7 @@ registerLocaleData(localeRu);
     EditDeliveryDialogComponent,
     MatConfirmDialogComponent,
     MatPasswordDialogComponent,
+    MatColumnSelectDialogComponent,
     LoginComponent,
     AddDeliveriesComponent
   ],
@@ -130,7 +132,8 @@ registerLocaleData(localeRu);
     EditShopDialogComponent,
     EditDeliveryDialogComponent,
     MatConfirmDialogComponent,
-    MatPasswordDialogComponent
+    MatPasswordDialogComponent,
+    MatColumnSelectDialogComponent
   ],
   bootstrap: [AppComponent]
 })

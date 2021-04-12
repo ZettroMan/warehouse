@@ -23,7 +23,7 @@ export class CommonCachedService<T> extends CommonService<T> {
   }
 
   // Refreshes cached data
-  refresh(): Observable<T[]>  {
+  refresh(): Observable<T[]> {
     const response = super.findAll();
     response.subscribe(entities => this.entities = entities);
     return response;
