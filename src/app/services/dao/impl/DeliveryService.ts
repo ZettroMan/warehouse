@@ -28,7 +28,7 @@ export class DeliveryService extends CommonService<Delivery> implements Delivery
       params = params.set('first', this.toStringDate(startDate));
     }
     if (endDate) {
-      params = params.append('last', this.toStringDate(endDate));
+      params = params.set('last', this.toStringDate(endDate));
     }
     return this.http.get<Delivery[]>(this.baseUrl, {params});
   }

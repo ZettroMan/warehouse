@@ -16,13 +16,14 @@ import {MatNativeDateModule} from '@angular/material/core';
 import {MatDatepickerModule} from '@angular/material/datepicker';
 import {MatMenuModule} from '@angular/material/menu';
 import {MatSnackBarModule} from '@angular/material/snack-bar';
+import {MatCheckboxModule} from '@angular/material/checkbox';
 
 const MaterialComponents = [
   MatButtonModule, MatIconModule, MatTableModule, MatSortModule,
   MatPaginatorModule, MatSidenavModule, MatToolbarModule,
   MatListModule, MatDialogModule, MatFormFieldModule, MatInputModule,
   MatSelectModule, MatGridListModule, MatNativeDateModule,
-  MatDatepickerModule, MatMenuModule, MatSnackBarModule
+  MatDatepickerModule, MatMenuModule, MatSnackBarModule, MatCheckboxModule
 ];
 
 @NgModule({

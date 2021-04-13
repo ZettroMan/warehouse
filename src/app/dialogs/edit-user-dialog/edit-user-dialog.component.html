@@ -31,7 +31,7 @@
   <mat-form-field>
     <mat-label>Роли в системе</mat-label>
     <mat-select formControlName="roles" [compareWith]="compareFn" multiple>
-      <mat-option *ngFor="let role of allRoles" [value]="role">{{role.role}}</mat-option>
+      <mat-option *ngFor="let role of allRoles" [value]="role">{{mapRole(role.role)}}</mat-option>
     </mat-select>
   </mat-form-field>
 
