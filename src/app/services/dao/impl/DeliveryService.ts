@@ -39,7 +39,7 @@ export class DeliveryService extends CommonService<Delivery> implements Delivery
   }
 
   addAll(obj: Delivery[]): Observable<boolean> {
-    return this.http.post<boolean>(this.baseUrl + '/grouped-save', obj);
+    return this.http.post<boolean>('https://command-project-warehouse.herokuapp.com/api/v1/deliveries/grouped-save', obj);
   }
 
   loadToExcel(data: Delivery[], displayedColumns: string[]): void {

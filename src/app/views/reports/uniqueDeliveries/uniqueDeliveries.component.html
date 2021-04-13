@@ -1,4 +1,3 @@
-
 <div class="content">
   <div class="container-fluid">
     <div class="row">
@@ -20,13 +19,15 @@
                 <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                 <mat-date-range-picker #picker></mat-date-range-picker>
 
-                <mat-error *ngIf="range.controls.start.hasError('matStartDateInvalid')">Недопустимая стартовая дата</mat-error>
-                <mat-error *ngIf="range.controls.end.hasError('matEndDateInvalid')">Недопустимая конечная дата</mat-error>
+                <mat-error *ngIf="range.controls.start.hasError('matStartDateInvalid')">Недопустимая стартовая дата
+                </mat-error>
+                <mat-error *ngIf="range.controls.end.hasError('matEndDateInvalid')">Недопустимая конечная дата
+                </mat-error>
               </mat-form-field>
 
-              <p>Выбранный диапазон: {{range.value | json}}</p>
+              <!--              <p>Выбранный диапазон: {{range.value | json}}</p>-->
 
-              <mat-card-actions>
+              <mat-card-actions style="margin-left: 40px">
                 <button mat-raised-button color="primary"
                         (click)="send()">
                   Отправить
@@ -34,6 +35,27 @@
               </mat-card-actions>
 
             </div>
+            <div style="margin-top: 100px">
+              <ngx-charts-bar-vertical *ngIf="deliveriesInRange.length > 0"
+                                       [view]="view"
+                                       [barPadding]="5"
+                                       [scheme]="colorScheme"
+                                       [results]="deliveriesInRange"
+                                       [gradient]="gradient"
+                                       [xAxis]="showXAxis"
+                                       [yAxis]="showYAxis"
+                                       [legend]="showLegend"
+                                       [legendTitle]="legendTitle"
+                                       [showDataLabel]="showDataLabel"
+                                       [showXAxisLabel]="showXAxisLabel"
+                                       [showYAxisLabel]="showYAxisLabel"
+                                       [xAxisLabel]="xAxisLabel"
+                                       [yAxisLabel]="yAxisLabel"
+                                       (select)="onSelect($event)">
+              </ngx-charts-bar-vertical>
+
+            </div>
+
           </div>
         </div>
       </div>
