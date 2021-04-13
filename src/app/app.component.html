@@ -1,6 +1,10 @@
 <mat-sidenav-container style="height: 100%">
 
-  <mat-sidenav *ngIf="_authService.loggedIn()" mode="side" [(opened)]="menuOpened">
+  <mat-sidenav id="sidenav" *ngIf="_authService.loggedIn()"
+               mode="side"
+               [class.menu-opened]="menuOpened"
+               [class.menu-closed]="!menuOpened"
+               opened>
     <div class="logo"><a href="#" class="simple-text">
       My Warehouse
     </a></div>
@@ -63,10 +67,10 @@
 
   <!--  основной контент-->
   <!--  ng-sidebar-content - над чем будет открываться слайд-меню-->
-  <mat-sidenav-content>
+  <mat-sidenav-content [ngStyle]="{ 'margin-left.px': contentMargin }">
     <mat-toolbar *ngIf="_authService.loggedIn()" class="topnavbar">
       <div class="col-8 text-left align-self-top">
-        <button mat-icon-button disableRipple type="button" (click)="menuOpened=!menuOpened">
+        <button mat-icon-button disableRipple type="button" (click)="toggleMenu()">
           <mat-icon>menu</mat-icon>
         </button>
       </div>

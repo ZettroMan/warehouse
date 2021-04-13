@@ -1,29 +1,6 @@
-/*.demo-header {*/
-/*  align-items: center;*/
-/*  !*background: $brand;*!*/
-/*  !*box-shadow: 0 0.1em 1.5em rgba($dark-grey, 0.5);*!*/
-/*  !*color: $white;*!*/
-/*  display: flex;*/
-/*  padding: 1em;*/
+/*.mat-sidenav, .mat-sidenav-content {*/
+/*  padding: 8px;*/
 /*}*/
-
-/*.demo-header__toggle {*/
-/*  background: transparent;*/
-/*  !*border: 0.15rem solid $white;*!*/
-/*  border-left: 0;*/
-/*  border-right: 0;*/
-/*  cursor: pointer;*/
-/*  font-size: 0;*/
-/*  height: 1.5rem;*/
-/*  margin-right: 1rem;*/
-/*  position: relative;*/
-/*  width: 2rem;*/
-
-/*}*/
-
-.mat-sidenav, .mat-sidenav-content {
-  padding: 8px;
-}
 
 .mat-sidenav {
   background-color: #fbf8ff;
@@ -35,6 +12,7 @@
 .mat-sidenav-content {
   background-color: #e8e1e8;
 }
+
 
 .mat-sidenav .logo .simple-text {
   text-transform: uppercase;
@@ -76,21 +54,18 @@
   line-height: 20px;
 }
 
-.mat-list-item {
-  border-radius: 8px;
-  height: 46px !important;
-  margin: 6px 0;
+#sidenav.menu-opened {
+  width: 260px;
 }
 
-.mat-list-item:hover {
-  background: rgba(160, 5, 181, .1);
-  cursor: pointer;
+#sidenav.menu-closed {
+  width: 70px;
 }
 
-.mat-list-base {
-  padding-right: 16px;
-  padding-left: 16px;
-}
+/*.mat-list-base {*/
+/*  padding-right: 16px;*/
+/*  padding-left: 16px;*/
+/*}*/
 
 .topnavbar {
   justify-content: space-between;
@@ -109,14 +84,40 @@ span {
   color: #9b71ec;
 }
 
-.mat-sidenav .mat-icon:active {
+.mat-icon:active {
   color: #ececec;
 }
 
-.mat-sidenav .mat-list-item.active {
+.mat-list-item {
+  border-radius: 8px;
+  height: 46px !important;
+  margin: 6px 0;
+}
+
+.mat-list-item:hover {
+  background: transparent;
+  color: #752492;
+  cursor: pointer;
+}
+
+.mat-list-item.active .mat-icon {
   background: linear-gradient(60deg, #7e4a8a, #752492);
   box-shadow: 0 0 10px 2px rgba(0, 0, 0, 0.4);
   color: #eaeaea;
+}
+
+.mat-list-item.active .mat-line {
+  color: #752492;
+  font-weight: bolder;
+}
+
+.mat-list-item  {
+  color: #000000;
+}
+
+.mat-list-item:hover .mat-icon  {
+  background-color: rgba(249, 164, 218, 0.15);
+  box-shadow: 0 0 10px 2px rgba(0, 0, 0, 0.4);
 }
 
 .my-menu-button {
@@ -134,11 +135,11 @@ span {
   font: 400 11px system-ui;
 }
 
-.my-menu-button:hover {
-  background: linear-gradient(60deg, #b68ec1, #752492);
-  box-shadow: 0 0 10px 2px rgba(0, 0, 0, 0.4);
-  color: #eaeaea;
-}
+/*.my-menu-button:hover  {*/
+/*  background: linear-gradient(60deg, #b68ec1, #752492);*/
+/*  box-shadow: 0 0 10px 2px rgba(0, 0, 0, 0.4);*/
+/*  color: #eaeaea;*/
+/*}*/
 
 
 /*router-link-active {*/
