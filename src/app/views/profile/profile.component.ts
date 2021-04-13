@@ -6,6 +6,7 @@ import {Role} from '../../model/Role';
 import {FormBuilder, FormGroup} from '@angular/forms';
 import {AuthService} from '../../security/auth.service';
 import {DialogService} from '../../services/dialog.service';
+import {roleMapper} from '../../services/dao/impl/RoleService';
 
 @Component({
   selector: 'app-profile',
@@ -67,13 +68,15 @@ export class ProfileComponent implements OnInit {
           .subscribe(() => console.log('Password has been changed'), error => console.log(error));
       }
     });
-
   }
 
   getFormattedRoles(roles: Role[]): string {
     let rolesList = '';
     for (let i = 0; i < roles.length; i++) {
-      i === roles.length - 1 ? rolesList = rolesList + roles[i].role : rolesList = rolesList + roles[i].role + ', ';
+      rolesList = rolesList + roleMapper[roles[i].role];
+      if (i < roles.length - 1) {
+        rolesList = rolesList + ', ';
+      }
     }
     return rolesList;
   }
@@ -81,7 +84,10 @@ export class ProfileComponent implements OnInit {
   getFormattedBrands(brands: Brand[]): string {
     let brandsList = '';
     for (let i = 0; i < brands.length; i++) {
-      i === brands.length - 1 ? brandsList = brandsList + brands[i].abbr : brandsList = brandsList + brands[i].abbr + ', ';
+      brandsList = brandsList + brands[i].abbr;
+      if (i < brands.length - 1) {
+        brandsList = brandsList + ', ';
+      }
     }
     return brandsList;
   }

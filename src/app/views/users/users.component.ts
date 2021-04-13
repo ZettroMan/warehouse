@@ -7,6 +7,7 @@ import {Role} from '../../model/Role';
 import {Brand} from '../../model/Brand';
 import {MatTableDataSource} from '@angular/material/table';
 import {AuthService} from '../../security/auth.service';
+import {roleMapper} from '../../services/dao/impl/RoleService';
 
 @Component({
   selector: 'app-users',
@@ -41,7 +42,7 @@ export class UsersComponent implements OnInit {
       if (user) {
         console.log('Created');
         console.log(user);
-        this.userService.add(user).subscribe(() => this.reloadData(), error => this.reloadData());
+        this.userService.add(user).subscribe(() => this.reloadData(), () => this.reloadData());
       }
     });
   }
@@ -53,12 +54,12 @@ export class UsersComponent implements OnInit {
       if (user) {
         if (typeof user === 'string') {
           if (user === 'delete') {
-            this.userService.delete(row.id).subscribe(() => this.reloadData(), error => this.reloadData());
+            this.userService.delete(row.id).subscribe(() => this.reloadData(), () => this.reloadData());
           }
         } else {
           console.log('Updated');
           console.log(user);
-          this.userService.update(user.id, user).subscribe(() => this.reloadData(), error => this.reloadData());
+          this.userService.update(user.id, user).subscribe(() => this.reloadData(), () => this.reloadData());
         }
       }
     });
@@ -73,7 +74,10 @@ export class UsersComponent implements OnInit {
   getFormattedRoles(roles: Role[]): string {
     let rolesList = '';
     for (let i = 0; i < roles.length; i++) {
-      i === roles.length - 1 ? rolesList = rolesList + roles[i].role : rolesList = rolesList + roles[i].role + ', ';
+      rolesList = rolesList + roleMapper[roles[i].role];
+      if (i < roles.length - 1) {
+        rolesList = rolesList + ', ';
+      }
     }
     return rolesList;
   }
@@ -81,7 +85,10 @@ export class UsersComponent implements OnInit {
   getFormattedBrands(brands: Brand[]): string {
     let brandsList = '';
     for (let i = 0; i < brands.length; i++) {
-      i === brands.length - 1 ? brandsList = brandsList + brands[i].abbr : brandsList = brandsList + brands[i].abbr + ', ';
+      brandsList = brandsList + brands[i].abbr;
+      if (i < brands.length - 1) {
+        brandsList = brandsList + ', ';
+      }
     }
     return brandsList;
   }
