@@ -4,6 +4,12 @@ import {Role} from '../../../model/Role';
 import {RoleDao} from '../interface/RoleDao';
 import {CommonCachedService} from './CommonCachedService';
 
+export const roleMapper = {
+  ROLE_ADMIN : 'Администратор',
+  ROLE_BRAND_MANAGER: 'Бренд-менеджер',
+  ROLE_WAREHOUSE: 'Оператор склада'
+};
+
 // глобальная переменная для хранения URL
 export const ROLES_URL_TOKEN = new InjectionToken<string>('url');
 
@@ -17,6 +23,7 @@ export class RoleService extends CommonCachedService<Role> implements RoleDao {
               private http: HttpClient // для выполнения HTTP запросов
   ) {
     super(baseUrl, http);
+    roleMapper.ROLE_ADMIN = 'Администратор';
   }
 
   toRole(text: string): Role {

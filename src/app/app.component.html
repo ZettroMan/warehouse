@@ -1,3 +1,22 @@
+<mat-toolbar *ngIf="_authService.loggedIn()" class="topnavbar" color="primary">
+  <div class="col-8 text-left align-self-top">
+    <button mat-icon-button disableRipple type="button" (click)="toggleMenu()">
+      <mat-icon *ngIf="menuOpened">keyboard_arrow_left</mat-icon>
+      <mat-icon *ngIf="!menuOpened">keyboard_arrow_right</mat-icon>
+    </button>
+    <h3 style="display: inline-block; margin-left: 1rem; color: #fff">My Warehouse</h3>
+  </div>
+  <!--  помощь, настройки-->
+  <div class="col-4 text-right align-self-top">
+    <button mat-icon-button class="header-icon">
+      <mat-icon>settings</mat-icon>
+    </button>
+    <button mat-icon-button class="header-icon">
+      <mat-icon>help</mat-icon>
+    </button>
+  </div>
+</mat-toolbar>
+
 <mat-sidenav-container style="height: 100%">
 
   <mat-sidenav id="sidenav" *ngIf="_authService.loggedIn()"
@@ -5,11 +24,15 @@
                [class.menu-opened]="menuOpened"
                [class.menu-closed]="!menuOpened"
                opened>
-    <div class="logo"><a href="#" class="simple-text">
-      My Warehouse
-    </a></div>
+    <!--    <div class="logo"><a href="#" class="simple-text">-->
+    <!--      My Warehouse-->
+    <!--    </a></div>-->
     <div>
       <mat-list>
+        <mat-list-item class="profile-item" *ngIf="_authService.isRouteEnabled('profile')" routerLink="/profile" routerLinkActive="active">
+          <mat-icon matListIcon>person</mat-icon>
+          <h3 matLine>Мой профиль</h3>
+        </mat-list-item>
         <mat-list-item *ngIf="_authService.isRouteEnabled('users')" routerLink="/users" routerLinkActive="active">
           <mat-icon matListIcon>groups</mat-icon>
           <h3 matLine>Пользователи</h3>
@@ -44,23 +67,14 @@
         </mat-list-item>
         <mat-menu #report="matMenu">
           <button class="my-menu-button" mat-menu-item routerLink="/reports" (click)="onSidenavClose()">
-            <p class="mat-menu-item-submenu-trigger my-sub-menu">
-            Отчёт по уникальным поставкам
-          </p></button>
+            <span class="mat-menu-item-submenu-trigger my-sub-menu">
+              Отчёт по уникальным поставкам
+            </span></button>
           <button class="my-menu-button" mat-menu-item routerLink="/reports" (click)="onSidenavClose()">
-            <p class="mat-menu-item-submenu-trigger my-sub-menu">
-            Отчёт на будущее...
-            </p></button>
+            <span class="mat-menu-item-submenu-trigger my-sub-menu">
+              Отчёт на будущее...
+            </span></button>
         </mat-menu>
-        <mat-list-item *ngIf="_authService.isRouteEnabled('profile')" routerLink="/profile" routerLinkActive="active">
-          <mat-icon matListIcon>person</mat-icon>
-          <h3 matLine>Мой профиль</h3>
-        </mat-list-item>
-<!--        add_box-->
-<!--        <mat-list-item routerLink="/login" routerLinkActive="active">-->
-<!--          <mat-icon matListIcon>person</mat-icon>-->
-<!--          <h3 matLine>Выход</h3>-->
-<!--        </mat-list-item>-->
       </mat-list>
     </div>
   </mat-sidenav>
@@ -68,22 +82,6 @@
   <!--  основной контент-->
   <!--  ng-sidebar-content - над чем будет открываться слайд-меню-->
   <mat-sidenav-content [ngStyle]="{ 'margin-left.px': contentMargin }">
-    <mat-toolbar *ngIf="_authService.loggedIn()" class="topnavbar">
-      <div class="col-8 text-left align-self-top">
-        <button mat-icon-button disableRipple type="button" (click)="toggleMenu()">
-          <mat-icon>menu</mat-icon>
-        </button>
-      </div>
-      <!--  помощь, настройки-->
-      <div class="col-4 text-right align-self-top">
-        <button mat-icon-button class="header-icon">
-          <mat-icon>settings</mat-icon>
-        </button>
-        <button mat-icon-button class="header-icon">
-          <mat-icon>help</mat-icon>
-        </button>
-      </div>
-    </mat-toolbar>
 
     <div class="container-fluid">
       <router-outlet></router-outlet>

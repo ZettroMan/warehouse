@@ -2,7 +2,7 @@ import {Component, Inject, OnInit} from '@angular/core';
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
 import {Brand} from '../../model/Brand';
 import {BrandService} from '../../services/dao/impl/BrandService';
-import {RoleService} from '../../services/dao/impl/RoleService';
+import {roleMapper, RoleService} from '../../services/dao/impl/RoleService';
 import {Role} from '../../model/Role';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {User} from '../../model/User';
@@ -75,5 +75,9 @@ export class EditUserDialogComponent implements OnInit {
       if (role.role === 'ROLE_ADMIN' || role.role === 'ROLE_BRAND_MANAGER') { return true; }
     }
     return false;
+  }
+
+  mapRole(role: string): string {
+    return roleMapper[role];
   }
 }
