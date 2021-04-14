@@ -1,3 +1,11 @@
+.grayed {
+  background-color: #a1a1a1;
+}
+
+.grayed:hover {
+  cursor: not-allowed;
+}
+
 .mat-cell,
 .mat-header-cell {
   display: flex;
@@ -20,9 +28,46 @@
   flex: 0 0 3% !important;
 }
 
-.mat-column-type {
-  flex: 0 0 12% !important;
+.mat-column-id {
+  flex: 0 0 4% !important;
 }
+
+.mat-column-deliveryType {
+  flex: 0 0 7% !important;
+}
+
+.mat-column-numberOfPlaces {
+  flex: 0 0 5% !important;
+}
+
+.mat-column-torgNumber {
+  flex: 0 0 4% !important;
+}
+
+.mat-column-invoice {
+  flex: 0 0 5% !important;
+}
+
+.mat-column-deliveryDate {
+  flex: 0 0 5% !important;
+}
+
+.mat-column-warehouse {
+  flex: 0 0 5% !important;
+}
+
+/*.mat-column-deliveryTime {*/
+/*  flex: 0 0 7% !important;*/
+/*}*/
+
+/*.mat-column-brand {*/
+/*  flex: 0 0 6% !important;*/
+/*}*/
+
+
+/*.mat-column-shop {*/
+/*  flex: 0 0 5% !important;*/
+/*}*/
 
 
 .myStyle {
@@ -47,14 +92,6 @@
   padding: 0 5px;
   font-size: 11px;
   text-align: center;
-}
-
-.mat-column-deliveryDate {
-  flex: 0 0 7% !important;
-}
-
-.mat-column-deliveryTime {
-  flex: 0 0 7% !important;
 }
 
 .mat-paginator {

@@ -43,8 +43,6 @@ export class DeliveryService extends CommonService<Delivery> implements Delivery
   }
 
   loadToExcel(data: Delivery[], displayedColumns: string[]): void {
-    console.log(data);
-    console.log(displayedColumns);
     this.http.post('https://command-project-warehouse.herokuapp.com/api/v1/deliveries/report',
       data, {params: {columns: displayedColumns}, responseType: 'blob'})
       .subscribe(onloadeddata => this.downloadFile(onloadeddata),
