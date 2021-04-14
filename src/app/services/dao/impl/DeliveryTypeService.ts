@@ -7,10 +7,14 @@ import {CommonCachedService} from './CommonCachedService';
 // глобальная переменная для хранения URL
 export const DELIVERY_TYPES_URL_TOKEN = new InjectionToken<string>('url');
 
+export const deliveryTypeMapper = {
+  TO_WAREHOUSE : 'На склад',
+  CROSS_DOCKING: 'Кросс-докинг'
+};
+
 @Injectable({
   providedIn: 'root'
 })
-
 export class DeliveryTypeService extends CommonCachedService<DeliveryType> implements DeliveryTypeDao {
 
   constructor(@Inject(DELIVERY_TYPES_URL_TOKEN) private baseUrl,

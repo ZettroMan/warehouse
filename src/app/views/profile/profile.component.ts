@@ -28,6 +28,9 @@ export class ProfileComponent implements OnInit {
 
     this.userService.findAll().subscribe(() => {
       this.user = this.userService.getCurrentUser();
+      if (!this.user) {
+        this.logout();
+      }
       this.form = this.fb.group({
         username: [this.user.username],
         fullName: [this.user.fullName],
@@ -94,7 +97,6 @@ export class ProfileComponent implements OnInit {
 
   logout(): void {
     this.authService.logoutUser();
-    // this.isLoginFailed = false;
 
   }
 

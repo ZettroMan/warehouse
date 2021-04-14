@@ -12,7 +12,7 @@ import {WarehouseService} from '../../services/dao/impl/WarehouseService';
 import {DeliveryTimeService} from '../../services/dao/impl/DeliveryTimeService';
 import {DeliveryTime} from '../../model/DeliveryTime';
 import {DeliveryType} from '../../model/DeliveryType';
-import {DeliveryTypeService} from '../../services/dao/impl/DeliveryTypeService';
+import {deliveryTypeMapper, DeliveryTypeService} from '../../services/dao/impl/DeliveryTypeService';
 
 @Component({
   selector: 'app-edit-delivery-dialog',
@@ -73,7 +73,6 @@ export class EditDeliveryDialogComponent implements OnInit {
   }
 
   save(): void {
-    console.log(this.form.value);
     this.dialogRef.close(this.form.value);
   }
 
@@ -82,11 +81,16 @@ export class EditDeliveryDialogComponent implements OnInit {
   }
 
   delete(): void {
-    this.dialogService.openConfirmDialog('Удалить поставку № ' + this.delivery.id + '?')
+    this.dialogService.openConfirmDialog('Удалить приход № ' + this.delivery.id + '?')
       .afterClosed().subscribe(res => {
       if (res) {
         this.dialogRef.close('delete');
       }
     });
   }
+
+  mapDeliveryType(dt: string): string {
+    return deliveryTypeMapper[dt];
+  }
+
 }
