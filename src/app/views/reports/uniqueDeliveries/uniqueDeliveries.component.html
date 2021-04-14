@@ -25,9 +25,7 @@
                 </mat-error>
               </mat-form-field>
 
-              <!--              <p>Выбранный диапазон: {{range.value | json}}</p>-->
-
-              <mat-card-actions style="margin-left: 40px">
+              <mat-card-actions style="margin-left: 40px; display: inline-block">
                 <button mat-raised-button color="primary"
                         (click)="send()">
                   Отправить
@@ -36,7 +34,7 @@
 
             </div>
             <div style="margin-top: 100px">
-              <ngx-charts-bar-vertical *ngIf="deliveriesInRange.length > 0"
+              <ngx-charts-bar-horizontal *ngIf="deliveriesInRange.length > 0"
                                        [view]="view"
                                        [barPadding]="5"
                                        [scheme]="colorScheme"
@@ -52,7 +50,8 @@
                                        [xAxisLabel]="xAxisLabel"
                                        [yAxisLabel]="yAxisLabel"
                                        (select)="onSelect($event)">
-              </ngx-charts-bar-vertical>
+              </ngx-charts-bar-horizontal>
+
 
             </div>
 

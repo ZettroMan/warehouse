@@ -53,6 +53,7 @@ registerLocaleData(localeRu);
     WarehousesComponent,
     UsersComponent,
     DeliveriesComponent,
+    MatColumnSelectDialogComponent,
     UniqueDeliveriesComponent,
     ProfileComponent,
     ShopsComponent,

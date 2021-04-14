@@ -8,24 +8,22 @@ export interface ChartObject {
   value: number;
 }
 
-
 @Component({
   selector: 'app-reports',
   templateUrl: './uniqueDeliveries.component.html',
   styleUrls: ['./uniqueDeliveries.component.css']
 })
 export class UniqueDeliveriesComponent implements OnInit {
-  view: any[] = [900, 400];
-
+  view: any[];
   // options
   showXAxis = true;
   showYAxis = true;
   gradient = true;
-  showLegend = true;
+  showLegend = false;
   showXAxisLabel = true;
-  xAxisLabel = 'Дата';
+  xAxisLabel = 'Кол-во поставок';
   showYAxisLabel = true;
-  yAxisLabel = 'Кол-во поставок';
+  yAxisLabel = 'Дата';
   legendTitle = 'Даты поставок';
   showDataLabel = true;
 
@@ -48,13 +46,10 @@ export class UniqueDeliveriesComponent implements OnInit {
 
   send(): void {
     this.deliveriesInRange = [];
-    this.deliveryService.findByDateRange(this.range.controls.start.value, this.range.controls.end.value)
+    this.deliveryService.getUniqueDeliveriesReport(this.range.controls.start.value, this.range.controls.end.value)
       .subscribe(value => {
-        value.forEach(value1 => this.deliveriesInRange.push({
-            name: value1.deliveryDate.toString(),
-            value: 5
-          }
-        ));
+        this.view = [900, value.length * 25];
+        value.forEach(v => this.deliveriesInRange.push(v));
       }, () => console.log('error'));
   }
 

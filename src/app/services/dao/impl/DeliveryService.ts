@@ -33,6 +33,17 @@ export class DeliveryService extends CommonService<Delivery> implements Delivery
     return this.http.get<Delivery[]>(this.baseUrl, {params});
   }
 
+  getUniqueDeliveriesReport(startDate: any, endDate: any): Observable<any[]> {
+    let params = new HttpParams();
+    if (startDate) {
+      params = params.set('first', this.toStringDate(startDate));
+    }
+    if (endDate) {
+      params = params.set('last', this.toStringDate(endDate));
+    }
+    return this.http.get<any[]>('https://command-project-warehouse.herokuapp.com/api/v1/deliveries/uniqueDeliveriesReport', {params});
+  }
+
   toStringDate(dateValue: any): string {
     const dateParts = dateValue.toLocaleDateString().split('.');
     return dateParts[2] + '-' + (dateParts[1]) + '-' + dateParts[0];
