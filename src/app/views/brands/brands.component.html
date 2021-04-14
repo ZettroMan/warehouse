@@ -16,6 +16,12 @@
                   <mat-cell *matCellDef="let i = index"> {{i + 1}} </mat-cell>
                 </ng-container>
 
+                <!-- Id Column -->
+                <ng-container matColumnDef="Id">
+                  <mat-header-cell *matHeaderCellDef>ID</mat-header-cell>
+                  <mat-cell *matCellDef="let element"> {{element.id}} </mat-cell>
+                </ng-container>
+
                 <!-- Brand name Column -->
                 <ng-container matColumnDef="name">
                   <mat-header-cell *matHeaderCellDef> Наименование</mat-header-cell>

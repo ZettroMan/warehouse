@@ -1,22 +1,22 @@
-<h2 mat-dialog-title style="display: inline-block" [hidden]="delivery.id == null">Поставка № {{delivery.id}} </h2>
-<h3 mat-dialog-title style="display: inline-block; margin-left: 3rem" [hidden]="delivery.user == null">Создана пользователем: {{delivery.user.fullName}} </h3>
+<h2 mat-dialog-title style="display: inline-block" [hidden]="delivery.id == null">Приход № {{delivery.id}} </h2>
+<h3 mat-dialog-title style="display: inline-block; margin-left: 3rem" [hidden]="delivery.user == null">Создан пользователем: {{delivery.user.fullName}} </h3>
 <mat-dialog-content [formGroup]="form">
   <mat-grid-list cols="2">
     <mat-grid-tile>
       <div class="controls-container">
         <mat-form-field>
-          <mat-label>Дата поставки</mat-label>
+          <mat-label>Дата</mat-label>
           <input matInput formControlName="deliveryDate" [matDatepicker]="picker">
           <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
           <mat-datepicker #picker></mat-datepicker>
         </mat-form-field>
 
         <mat-form-field>
-          <mat-label>Время поставки</mat-label>
+          <mat-label>Время</mat-label>
           <mat-select [compareWith]="compareFn" formControlName="deliveryTime">
             <mat-option *ngFor="let time of allTimes" [value]="time">{{time.deliveryTime}}</mat-option>
           </mat-select>
-          <mat-error *ngIf="form.controls['deliveryTime'].errors?.required">Укажите время поставки</mat-error>
+          <mat-error *ngIf="form.controls['deliveryTime'].errors?.required">Укажите время</mat-error>
         </mat-form-field>
 
         <mat-form-field>
@@ -43,11 +43,11 @@
         </mat-form-field>
 
         <mat-form-field>
-          <mat-label>Тип поставки</mat-label>
+          <mat-label>Тип</mat-label>
           <mat-select [compareWith]="compareFn" formControlName="deliveryType">
-            <mat-option *ngFor="let deliveryType of allTypes" [value]="deliveryType">{{deliveryType.type}}</mat-option>
+            <mat-option *ngFor="let deliveryType of allTypes" [value]="deliveryType">{{mapDeliveryType(deliveryType.type)}}</mat-option>
           </mat-select>
-          <mat-error *ngIf="form.controls['deliveryType'].errors?.required">Укажите тип поставки</mat-error>
+          <mat-error *ngIf="form.controls['deliveryType'].errors?.required">Укажите тип</mat-error>
         </mat-form-field>
       </div>
     </mat-grid-tile>
@@ -61,7 +61,7 @@
         </mat-form-field>
 
         <mat-form-field>
-          <mat-label>Комментарий к поставке</mat-label>
+          <mat-label>Комментарий</mat-label>
           <input matInput formControlName="comment">
         </mat-form-field>
 

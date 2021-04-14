@@ -1,8 +1,8 @@
 <div class="content">
   <div class="search-div">
-    <button mat-raised-button (click)="addDelivery()" class="btn-secondary">
+    <button *ngIf="isAdmin || isBrandManager" mat-raised-button (click)="addDelivery()" class="btn-secondary">
       <mat-icon>add</mat-icon>
-      Записаться
+      Создать приход
     </button>
     <mat-form-field class="date-form-field">
       <mat-label>Выберите интервал дат</mat-label>
@@ -16,13 +16,15 @@
       <mat-error *ngIf="range.controls.end.hasError('matEndDateInvalid')">Недопустимая конечная дата</mat-error>
     </mat-form-field>
 
-    <button mat-raised-button color="primary" style="height: 40px; margin-left: 1rem" (click)="resetDateFilter()">Сбросить</button>
+    <mat-checkbox *ngIf="isBrandManager" style="padding-left: 1rem" [(ngModel)]="onlyMyRecords" (change)="applyFilter()">Только мои записи</mat-checkbox>
+    <mat-checkbox *ngIf="isBrandManager" style="padding-left: 1rem" [(ngModel)]="onlyMyBrands" (change)="applyFilter()">Только мои бренды</mat-checkbox>
+    <button mat-raised-button color="primary" style="height: 40px; margin-left: 1rem" (click)="resetFilter()">Сбросить фильтр</button>
     <button mat-raised-button color="primary" style="height: 40px; margin-left: 1rem" (click)="loadToExcel()">Экспорт в Excel</button>
     <div class="row">
       <div class="col-md-12">
         <div class="card">
           <div class="card-header card-header-primary">
-            <h4 class="card-title ">Поставки</h4>
+            <h4 class="card-title ">Приходы</h4>
           </div>
           <div class="card-body">
             <div class="table-responsive">
@@ -35,7 +37,7 @@
 
                 <!-- Id Column -->
                 <ng-container matColumnDef="id">
-                  <mat-header-cell *matHeaderCellDef mat-sort-header>Номер<br>поставки</mat-header-cell>
+                  <mat-header-cell *matHeaderCellDef mat-sort-header>ID</mat-header-cell>
                   <mat-cell *matCellDef="let element"> {{element.id}}</mat-cell>
                 </ng-container>
 
@@ -71,25 +73,25 @@
 
                 <!-- Order Column -->
                 <ng-container matColumnDef="orderNumber">
-                  <mat-header-cell *matHeaderCellDef mat-sort-header>Заказ</mat-header-cell>
+                  <mat-header-cell *matHeaderCellDef mat-sort-header>Внутренний<br>заказ</mat-header-cell>
                   <mat-cell *matCellDef="let element"> {{element.orderNumber}}</mat-cell>
                 </ng-container>
 
                 <!-- Delivery Type Column -->
                 <ng-container matColumnDef="deliveryType">
-                  <mat-header-cell *matHeaderCellDef mat-sort-header>Тип<br>поставки</mat-header-cell>
-                  <mat-cell *matCellDef="let element"> {{element.deliveryType.type}}</mat-cell>
+                  <mat-header-cell *matHeaderCellDef mat-sort-header>Тип</mat-header-cell>
+                  <mat-cell *matCellDef="let element"> {{mapDeliveryType(element.deliveryType.type)}}</mat-cell>
                 </ng-container>
 
                 <!-- Sender Column -->
                 <ng-container matColumnDef="sender">
-                  <mat-header-cell *matHeaderCellDef mat-sort-header>Отпра-<br>витель</mat-header-cell>
+                  <mat-header-cell *matHeaderCellDef mat-sort-header>Отправитель</mat-header-cell>
                   <mat-cell *matCellDef="let element"> {{element.sender}}</mat-cell>
                 </ng-container>
 
                 <!-- Comment Column -->
                 <ng-container matColumnDef="comment">
-                  <mat-header-cell *matHeaderCellDef mat-sort-header>Коммен-<br>тарий</mat-header-cell>
+                  <mat-header-cell *matHeaderCellDef mat-sort-header>Комментарий</mat-header-cell>
                   <mat-cell *matCellDef="let element"> {{element.comment}}</mat-cell>
                 </ng-container>
 
@@ -113,7 +115,7 @@
 
                 <!-- Invoice Column -->
                 <ng-container matColumnDef="invoice">
-                  <mat-header-cell *matHeaderCellDef mat-sort-header>Счет-фактура</mat-header-cell>
+                  <mat-header-cell *matHeaderCellDef mat-sort-header>Счет-<br>фактура</mat-header-cell>
                   <mat-cell *matCellDef="let element"> {{element.invoice}}</mat-cell>
                 </ng-container>
 
@@ -130,7 +132,8 @@
                 </ng-container>
 
                 <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-                <mat-row (click)="editDelivery(row)" *matRowDef="let row; columns: displayedColumns;"></mat-row>
+                <mat-row (click)="editDelivery(row)" *matRowDef="let row; columns: displayedColumns;"
+                [class.grayed]="isBrandManager && !isMyBrand(row.brand.id)"></mat-row>
                 <mat-footer-row *matFooterRowDef="['loading']"
                                 [ngClass]="{'hide':dataSource!=null && dataSource.data.length!=0}"></mat-footer-row>
               </mat-table>
