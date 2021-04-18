@@ -1,30 +1,28 @@
-<mat-toolbar *ngIf="_authService.loggedIn()" class="topnavbar" color="primary">
-  <div class="col-8 text-left align-self-top">
-    <button mat-icon-button disableRipple type="button" (click)="toggleMenu()">
-      <mat-icon *ngIf="menuOpened">keyboard_arrow_left</mat-icon>
-      <mat-icon *ngIf="!menuOpened">keyboard_arrow_right</mat-icon>
-    </button>
-    <h3 style="display: inline-block; margin-left: 1rem; color: #fff">My Warehouse</h3>
+<div class="content-wrapper">
+  <div class="toolbar-block" *ngIf="_authService.loggedIn()">
+    <mat-toolbar class="topnavbar">
+      <div class="col-8 text-left align-self-top">
+        <button mat-icon-button disableRipple type="button" (click)="toggleMenu()">
+          <mat-icon *ngIf="menuOpened">keyboard_arrow_left</mat-icon>
+          <mat-icon *ngIf="!menuOpened">keyboard_arrow_right</mat-icon>
+        </button>
+        <h3 style="display: inline-block; margin-left: 1rem; color: #fff">My Warehouse</h3>
+      </div>
+      <!--  Помощь, настройки. Пока убрано, так как будет реализовано позже -->
+      <div class="col-4 text-right align-self-top" hidden>
+        <button mat-icon-button class="header-icon">
+          <mat-icon>settings</mat-icon>
+        </button>
+        <button mat-icon-button class="header-icon">
+          <mat-icon>help</mat-icon>
+        </button>
+      </div>
+    </mat-toolbar>
   </div>
-  <!--  Помощь, настройки. Пока убрано, так как будет реализовано позже -->
-  <div class="col-4 text-right align-self-top" hidden>
-    <button mat-icon-button class="header-icon">
-      <mat-icon>settings</mat-icon>
-    </button>
-    <button mat-icon-button class="header-icon">
-      <mat-icon>help</mat-icon>
-    </button>
-  </div>
-</mat-toolbar>
-<!--<div>-->
-  <mat-sidenav-container style="height: 100%">
-
-    <mat-sidenav id="sidenav" *ngIf="_authService.loggedIn()"
-                 mode="side"
-                 [class.menu-opened]="menuOpened"
-                 [class.menu-closed]="!menuOpened"
-                 [class.top-indent]="_authService.loggedIn()"
-                 opened>
+  <div class="all-content">
+    <div class="sidebar" id="sidebar" *ngIf="_authService.loggedIn()"
+         [class.menu-opened]="menuOpened"
+         [class.menu-closed]="!menuOpened">
       <div>
         <mat-list>
           <mat-list-item class="profile-item" *ngIf="_authService.isRouteEnabled('profile')" routerLink="/profile" routerLinkActive="active">
@@ -65,9 +63,9 @@
           </mat-list-item>
           <mat-menu #report="matMenu">
             <button class="my-menu-button my-sub-menu" mat-menu-item routerLink="/reports" (click)="onSidenavClose()">
-            <span>
-              Отчёт по уникальным поставкам
-            </span></button>
+                  <span>
+                    Отчёт по уникальным поставкам
+                  </span></button>
             <!--          <button class="my-menu-button" mat-menu-item routerLink="/reports" (click)="onSidenavClose()">-->
             <!--            <span class="mat-menu-item-submenu-trigger my-sub-menu">-->
             <!--              Отчёт на будущее...-->
@@ -75,20 +73,22 @@
           </mat-menu>
         </mat-list>
       </div>
-    </mat-sidenav>
+    </div>
+    <div class="main-content" id="main-content"
+         [class.menu-opened]="menuOpened"
+         [class.menu-closed]="!menuOpened"
+         [class.not-logged]="!_authService.loggedIn()">
+      <router-outlet></router-outlet>
+    </div>
 
-    <!--  основной контент-->
-    <mat-sidenav-content [ngStyle]="{ 'margin-left.px': contentMargin }"
-                         [class.top-indent]="_authService.loggedIn()">
+  </div>
+  <div class="footer-block" *ngIf="_authService.loggedIn()">
+    <div class="item-center">
+      &copy; GEAR & CODE, 2021
+    </div>
+    <div class="item-right">
+      <img src="../assets/img/logo3D.png" width="56" alt="GEAR & CODE">
+    </div>
+  </div>
+</div>
 
-      <div [class.container-fluid]="_authService.loggedIn()">
-        <router-outlet></router-outlet>
-      </div>
-
-    </mat-sidenav-content>
-  </mat-sidenav-container>
-<!--</div>-->
-<!--Footer-->
-<!--<footer style="height: 48px; background-color:#F7C201; position: fixed;" [hidden]="!_authService.loggedIn()">-->
-<!--  <h1>Made with 🤍 at DigitalOcean</h1>-->
-<!--</footer>-->

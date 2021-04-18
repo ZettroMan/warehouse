@@ -48,7 +48,7 @@ export class UniqueDeliveriesComponent implements OnInit {
     this.deliveriesInRange = [];
     this.deliveryService.getUniqueDeliveriesReport(this.range.controls.start.value, this.range.controls.end.value)
       .subscribe(value => {
-        this.view = [900, value.length * 25];
+        this.view = [900, value.length * 25 + 100];
         value.forEach(v => this.deliveriesInRange.push(v));
       }, () => console.log('error'));
   }

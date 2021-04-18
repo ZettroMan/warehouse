@@ -32,29 +32,29 @@
   flex: 0 0 4% !important;
 }
 
-.mat-column-deliveryType {
-  flex: 0 0 7% !important;
-}
+/*.mat-column-deliveryType {*/
+/*  flex: 0 0 7% !important;*/
+/*}*/
 
-.mat-column-numberOfPlaces {
-  flex: 0 0 5% !important;
-}
+/*.mat-column-numberOfPlaces {*/
+/*  flex: 0 0 5% !important;*/
+/*}*/
 
-.mat-column-torgNumber {
-  flex: 0 0 5% !important;
-}
+/*.mat-column-torgNumber {*/
+/*  flex: 0 0 5% !important;*/
+/*}*/
 
-.mat-column-invoice {
-  flex: 0 0 5% !important;
-}
+/*.mat-column-invoice {*/
+/*  flex: 0 0 5% !important;*/
+/*}*/
 
-.mat-column-deliveryDate {
-  flex: 0 0 5% !important;
-}
+/*.mat-column-deliveryDate {*/
+/*  flex: 0 0 5% !important;*/
+/*}*/
 
-.mat-column-warehouse {
-  flex: 0 0 5% !important;
-}
+/*.mat-column-warehouse {*/
+/*  flex: 0 0 5% !important;*/
+/*}*/
 
 /*.mat-column-deliveryTime {*/
 /*  flex: 0 0 7% !important;*/
