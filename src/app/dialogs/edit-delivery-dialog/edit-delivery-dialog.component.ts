@@ -40,7 +40,7 @@ export class EditDeliveryDialogComponent implements OnInit {
               private fb: FormBuilder) {
     this.form = fb.group({
       id: [delivery.id],
-      deliveryDate: [delivery.deliveryDate, Validators.required],
+      deliveryDate: [new Date(delivery.deliveryDate), Validators.required],
       deliveryTime: [delivery.deliveryTime, Validators.required],
       carInfo: [delivery.carInfo],
       driverInfo: [delivery.driverInfo],
@@ -56,6 +56,7 @@ export class EditDeliveryDialogComponent implements OnInit {
       user: [delivery.user],
       warehouse: [delivery.warehouse, Validators.required],
     });
+    console.log(this.form.value.deliveryDate);
   }
 
   ngOnInit(): void {

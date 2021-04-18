@@ -98,6 +98,7 @@ export class AddDeliveriesComponent implements OnInit {
           // Индекс = 0 , это столбец с датой
           if (index === 0) {
             row[str] = this.toDate(rowValues[index]);
+            console.log(row[str]);
           } else if (index === 1) {
             row[str] = this.deliveryTimeService.toDeliveryTime(rowValues[index]);
           } else if (index === 4) {
@@ -138,9 +139,10 @@ export class AddDeliveriesComponent implements OnInit {
     const deliveriesToSend: Delivery[] = [];
     for (const item of table.data) {
       // console.log('prepare to send data: ');
+      const goodDate = new Date(item.deliveryDate.getFullYear(), item.deliveryDate.getMonth(), item.deliveryDate.getDate(), 12);
       delivery = new Delivery(
         null,
-        item.deliveryDate,
+        goodDate,
         item.deliveryTime,
         item.carInfo,
         item.driverInfo,
@@ -162,8 +164,9 @@ export class AddDeliveriesComponent implements OnInit {
 
   toDate(stringDate: string): Date {
     const dateParts = stringDate.split('.');
-    const date = new Date(Number(dateParts[2]), Number(dateParts[1]) - 1, Number(dateParts[0]));
-    // console.log(date);
+    console.log(dateParts);
+    const date = new Date(Number(dateParts[2]), Number(dateParts[1]) - 1, Number(dateParts[0]), 12);
+    console.log(date);
     return date;
   }
 
