@@ -106,7 +106,7 @@ export class DeliveriesComponent implements OnInit {
     const dialogRef = this.dialog.open(EditDeliveryDialogComponent, this.dialogConfig);
     dialogRef.afterClosed().subscribe(delivery => {
       if (delivery) {
-        delivery.deliveryDate.setDate(delivery.deliveryDate.getDate() + 1);
+        // delivery.deliveryDate.setDate(delivery.deliveryDate.getDate() + 1);
         console.log(delivery);
         this.deliveryService.add(delivery).subscribe(() => this.reloadData(), () => this.reloadData());
       }
@@ -131,7 +131,7 @@ export class DeliveriesComponent implements OnInit {
             this.deliveryService.delete(row.id).subscribe(() => this.reloadData(), () => this.reloadData());
           }
         } else {
-          delivery.deliveryDate.setDate(delivery.deliveryDate.getDate() + 1);
+          // delivery.deliveryDate.setDate(delivery.deliveryDate.getDate() + 1);
           console.log(delivery);
           this.deliveryService.update(delivery.id, delivery).subscribe(() => this.reloadData(), () => this.reloadData());
         }
