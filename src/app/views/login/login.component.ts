@@ -7,7 +7,8 @@ import {LoaderService} from '../../services/loader.service';
 
 @Component({
   selector: 'app-login',
-  templateUrl: './login.component.html'
+  templateUrl: './login.component.html',
+  styleUrls: ['./login.component.css']
 })
 export class LoginComponent implements OnInit {
 
@@ -38,7 +39,7 @@ export class LoginComponent implements OnInit {
         localStorage.setItem('authorities', authorities);
         this.loaderService.load();
         this.isLoginFailed = false;
-        this.router.navigate(['/profile']);
+        this.router.navigate(['/deliveries']);
       },
       error => {
         this.errorMessage = error.error.message;

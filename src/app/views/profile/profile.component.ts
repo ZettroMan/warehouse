@@ -25,11 +25,10 @@ export class ProfileComponent implements OnInit {
   }
 
   ngOnInit(): void {
-
-    this.userService.findAll().subscribe(() => {
+     this.userService.findAll().subscribe(() => {
       this.user = this.userService.getCurrentUser();
       if (!this.user) {
-        this.logout();
+        this.authService.logoutUser();
       }
       this.form = this.fb.group({
         username: [this.user.username],
@@ -97,7 +96,6 @@ export class ProfileComponent implements OnInit {
 
   logout(): void {
     this.authService.logoutUser();
-
   }
 
 

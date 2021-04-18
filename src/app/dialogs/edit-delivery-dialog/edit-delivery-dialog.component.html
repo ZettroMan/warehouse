@@ -1,12 +1,12 @@
 <h2 mat-dialog-title style="display: inline-block" [hidden]="delivery.id == null">Приход № {{delivery.id}} </h2>
 <h3 mat-dialog-title style="display: inline-block; margin-left: 3rem" [hidden]="delivery.user == null">Создан пользователем: {{delivery.user.fullName}} </h3>
-<mat-dialog-content [formGroup]="form">
+<mat-dialog-content [formGroup]="form" style="padding: 0 !important;">
   <mat-grid-list cols="2">
     <mat-grid-tile>
       <div class="controls-container">
         <mat-form-field>
           <mat-label>Дата</mat-label>
-          <input matInput formControlName="deliveryDate" [matDatepicker]="picker">
+          <input matInput formControlName="deliveryDate" [matDatepicker]="picker" [min]="todaysDate" readonly>
           <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
           <mat-datepicker #picker></mat-datepicker>
         </mat-form-field>
