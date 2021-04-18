@@ -7,7 +7,7 @@ import {User} from '../../model/User';
 import {UserService} from '../../services/dao/impl/UserService';
 import {EditDeliveryDialogComponent} from '../../dialogs/edit-delivery-dialog/edit-delivery-dialog.component';
 import {DateAdapter} from '@angular/material/core';
-import {MatSort} from '@angular/material/sort';
+import {MatSort, MatSortable} from '@angular/material/sort';
 import {MatPaginator} from '@angular/material/paginator';
 import {FormControl, FormGroup} from '@angular/forms';
 import {DialogService} from '../../services/dialog.service';
@@ -47,7 +47,7 @@ export class DeliveriesComponent implements OnInit {
               private dialogService: DialogService,
               private dateAdapter: DateAdapter<any>) {
     this.dateAdapter.setLocale('ru-RU');
-    this.endDate.setMonth(this.startDate.getMonth() + 1);
+    this.endDate.setDate(this.startDate.getDate() + 7);
 
   }
 
@@ -81,6 +81,7 @@ export class DeliveriesComponent implements OnInit {
               return item[property];
           }
         };
+        this.sort.sort(({ id: 'deliveryDate', start: 'asc'}) as MatSortable);
         this.dataSource.sort = this.sort;
         this.dataSource.paginator = this.paginator;
         this.paginator._intl.itemsPerPageLabel = 'Поставок на странице:';

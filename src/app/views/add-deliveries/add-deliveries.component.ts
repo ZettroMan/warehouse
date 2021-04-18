@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, ViewChild} from '@angular/core';
 import {Delivery} from '../../model/Delivery';
 import {DeliveryService} from '../../services/dao/impl/DeliveryService';
 import {MatTableDataSource} from '@angular/material/table';
@@ -36,6 +36,8 @@ export class AddDeliveriesComponent implements OnInit {
   allWarehouses: Warehouse[];
   allTimes: DeliveryTime[];
   allTypes: DeliveryType[];
+
+  @ViewChild('copyPasteForm') formGroup;
 
   constructor(private deliveryService: DeliveryService,
               private userService: UserService,
@@ -114,6 +116,12 @@ export class AddDeliveriesComponent implements OnInit {
       }
     });
     this.pasteTableDataSource = new MatTableDataSource(dataObject);
+    // for (const rowIndex = 0; rowIndex < dataObject.length; rowIndex++) {
+    //   const dateField = document.getElementsByName('deliveryDate' + rowIndex);
+    //   dateField.``;
+    //   dateField.markAsTouched();
+    // }
+    // this.formGroup.control.markAsTouched();
     console.log(this.pasteTableDataSource);
   }
 

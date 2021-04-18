@@ -9,7 +9,7 @@
 </div>
 <mat-dialog-content>
   <mat-selection-list #columns [formControl]="selectedColumnsControl" multiple>
-    <mat-list-option *ngFor="let column of selectedColumns" [value]="column" checkboxPosition="before">{{column}}</mat-list-option>
+    <mat-list-option *ngFor="let column of selectedColumns" [value]="column" checkboxPosition="before" selected="selected">{{mapColumn(column)}}</mat-list-option>
   </mat-selection-list>
 
 </mat-dialog-content>

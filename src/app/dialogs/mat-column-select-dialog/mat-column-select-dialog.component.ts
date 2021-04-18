@@ -10,6 +10,25 @@ import {MatSelectionList} from '@angular/material/list';
 })
 export class MatColumnSelectDialogComponent implements OnInit {
 
+  private columnsMapper = {
+    No: '№ п/п',
+    id: 'ID',
+    deliveryDate: 'Дата',
+    deliveryTime: 'Время',
+    carInfo: 'Машина',
+    driverInfo: 'Водитель',
+    brand: 'Бренд',
+    orderNumber: '№ внутреннего заказа',
+    deliveryType: 'Тип доставки',
+    sender: 'Отправитель',
+    comment: 'Комментарий',
+    shop: 'Магазин',
+    numberOfPlaces: 'Количество',
+    torgNumber: 'Торг-12',
+    invoice: 'Счет-фактура',
+    warehouse: 'Склад'
+  };
+
   selectedColumnsControl = new FormControl();
 
   @ViewChild('columns') columns: MatSelectionList;
@@ -18,6 +37,7 @@ export class MatColumnSelectDialogComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.columns.selectAll();
   }
 
   onSelectAll(): void {
@@ -26,5 +46,9 @@ export class MatColumnSelectDialogComponent implements OnInit {
 
   onReset(): void {
     this.columns.deselectAll();
+  }
+
+  mapColumn(columnName: string): string {
+    return this.columnsMapper[columnName];
   }
 }

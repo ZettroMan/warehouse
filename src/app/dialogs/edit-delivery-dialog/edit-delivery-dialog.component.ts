@@ -27,6 +27,7 @@ export class EditDeliveryDialogComponent implements OnInit {
   allTimes: DeliveryTime[];
   allTypes: DeliveryType[];
   form: FormGroup;
+  todaysDate = new Date();
 
   constructor(@Inject(MAT_DIALOG_DATA) public delivery: Delivery,
               private dialogRef: MatDialogRef<EditDeliveryDialogComponent>,

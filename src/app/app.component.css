@@ -7,13 +7,16 @@
   width: 260px;
   height: 100%;
   box-shadow: 0 0 20px 6px rgba(0, 0, 0, 0.4);
-  transition: width 0.5s;
+  transition: width 0.4s;
+}
+
+.top-indent {
+  margin-top: 48px;
 }
 
 .mat-sidenav-content {
   background-color: #e8e1e8;
-  padding-top: 16px;
-  transition: margin 0.5s;
+  transition: margin 0.4s;
 }
 
 .mat-sidenav .profile-item {
@@ -23,8 +26,6 @@
 .mat-sidenav .profile-item:after {
   content: '';
   position: absolute;
-  /*bottom: -8px;*/
-  /*margin-bottom: 8px;*/
   right: 15px;
   height: 1px;
   width: calc(100% - 30px);
@@ -48,15 +49,18 @@
 }
 
 .mat-list-base {
-  padding-top: 0px;
+  padding-top: 0;
 }
 
 .topnavbar {
   justify-content: space-between;
-  /*background-color: ;*/
-  box-shadow: none;
+  z-index: 9999;
+  position: fixed;
+  border-bottom: 1px solid #01113f;
+  width: 100%;
+  background: linear-gradient(60deg, #2e134a, #592387);
+  box-shadow: 0 0 20px 6px rgba(0, 0, 0, 0.4);
   height: 48px;
-  /*margin: 5px 0 5px 0;*/
   padding: 0;
 }
 
@@ -115,10 +119,14 @@ span {
   color: initial;
   display: block;
   text-align: start;
-  margin: 0em;
+  margin: 0;
   font: 400 11px system-ui;
 }
 
+.my-sub-menu:hover {
+  /*margin-left: 8px;*/
+  background: linear-gradient(60deg, #756d75, #775087);
+}
 /*.my-menu-button:hover  {*/
 /*  background: linear-gradient(60deg, #b68ec1, #752492);*/
 /*  box-shadow: 0 0 10px 2px rgba(0, 0, 0, 0.4);*/
