@@ -60,11 +60,16 @@ export class EditDeliveryDialogComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.brandService.findAll().subscribe(onloadeddata => this.allBrands = onloadeddata);
-    this.shopService.findAll().subscribe(onloadeddata => this.allShops = onloadeddata);
-    this.warehouseService.findAll().subscribe(onloadeddata => this.allWarehouses = onloadeddata);
-    this.deliveryTimeService.findAll().subscribe(onloadeddata => this.allTimes = onloadeddata);
-    this.deliveryTypeService.findAll().subscribe(onloadeddata => this.allTypes = onloadeddata);
+    this.brandService.findAll().subscribe(onloadeddata => this.allBrands = onloadeddata,
+      error => this.dialogService.openFailureSnackBar('Произошла ошибка загрузки справочника "Бренды": ' + error.message));
+    this.shopService.findAll().subscribe(onloadeddata => this.allShops = onloadeddata,
+      error => this.dialogService.openFailureSnackBar('Произошла ошибка загрузки справочника "Магазины": ' + error.message));
+    this.warehouseService.findAll().subscribe(onloadeddata => this.allWarehouses = onloadeddata,
+      error => this.dialogService.openFailureSnackBar('Произошла ошибка загрузки справочника "Склады": ' + error.message));
+    this.deliveryTimeService.findAll().subscribe(onloadeddata => this.allTimes = onloadeddata,
+      error => this.dialogService.openFailureSnackBar('Произошла ошибка загрузки справочника "Время доставки": ' + error.message));
+    this.deliveryTypeService.findAll().subscribe(onloadeddata => this.allTypes = onloadeddata,
+      error => this.dialogService.openFailureSnackBar('Произошла ошибка загрузки справочника "Тип доставки": ' + error.message));
   }
 
   compareFn(o1: any, o2: any): boolean {

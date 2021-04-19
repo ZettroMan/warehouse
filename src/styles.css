@@ -64,18 +64,20 @@ mat-footer-row mat-footer-cell {
 }
 
 /*-------------- Snackbar start --------------*/
-.green-snackbar {
+.ok-snackbar {
   align-self: center;
-  background: rgb(95, 183, 41);
+  background: #2f1c5a;
   color: white;
-  margin-bottom: 40px;
+  z-index: 10;
+  opacity: 85%;
 }
 
-.red-snackbar {
+.error-snackbar {
   align-self: center;
-  background: #F44336;
+  background: #ea0000;
   color: white;
-  margin-bottom: 40px;
+  z-index: 10;
+  opacity: 85%;
 }
 
 /*-------------- Snackbar end --------------*/

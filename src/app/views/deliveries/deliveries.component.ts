@@ -108,7 +108,11 @@ export class DeliveriesComponent implements OnInit {
       if (delivery) {
         delivery.deliveryDate.setHours(12);
         console.log(delivery);
-        this.deliveryService.add(delivery).subscribe(() => this.reloadData(), () => this.reloadData());
+        this.deliveryService.add(delivery)
+          .subscribe(newDelivery =>
+              this.dialogService.openSuccessSnackBar('Создан приход № ' + newDelivery.id + ' от ' + newDelivery.deliveryDate),
+          error => this.dialogService.openFailureSnackBar('Произошла ошибка: ' + error.message),
+          () => this.reloadData());
       }
     });
   }
@@ -133,7 +137,9 @@ export class DeliveriesComponent implements OnInit {
         } else {
           delivery.deliveryDate.setHours(12);
           console.log(delivery);
-          this.deliveryService.update(delivery.id, delivery).subscribe(() => this.reloadData(), () => this.reloadData());
+          this.deliveryService.update(delivery.id, delivery).subscribe(() => this.dialogService.openSuccessSnackBar('Данные сохранены'),
+            error => this.dialogService.openFailureSnackBar('Произошла ошибка: ' + error.message),
+            () => this.reloadData());
         }
       }
     });
@@ -143,7 +149,6 @@ export class DeliveriesComponent implements OnInit {
     this.deliveryService.findByDateRange(this.range.controls.start.value, this.range.controls.end.value)
       .subscribe(deliveries => {
         this.dataSource.data = deliveries;  // this forces mat-table to refresh data
-        // console.log(deliveries);
       });
   }
 

@@ -20,7 +20,7 @@
 
 
 .footer-block {
-  z-index: 9999;
+  z-index: 5;
   width: 100%;
   background: linear-gradient(60deg, #673ab7, #673ab7);
   box-shadow: 0 0 20px 6px rgba(0, 0, 0, 0.4);

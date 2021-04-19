@@ -6,6 +6,7 @@ import {DeliveryDao} from '../interface/DeliveryDao';
 import {Delivery} from '../../../model/Delivery';
 import {Observable} from 'rxjs';
 import {saveAs} from 'file-saver';
+import {DialogService} from '../../dialog.service';
 
 // глобальная переменная для хранения URL
 export const DELIVERIES_URL_TOKEN = new InjectionToken<string>('url');
@@ -17,7 +18,8 @@ export const DELIVERIES_URL_TOKEN = new InjectionToken<string>('url');
 export class DeliveryService extends CommonService<Delivery> implements DeliveryDao {
 
   constructor(@Inject(DELIVERIES_URL_TOKEN) private baseUrl,
-              private http: HttpClient // для выполнения HTTP запросов
+              private http: HttpClient,
+              private dialogService: DialogService
   ) {
     super(baseUrl, http);
   }
@@ -57,7 +59,7 @@ export class DeliveryService extends CommonService<Delivery> implements Delivery
     this.http.post('https://command-project-warehouse.herokuapp.com/api/v1/deliveries/report',
       data, {params: {columns: displayedColumns}, responseType: 'blob'})
       .subscribe(onloadeddata => this.downloadFile(onloadeddata),
-        () => console.log('Error downloading the file.'), () => console.log('OK'));
+        error => this.dialogService.openFailureSnackBar('Произошла ошибка загрузки файла: ' + error.message));
   }
 
   downloadFile(data: Blob): void {

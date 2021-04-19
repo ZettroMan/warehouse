@@ -17,7 +17,7 @@ import {Warehouse} from '../../model/Warehouse';
 import {Shop} from '../../model/Shop';
 import {Brand} from '../../model/Brand';
 import {NgForm} from '@angular/forms';
-import {MatSnackBar} from '@angular/material/snack-bar';
+import {DialogService} from '../../services/dialog.service';
 
 @Component({
   selector: 'app-deliveries',
@@ -48,7 +48,7 @@ export class AddDeliveriesComponent implements OnInit {
               private warehouseService: WarehouseService,
               private deliveryTimeService: DeliveryTimeService,
               private deliveryTypeService: DeliveryTypeService,
-              private snackBar: MatSnackBar) {
+              private dialogService: DialogService) {
     this.dateAdapter.setLocale('ru-RU');
     this.todaysDate = new Date();
   }
@@ -64,21 +64,6 @@ export class AddDeliveriesComponent implements OnInit {
     });
   }
 
-  // Snackbar that opens with success background
-  openSuccessSnackBar(): void {
-    this.snackBar.open('Приходы успешно добавлены в график!', 'OK', {
-      duration: 3000,
-      panelClass: ['green-snackbar', 'login-snackbar'],
-    });
-  }
-
-  // Snackbar that opens with failure background
-  openFailureSnackBar(): void {
-    this.snackBar.open('Ошибка при добавлении приходов в график!', 'Попробуйте ещё раз!', {
-      duration: 3000,
-      panelClass: ['red-snackbar', 'login-snackbar'],
-    });
-  }
 
   // ---------------------------------------------------------
   data(event: ClipboardEvent): void {
@@ -129,7 +114,8 @@ export class AddDeliveriesComponent implements OnInit {
   send(form: NgForm): void {
     if (form.valid) {
       this.deliveryService.addAll(this.tableToDeliveries(this.pasteTableDataSource))
-        .subscribe(() => this.openSuccessSnackBar(), () => this.openFailureSnackBar());
+        .subscribe(() => this.dialogService.openSuccessSnackBar('Приходы добавлены в реестр'),
+          error => this.dialogService.openFailureSnackBar('Произошла ошибка: ' + error.message));
     }
     this.pasteTableDataSource = null;
   }
