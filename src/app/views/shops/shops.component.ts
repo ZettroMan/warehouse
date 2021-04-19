@@ -4,6 +4,7 @@ import {ShopService} from '../../services/dao/impl/ShopService';
 import {MatDialog, MatDialogConfig} from '@angular/material/dialog';
 import {MatTableDataSource} from '@angular/material/table';
 import {EditShopDialogComponent} from '../../dialogs/edit-shop-dialog/edit-shop-dialog.component';
+import {DialogService} from '../../services/dialog.service';
 
 @Component({
   selector: 'app-shops',
@@ -17,7 +18,8 @@ export class ShopsComponent implements OnInit {
   dialogConfig = new MatDialogConfig();
 
   constructor(private shopService: ShopService,
-              private dialog: MatDialog) {
+              private dialog: MatDialog,
+              private dialogService: DialogService) {
   }
 
   ngOnInit(): void {
@@ -33,7 +35,8 @@ export class ShopsComponent implements OnInit {
     const dialogRef = this.dialog.open(EditShopDialogComponent, this.dialogConfig);
     dialogRef.afterClosed().subscribe(shop => {
       if (shop) {
-        this.shopService.add(shop).subscribe(() => this.reloadData(), error => this.reloadData());
+        this.shopService.add(shop).subscribe(() => this.dialogService.openSuccessSnackBar('Магазин добавлен'),
+          error => this.dialogService.openFailureSnackBar('Произошла ошибка: ' + error.message), () => this.reloadData());
       }
     });
   }
@@ -45,10 +48,11 @@ export class ShopsComponent implements OnInit {
       if (shop) {
         if (typeof shop === 'string') {
           if (shop === 'delete') {
-            this.shopService.delete(row.id).subscribe(() => this.reloadData(), error => this.reloadData());
+            this.shopService.delete(row.id).subscribe(() => this.reloadData(), () => this.reloadData());
           }
         } else {
-          this.shopService.update(shop.id, shop).subscribe(() => this.reloadData(), error => this.reloadData());
+          this.shopService.update(shop.id, shop).subscribe(() => this.dialogService.openSuccessSnackBar('Данные сохранены'),
+            error => this.dialogService.openFailureSnackBar('Произошла ошибка: ' + error.message), () => this.reloadData());
         }
       }
     });

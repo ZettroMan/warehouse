@@ -30,7 +30,8 @@ export class EditShopDialogComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.brandService.findAll().subscribe(onloadeddata => this.allBrands = onloadeddata);
+    this.brandService.findAll().subscribe(onloadeddata => this.allBrands = onloadeddata,
+      error => this.dialogService.openFailureSnackBar('Произошла ошибка загрузки справочника "Бренды": ' + error.message));
   }
 
   compareFn(o1: any, o2: any): boolean {

@@ -8,6 +8,7 @@ import {Brand} from '../../model/Brand';
 import {MatTableDataSource} from '@angular/material/table';
 import {AuthService} from '../../security/auth.service';
 import {roleMapper} from '../../services/dao/impl/RoleService';
+import {DialogService} from '../../services/dialog.service';
 
 @Component({
   selector: 'app-users',
@@ -22,7 +23,8 @@ export class UsersComponent implements OnInit {
 
   constructor(private userService: UserService,
               private authService: AuthService,
-              private dialog: MatDialog) {
+              private dialog: MatDialog,
+              private dialogService: DialogService) {
   }
 
   ngOnInit(): void {
@@ -42,7 +44,8 @@ export class UsersComponent implements OnInit {
       if (user) {
         console.log('Created');
         console.log(user);
-        this.userService.add(user).subscribe(() => this.reloadData(), () => this.reloadData());
+        this.userService.add(user).subscribe(() => this.dialogService.openSuccessSnackBar('Пользователь добавлен'),
+          error => this.dialogService.openFailureSnackBar('Произошла ошибка: ' + error.message), () => this.reloadData());
       }
     });
   }
@@ -57,9 +60,8 @@ export class UsersComponent implements OnInit {
             this.userService.delete(row.id).subscribe(() => this.reloadData(), () => this.reloadData());
           }
         } else {
-          console.log('Updated');
-          console.log(user);
-          this.userService.update(user.id, user).subscribe(() => this.reloadData(), () => this.reloadData());
+          this.userService.update(user.id, user).subscribe(() => this.dialogService.openSuccessSnackBar('Данные сохранены'),
+            error => this.dialogService.openFailureSnackBar('Произошла ошибка: ' + error.message), () => this.reloadData());
         }
       }
     });

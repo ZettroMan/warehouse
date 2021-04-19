@@ -44,7 +44,8 @@ export class ProfileComponent implements OnInit {
     this.user.email = this.form.controls.email.value;
     this.user.phone = this.form.controls.phone.value;
     this.userService.update(this.user.id, this.user)
-      .subscribe(() => this.loadUser(), error => console.log(error));
+      .subscribe(() => this.dialogService.openSuccessSnackBar('Профиль пользователя обновлен'),
+        error => this.dialogService.openFailureSnackBar('Произошла ошибка: ' + error.message), () => this.loadUser());
   }
 
   reset(): void {
@@ -67,7 +68,8 @@ export class ProfileComponent implements OnInit {
       if (password) {
         this.user.password = password;
         this.userService.update(this.user.id, this.user)
-          .subscribe(() => console.log('Password has been changed'), error => console.log(error));
+          .subscribe(() => this.dialogService.openSuccessSnackBar('Пароль изменен'),
+            error => this.dialogService.openFailureSnackBar('Произошла ошибка: ' + error.message));
       }
     });
   }

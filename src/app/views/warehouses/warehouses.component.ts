@@ -4,6 +4,7 @@ import {WarehouseService} from '../../services/dao/impl/WarehouseService';
 import {MatDialog, MatDialogConfig} from '@angular/material/dialog';
 import {EditWarehouseDialogComponent} from '../../dialogs/edit-warehouse-dialog/edit-warehouse-dialog.component';
 import {MatTableDataSource} from '@angular/material/table';
+import {DialogService} from '../../services/dialog.service';
 
 @Component({
   selector: 'app-warehouses',
@@ -17,7 +18,8 @@ export class WarehousesComponent implements OnInit {
   dialogConfig = new MatDialogConfig();
 
   constructor(private warehouseService: WarehouseService,
-              private dialog: MatDialog) {
+              private dialog: MatDialog,
+              private dialogService: DialogService) {
   }
 
   ngOnInit(): void {
@@ -34,7 +36,8 @@ export class WarehousesComponent implements OnInit {
     const dialogRef = this.dialog.open(EditWarehouseDialogComponent, this.dialogConfig);
     dialogRef.afterClosed().subscribe(warehouse => {
       if (warehouse) {
-        this.warehouseService.add(warehouse).subscribe(() => this.reloadData(), error => this.reloadData());
+        this.warehouseService.add(warehouse).subscribe(() => this.dialogService.openSuccessSnackBar('Склад добавлен'),
+          error => this.dialogService.openFailureSnackBar('Произошла ошибка: ' + error.message), () => this.reloadData());
       }
     });
   }
@@ -46,10 +49,11 @@ export class WarehousesComponent implements OnInit {
       if (warehouse) {
         if (typeof warehouse === 'string') {
           if (warehouse === 'delete') {
-            this.warehouseService.delete(row.id).subscribe(() => this.reloadData(), error => this.reloadData());
+            this.warehouseService.delete(row.id).subscribe(() => this.reloadData(), () => this.reloadData());
           }
         } else {
-          this.warehouseService.update(warehouse.id, warehouse).subscribe(() => this.reloadData(), error => this.reloadData());
+          this.warehouseService.update(warehouse.id, warehouse).subscribe(() => this.dialogService.openSuccessSnackBar('Данные сохранены'),
+            error => this.dialogService.openFailureSnackBar('Произошла ошибка: ' + error.message), () => this.reloadData());
         }
       } else {
         this.reloadData();

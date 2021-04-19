@@ -38,9 +38,10 @@ export class EditUserDialogComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.brandService.findAll().subscribe(onloadeddata => this.allBrands = onloadeddata);
-    this.roleService.findAll().subscribe(onloadeddata => this.allRoles = onloadeddata);
-    // console.log(this.user);
+    this.brandService.findAll().subscribe(onloadeddata => this.allBrands = onloadeddata,
+      error => this.dialogService.openFailureSnackBar('Произошла ошибка загрузки справочника "Бренды": ' + error.message));
+    this.roleService.findAll().subscribe(onloadeddata => this.allRoles = onloadeddata,
+      error => this.dialogService.openFailureSnackBar('Произошла ошибка загрузки справочника "Роли в системе": ' + error.message));
   }
 
   compareFn(o1: any, o2: any): boolean {

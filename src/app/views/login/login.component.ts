@@ -4,6 +4,7 @@ import {Router} from '@angular/router';
 import {AuthService} from '../../security/auth.service';
 import {LoginInfo} from '../../security/login-info';
 import {LoaderService} from '../../services/loader.service';
+import {DialogService} from '../../services/dialog.service';
 
 @Component({
   selector: 'app-login',
@@ -12,14 +13,13 @@ import {LoaderService} from '../../services/loader.service';
 })
 export class LoginComponent implements OnInit {
 
-  isLoginFailed = false;
-  errorMessage = '';
   loginInfo: LoginInfo = new LoginInfo('', '');
   _authService: AuthService;
 
   constructor(private router: Router,
               private authService: AuthService,
-              private loaderService: LoaderService) {
+              private loaderService: LoaderService,
+              private dialogService: DialogService) {
     this._authService = authService;
   }
 
@@ -38,19 +38,9 @@ export class LoginComponent implements OnInit {
         authorities = authorities.slice(0, -1);
         localStorage.setItem('authorities', authorities);
         this.loaderService.load();
-        this.isLoginFailed = false;
         this.router.navigate(['/deliveries']);
       },
-      error => {
-        this.errorMessage = error.error.message;
-        this.isLoginFailed = true;
-      }
+      () => this.dialogService.openFailureSnackBar('Неудачная попытка входа. Проверьте имя пользователя и пароль и повторите попытку.')
     );
   }
-
-  // logout(): void {
-  //   this.authService.logoutUser();
-  //   this.isLoginFailed = false;
-  //
-  // }
-}
+ }
