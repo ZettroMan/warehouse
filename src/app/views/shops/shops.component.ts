@@ -1,10 +1,11 @@
-import {Component, OnInit} from '@angular/core';
+import {ChangeDetectorRef, Component, OnInit, ViewChild} from '@angular/core';
 import {Shop} from '../../model/Shop';
 import {ShopService} from '../../services/dao/impl/ShopService';
 import {MatDialog, MatDialogConfig} from '@angular/material/dialog';
 import {MatTableDataSource} from '@angular/material/table';
 import {EditShopDialogComponent} from '../../dialogs/edit-shop-dialog/edit-shop-dialog.component';
 import {DialogService} from '../../services/dialog.service';
+import {MatSort} from '@angular/material/sort';
 
 @Component({
   selector: 'app-shops',
@@ -16,10 +17,12 @@ export class ShopsComponent implements OnInit {
   displayedColumns: string[] = ['No', 'name', 'abbr', 'brand'];
   dataSource = new MatTableDataSource<Shop>();
   dialogConfig = new MatDialogConfig();
+  @ViewChild(MatSort) sort: MatSort;
 
   constructor(private shopService: ShopService,
               private dialog: MatDialog,
-              private dialogService: DialogService) {
+              private dialogService: DialogService,
+              private ref: ChangeDetectorRef) {
   }
 
   ngOnInit(): void {
@@ -27,6 +30,16 @@ export class ShopsComponent implements OnInit {
     this.dialogConfig.autoFocus = true;
     this.shopService.findAll().subscribe(shops => {
       this.dataSource.data = shops;  // this forces mat-table to refresh data
+      this.dataSource.sortingDataAccessor = (item, property) => {
+        switch (property) {
+          case 'brand':
+            return item.brand.name;
+          default:
+            return item[property];
+        }
+      };
+      this.ref.detectChanges();
+      this.dataSource.sort = this.sort;
     });
   }
 

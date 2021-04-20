@@ -35,7 +35,7 @@
     </mat-select>
   </mat-form-field>
 
-  <mat-form-field [hidden]="!isUserWithBrand()">
+  <mat-form-field [hidden]="!isBrandManager()">
     <mat-label>Бренды</mat-label>
     <mat-select formControlName="brands" [compareWith]="compareFn" multiple>
       <mat-option *ngFor="let brand of allBrands" [value]="brand">{{brand.name}}</mat-option>

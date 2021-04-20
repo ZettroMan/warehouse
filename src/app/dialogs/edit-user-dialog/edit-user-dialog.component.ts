@@ -52,7 +52,7 @@ export class EditUserDialogComponent implements OnInit {
   }
 
   save(): void {
-    if (!this.isUserWithBrand()) {
+    if (!this.isBrandManager()) {
       this.form.value.brands = [];
     }
     this.dialogRef.close(this.form.value);
@@ -71,9 +71,9 @@ export class EditUserDialogComponent implements OnInit {
     });
   }
 
-  isUserWithBrand(): boolean {
+  isBrandManager(): boolean {
     for (const role of this.form.value.roles) {
-      if (role.role === 'ROLE_ADMIN' || role.role === 'ROLE_BRAND_MANAGER') { return true; }
+      if (role.role === 'ROLE_BRAND_MANAGER') { return true; }
     }
     return false;
   }
