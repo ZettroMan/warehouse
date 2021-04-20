@@ -80,7 +80,7 @@ export class DeliveriesComponent implements OnInit {
               return item[property];
           }
         };
-        this.sort.sort(({ id: 'deliveryDate', start: 'asc'}) as MatSortable);
+        this.sort.sort(({id: 'deliveryDate', start: 'asc'}) as MatSortable);
         this.dataSource.sort = this.sort;
         this.dataSource.paginator = this.paginator;
         this.paginator._intl.itemsPerPageLabel = 'Поставок на странице:';
@@ -111,8 +111,8 @@ export class DeliveriesComponent implements OnInit {
         this.deliveryService.add(delivery)
           .subscribe(newDelivery =>
               this.dialogService.openSuccessSnackBar('Создан приход № ' + newDelivery.id + ' от ' + newDelivery.deliveryDate),
-          error => this.dialogService.openFailureSnackBar('Произошла ошибка: ' + error.message),
-          () => this.reloadData());
+            error => this.dialogService.openFailureSnackBar('Произошла ошибка: ' + error.message),
+            () => this.reloadData());
       }
     });
   }
@@ -146,6 +146,10 @@ export class DeliveriesComponent implements OnInit {
   }
 
   reloadData(): void {
+    // request new data only when both start and end dates have been set
+    if (!(this.range.controls.end.value && this.range.controls.start.value)) {
+      return;
+    }
     this.deliveryService.findByDateRange(this.range.controls.start.value, this.range.controls.end.value)
       .subscribe(deliveries => {
         this.dataSource.data = deliveries;  // this forces mat-table to refresh data
