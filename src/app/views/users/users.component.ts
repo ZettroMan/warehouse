@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {ChangeDetectorRef, Component, OnInit, ViewChild} from '@angular/core';
 import {User} from '../../model/User';
 import {UserService} from '../../services/dao/impl/UserService';
 import {MatDialog, MatDialogConfig} from '@angular/material/dialog';
@@ -9,6 +9,7 @@ import {MatTableDataSource} from '@angular/material/table';
 import {AuthService} from '../../security/auth.service';
 import {roleMapper} from '../../services/dao/impl/RoleService';
 import {DialogService} from '../../services/dialog.service';
+import {MatSort} from '@angular/material/sort';
 
 @Component({
   selector: 'app-users',
@@ -17,14 +18,16 @@ import {DialogService} from '../../services/dialog.service';
 })
 export class UsersComponent implements OnInit {
 
-  displayedColumns: string[] = ['No', 'username', 'fullname', 'email', 'phone', 'brands', 'roles'];
+  displayedColumns: string[] = ['No', 'username', 'fullName', 'email', 'phone', 'brands', 'roles'];
   dataSource = new MatTableDataSource<User>();
   dialogConfig = new MatDialogConfig();
+  @ViewChild(MatSort) sort: MatSort;
 
   constructor(private userService: UserService,
               private authService: AuthService,
               private dialog: MatDialog,
-              private dialogService: DialogService) {
+              private dialogService: DialogService,
+              private ref: ChangeDetectorRef) {
   }
 
   ngOnInit(): void {
@@ -34,6 +37,8 @@ export class UsersComponent implements OnInit {
     this.dataSource.filter = this.authService.getUserName();
     this.userService.findAll().subscribe(users => {
       this.dataSource.data = users;  // this forces mat-table to refresh data
+      this.ref.detectChanges();
+      this.dataSource.sort = this.sort;
     });
   }
 
