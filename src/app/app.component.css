@@ -148,7 +148,7 @@ span {
 .mat-list-item.active .mat-icon {
   background: linear-gradient(60deg, #7e4a8a, #752492);
   box-shadow: 0 0 10px 2px rgba(0, 0, 0, 0.4);
-  color: #eaeaea;
+  color: #fbfbfb;
 }
 
 .mat-list-item.active .mat-line {
