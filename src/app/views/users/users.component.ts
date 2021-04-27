@@ -102,6 +102,9 @@ export class UsersComponent implements OnInit {
   }
 
   getFormattedWarehouse(warehouse: Warehouse): string {
+    if (warehouse === null) {
+      return '';
+    }
     return warehouse.name;
   }
 }
