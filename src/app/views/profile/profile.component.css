@@ -1,3 +1,4 @@
-.card-header-primary {
-  padding: 8px 16px !important;
+.mat-form-field {
+  display: block;
+  width: 60%;
 }

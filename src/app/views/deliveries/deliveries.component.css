@@ -1,23 +1,101 @@
-.card {
-  font-size: .7rem !important;
-  line-height: 1em;
+.grayed {
+  background-color: #a1a1a1;
 }
 
-.table thead th {
-  font-size: 0.8rem;
-  line-height: 1em;
-  padding-top: 0px;
+.grayed:hover {
+  cursor: not-allowed;
 }
 
-.card-body{
-  padding-top: 0.375rem;
+.mat-cell,
+.mat-header-cell {
+  display: flex;
+  justify-content: center;
+  padding: 0 5px;
+  font-size: 12px;
+  text-align: center;
 }
 
-tbody tr:hover {
-  background: #bea5c1; /* Цвет фона при наведении */
-  cursor: pointer;
+.mat-header-cell {
+  color: #4d0744 !important;
+  font-size: 0.85rem !important;
 }
 
-.card-header-primary {
-  padding: 8px 16px !important;
+.mat-cell {
+  font-size: 0.75rem !important;
 }
+
+.mat-column-No {
+  flex: 0 0 3% !important;
+}
+
+.mat-column-id {
+  flex: 0 0 4% !important;
+}
+
+/*.mat-column-deliveryType {*/
+/*  flex: 0 0 7% !important;*/
+/*}*/
+
+/*.mat-column-numberOfPlaces {*/
+/*  flex: 0 0 5% !important;*/
+/*}*/
+
+/*.mat-column-torgNumber {*/
+/*  flex: 0 0 5% !important;*/
+/*}*/
+
+/*.mat-column-invoice {*/
+/*  flex: 0 0 5% !important;*/
+/*}*/
+
+/*.mat-column-deliveryDate {*/
+/*  flex: 0 0 5% !important;*/
+/*}*/
+
+/*.mat-column-warehouse {*/
+/*  flex: 0 0 5% !important;*/
+/*}*/
+
+/*.mat-column-deliveryTime {*/
+/*  flex: 0 0 7% !important;*/
+/*}*/
+
+/*.mat-column-brand {*/
+/*  flex: 0 0 6% !important;*/
+/*}*/
+
+
+/*.mat-column-shop {*/
+/*  flex: 0 0 5% !important;*/
+/*}*/
+
+
+.myStyle {
+  min-width: 1600px;
+  overflow: auto;
+}
+
+.myStyleCP {
+  min-width: 1800px;
+  overflow: auto;
+}
+
+.date-form-field {
+  margin-left: 10px;
+}
+
+/*CopyPasteTable style here down*/
+
+.myCopyPasteField {
+  display: flex;
+  justify-content: center;
+  padding: 0 5px;
+  font-size: 11px;
+  text-align: center;
+}
+
+.mat-paginator {
+  margin-top: 0.9rem;
+}
+
+

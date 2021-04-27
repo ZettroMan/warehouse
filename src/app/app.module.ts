@@ -1,33 +1,52 @@
 import {BrowserModule} from '@angular/platform-browser';
 import {NgModule} from '@angular/core';
+import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import {MaterialModule} from './material.module';
 
-import {RouterModule, Routes} from '@angular/router';
-import {MatButtonModule} from '@angular/material/button';
-import {MatIconModule} from '@angular/material/icon';
 import {AppComponent} from './app.component';
 import {BrandsComponent} from './views/brands/brands.component';
 import {WarehousesComponent} from './views/warehouses/warehouses.component';
 import {UsersComponent} from './views/users/users.component';
 import {DeliveriesComponent} from './views/deliveries/deliveries.component';
-import {ReportsComponent} from './views/reports/reports.component';
+import {UniqueDeliveriesComponent} from './views/reports/uniqueDeliveries/uniqueDeliveries.component';
 import {ProfileComponent} from './views/profile/profile.component';
 import {ShopsComponent} from './views/shops/shops.component';
 
-import {DELIVERY_URL_TOKEN} from './services/dao/impl/DeliveryService';
-import {HttpClientModule} from '@angular/common/http';
-import {SidebarModule} from 'ng-sidebar';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import {registerLocaleData} from '@angular/common';
+import localeRu from '@angular/common/locales/ru';
+import {DELIVERIES_URL_TOKEN, DeliveryService} from './services/dao/impl/DeliveryService';
+import {BRANDS_URL_TOKEN, BrandService} from './services/dao/impl/BrandService';
+import {WAREHOUSES_URL_TOKEN, WarehouseService} from './services/dao/impl/WarehouseService';
+import {SHOPS_URL_TOKEN, ShopService} from './services/dao/impl/ShopService';
+import {USERS_URL_TOKEN, UserService} from './services/dao/impl/UserService';
+import {ROLES_URL_TOKEN, RoleService} from './services/dao/impl/RoleService';
+import {DELIVERY_TIMES_URL_TOKEN, DeliveryTimeService} from './services/dao/impl/DeliveryTimeService';
+import {DELIVERY_TYPES_URL_TOKEN, DeliveryTypeService} from './services/dao/impl/DeliveryTypeService';
+import {AuthService, LOGIN_URL_TOKEN, REGISTER_URL_TOKEN} from './security/auth.service';
+import {EditUserDialogComponent} from './dialogs/edit-user-dialog/edit-user-dialog.component';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
+import {LoginComponent} from './views/login/login.component';
+import {TokenInterceptor} from './security/token-interceptor';
+import {AppRoutingModule} from './app-routing.module';
+import {AuthGuard} from './security/auth.guard';
+import {EditBrandDialogComponent} from './dialogs/edit-brand-dialog/edit-brand-dialog.component';
+import {EditWarehouseDialogComponent} from './dialogs/edit-warehouse-dialog/edit-warehouse-dialog.component';
+import {EditShopDialogComponent} from './dialogs/edit-shop-dialog/edit-shop-dialog.component';
+import {EditDeliveryDialogComponent} from './dialogs/edit-delivery-dialog/edit-delivery-dialog.component';
+import {MatConfirmDialogComponent} from './dialogs/mat-confirm-dialog/mat-confirm-dialog.component';
+import {MatCardModule} from '@angular/material/card';
+import {MatPasswordDialogComponent} from './dialogs/mat-password-dialog/mat-password-dialog.component';
+import {AddDeliveriesComponent} from './views/add-deliveries/add-deliveries.component';
+import { NgxChartsModule } from '@swimlane/ngx-charts';
+import {MatColumnSelectDialogComponent} from './dialogs/mat-column-select-dialog/mat-column-select-dialog.component';
+import {DragNdropDirective} from './dragNdrop.directive';
 
-const routes: Routes = [
-  {path: 'users', component: UsersComponent},
-  {path: 'brands', component: BrandsComponent},
-  {path: 'warehouses', component: WarehousesComponent},
-  {path: 'shops', component: ShopsComponent},
-  {path: 'deliveries', component: DeliveriesComponent},
-  {path: 'reports', component: ReportsComponent},
-  {path: 'profile', component: ProfileComponent},
-  {path: '', component: UsersComponent},
-];
+
+const BACKEND_ROOT_URL = 'https://command-project-warehouse.herokuapp.com/api/v1';
+// const BACKEND_ROOT_URL = 'http://localhost:8189/api/v1';
+
+registerLocaleData(localeRu);
 
 @NgModule({
   declarations: [
@@ -36,26 +55,92 @@ const routes: Routes = [
     WarehousesComponent,
     UsersComponent,
     DeliveriesComponent,
-    ReportsComponent,
+    MatColumnSelectDialogComponent,
+    UniqueDeliveriesComponent,
     ProfileComponent,
-    ShopsComponent
+    ShopsComponent,
+    EditUserDialogComponent,
+    EditBrandDialogComponent,
+    EditWarehouseDialogComponent,
+    EditShopDialogComponent,
+    EditDeliveryDialogComponent,
+    MatConfirmDialogComponent,
+    MatPasswordDialogComponent,
+    LoginComponent,
+    AddDeliveriesComponent,
+    DragNdropDirective
   ],
   imports: [
     BrowserModule,
-    RouterModule.forRoot(routes),
     HttpClientModule,
-    SidebarModule.forRoot(),
-    MatButtonModule,
-    MatIconModule,
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
+    MaterialModule,
+    FormsModule,
+    AppRoutingModule,
+    ReactiveFormsModule,
+    MatCardModule,
+    NgxChartsModule
   ],
-  providers: [
+  providers: [ AuthService, AuthGuard, BrandService, DeliveryService,
+    DeliveryTimeService, DeliveryTypeService, RoleService, ShopService,
+    UserService, WarehouseService,
     {
-      provide: DELIVERY_URL_TOKEN,
-      useValue: 'http://localhost:8082/api/v1/deliveries'
+      provide: HTTP_INTERCEPTORS,
+      useClass: TokenInterceptor,
+      multi: true
     },
-
+    {
+      provide: LOGIN_URL_TOKEN,
+      useValue: BACKEND_ROOT_URL + '/auth'
+    },
+    {
+      provide: REGISTER_URL_TOKEN,
+      useValue: BACKEND_ROOT_URL + '/register'
+    },
+     {
+      provide: DELIVERIES_URL_TOKEN,
+      useValue: BACKEND_ROOT_URL + '/deliveries'
+    },
+    {
+      provide: BRANDS_URL_TOKEN,
+      useValue: BACKEND_ROOT_URL + '/brands'
+    },
+    {
+      provide: WAREHOUSES_URL_TOKEN,
+      useValue: BACKEND_ROOT_URL + '/warehouses'
+    },
+    {
+      provide: SHOPS_URL_TOKEN,
+      useValue: BACKEND_ROOT_URL + '/shops'
+    },
+    {
+      provide: USERS_URL_TOKEN,
+      useValue: BACKEND_ROOT_URL + '/users'
+    },
+    {
+      provide: ROLES_URL_TOKEN,
+      useValue: BACKEND_ROOT_URL + '/roles'
+    },
+    {
+      provide: DELIVERY_TIMES_URL_TOKEN,
+      useValue: BACKEND_ROOT_URL + '/delivery-times'
+    },
+    {
+      provide: DELIVERY_TYPES_URL_TOKEN,
+      useValue: BACKEND_ROOT_URL + '/delivery-types'
+    },
+  ],
+  entryComponents: [
+    EditUserDialogComponent,
+    EditBrandDialogComponent,
+    EditWarehouseDialogComponent,
+    EditShopDialogComponent,
+    EditDeliveryDialogComponent,
+    MatConfirmDialogComponent,
+    MatPasswordDialogComponent,
+    MatColumnSelectDialogComponent
   ],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {
+}

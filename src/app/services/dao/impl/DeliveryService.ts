@@ -1,37 +1,77 @@
 import {Inject, Injectable, InjectionToken} from '@angular/core';
-import {HttpClient} from '@angular/common/http';
+import {HttpClient, HttpParams} from '@angular/common/http';
 
 import {CommonService} from './CommonService';
 import {DeliveryDao} from '../interface/DeliveryDao';
 import {Delivery} from '../../../model/Delivery';
+import {Observable} from 'rxjs';
+import {saveAs} from 'file-saver';
+import {DialogService} from '../../dialog.service';
 
 // глобальная переменная для хранения URL
-export const DELIVERY_URL_TOKEN = new InjectionToken<string>('url');
-
-// класс реализует методы доступа к данным с помощью RESTful запросов в формате JSON
-
-// JSON формируется автоматически для параметров и результатов
+export const DELIVERIES_URL_TOKEN = new InjectionToken<string>('url');
 
 @Injectable({
   providedIn: 'root'
 })
 
-// благодаря DAO и единому интерфейсу - мы можем вынести общую реализация в класс выше и избежать дублирования кода
-// классу остается только реализовать свои специфичные методы доступа к данным
 export class DeliveryService extends CommonService<Delivery> implements DeliveryDao {
 
-
-  constructor(@Inject(DELIVERY_URL_TOKEN) private baseUrl,
-              private http: HttpClient // для выполнения HTTP запросов
+  constructor(@Inject(DELIVERIES_URL_TOKEN) private baseUrl,
+              private http: HttpClient,
+              private dialogService: DialogService
   ) {
     super(baseUrl, http);
   }
 
+  findByDateRange(startDate: any, endDate: any): Observable<Delivery[]> {
+    let params = new HttpParams();
+    if (startDate) {
+      params = params.set('first', this.toStringDate(startDate));
+    }
+    if (endDate) {
+      params = params.set('last', this.toStringDate(endDate));
+    }
+    return this.http.get<Delivery[]>(this.baseUrl, {params});
+  }
 
-  // поиск доставок по любым параметрам
-  // findDeliveries(searchObj: DeliverySearchValues): Observable<any> { // из backend получаем тип Page, поэтому указываем any
-  //   return this.http.post<any>(this.baseUrl + '/search', searchObj);
-  // }
+  getUniqueDeliveriesReport(startDate: any, endDate: any): Observable<any[]> {
+    let params = new HttpParams();
+    if (startDate) {
+      params = params.set('first', this.toStringDate(startDate));
+    }
+    if (endDate) {
+      params = params.set('last', this.toStringDate(endDate));
+    }
+    return this.http.get<any[]>('https://command-project-warehouse.herokuapp.com/api/v1/deliveries/uniqueDeliveriesReport', {params});
+    // return this.http.get<any[]>('http://localhost:8189/api/v1/deliveries/uniqueDeliveriesReport', {params});
+  }
+
+  toStringDate(dateValue: any): string {
+    const dateParts = dateValue.toLocaleDateString().split('.');
+    return dateParts[2] + '-' + (dateParts[1]) + '-' + dateParts[0];
+  }
+
+  addAll(obj: Delivery[]): Observable<boolean> {
+    return this.http.post<boolean>('https://command-project-warehouse.herokuapp.com/api/v1/deliveries/grouped-save', obj);
+    // return this.http.post<boolean>('http://localhost:8189/api/v1/deliveries/grouped-save', obj);
+  }
+
+  loadToExcel(data: Delivery[], displayedColumns: string[]): void {
+    this.http.post('https://command-project-warehouse.herokuapp.com/api/v1/deliveries/report',
+    // this.http.post('http://localhost:8189/api/v1/deliveries/report',
+      data, {params: {columns: displayedColumns}, responseType: 'blob'})
+      .subscribe(onloadeddata => this.downloadFile(onloadeddata),
+        error => this.dialogService.openFailureSnackBar('Произошла ошибка загрузки файла: ' + error.message));
+  }
+
+  downloadFile(data: Blob): void {
+    saveAs(data, 'report.xls');
+
+    // это второй вариант сохранения, но он рандомно присваивает имя загруженному файлу
+    // const url = window.URL.createObjectURL(data);
+    // window.open(url);
+  }
 
 
 }

@@ -1,25 +1,36 @@
+import {DeliveryTime} from './DeliveryTime';
+import {Brand} from './Brand';
+import {DeliveryType} from './DeliveryType';
+import {User} from './User';
+import {Shop} from './Shop';
+import {Warehouse} from './Warehouse';
 
 export class Delivery {
   id: number;
-  deliveryDate: Date;    // только дата, без времени
-  deliveryTime: string;  // по факту - Enum
+  deliveryDate: Date;
+  deliveryTime: DeliveryTime;
   carInfo: string;
   driverInfo: string;
-  brand: string;
+  brand: Brand;
   orderNumber: string;
-  deliveryType: string;    // по факту - Enum
+  deliveryType: DeliveryType;
   sender: string;
   comment: string;
-  shop: string;
+  shop: Shop;
   numberOfPlaces: string;
   torgNumber: string;
   invoice: string;
-  // user: string;
+  user: User;
+  warehouse: Warehouse;
+  isDelivered: boolean;
 
 
-  constructor(id: number, deliveryDate: Date, deliveryTime: string, carInfo: string, driverInfo: string,
-              brand: string, orderNumber: string, deliveryType: string, sender: string, comment: string,
-              shop: string, numberOfPlaces: string, torgNumber: string, invoice: string) {
+  constructor(id: number, deliveryDate: Date, deliveryTime: DeliveryTime,
+              carInfo: string, driverInfo: string, brand: Brand,
+              orderNumber: string, deliveryType: DeliveryType, sender: string,
+              comment: string, shop: Shop, numberOfPlaces: string,
+              torgNumber: string, invoice: string, user: User, warehouse: Warehouse,
+              isDelivered: boolean) {
     this.id = id;
     this.deliveryDate = deliveryDate;
     this.deliveryTime = deliveryTime;
@@ -34,7 +45,8 @@ export class Delivery {
     this.numberOfPlaces = numberOfPlaces;
     this.torgNumber = torgNumber;
     this.invoice = invoice;
-    // this.user = user;
+    this.user = user;
+    this.warehouse = warehouse;
+    this.isDelivered = isDelivered;
   }
-
 }

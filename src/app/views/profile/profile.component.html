@@ -1,56 +1,43 @@
-
 <div class="content">
-  <div class="container-fluid">
-    <div class="row">
-      <div class="col-md-12">
-        <div class="card">
-          <div class="card-header card-header-primary">
-            <h4 class="card-title">Мой профиль</h4>
-          </div>
-          <div class="card-body">
-            <form>
-              <div class="row">
-                <div class="col-md-4">
-                  <div class="form-group">
-                    <label class="bmd-label-floating">Имя</label>
-                    <input type="text" class="form-control">
-                  </div>
-                </div>
-                <div class="col-md-4">
-                  <div class="form-group">
-                    <label class="bmd-label-floating">Фамилия</label>
-                    <input type="text" class="form-control">
-                  </div>
-                </div>
-                <div class="col-md-4">
-                  <div class="form-group">
-                    <label class="bmd-label-floating">E-mail</label>
-                    <input type="email" class="form-control">
-                  </div>
-                </div>
-              </div>
-              <div class="row">
-                <div class="col-md-5">
-                  <div class="form-group">
-                    <label class="bmd-label-floating">Компания</label>
-                    <input type="text" class="form-control" disabled>
-                  </div>
-                </div>
-              </div>
-              <div class="row">
-                <div class="col-md-12">
-                  <div class="form-group">
-                    <label class="bmd-label-floating">Адрес</label>
-                    <input type="text" class="form-control">
-                  </div>
-                </div>
-              </div>
-              <button type="submit" class="btn btn-primary pull-right">Сохранить</button>
-              <div class="clearfix"></div>
-            </form>
-          </div>
+<h2>Пользователь: {{user.fullName}} </h2>
+<h3>Логин: {{user.username}} </h3>
+
+<form [formGroup]="form">
+
+  <mat-form-field>
+    <mat-label>Имя пользователя (ФИО)</mat-label>
+    <input matInput formControlName="fullName">
+  </mat-form-field>
+
+  <mat-form-field>
+    <mat-label>E-mail</mat-label>
+    <input matInput formControlName="email">
+  </mat-form-field>
+
+  <mat-form-field>
+    <mat-label>Телефон</mat-label>
+    <input matInput formControlName="phone">
+  </mat-form-field>
+
+    <h3>Бренды: {{getFormattedBrands(user.brands)}}</h3>
+    <h3>Роли в системе: {{getFormattedRoles(user.roles)}}</h3>
+
+  <div>
+    <div class="container" style="width: 60%; display: inline-block">
+      <div class="row">
+        <div class="col-sm">
+          <button mat-raised-button color="primary" (click)="saveProfile()" [disabled]="form.pristine">Сохранить</button>
+        </div>
+        <div class="col-sm">
+          <button mat-raised-button (click)="reset()" [disabled]="form.pristine">Отменить изменения</button>
+        </div>
+        <div class="col-sm">
+          <button mat-raised-button (click)="changePassword()" color="warn">Сменить пароль</button>
         </div>
       </div>
+      <button class="btn btn-outline-danger" style="margin-top: 2rem" (click)="logout()">Выйти из системы</button>
     </div>
   </div>
+</form>
+
 </div>

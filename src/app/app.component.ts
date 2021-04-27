@@ -1,48 +1,44 @@
-import {Component} from '@angular/core';
+import {Component, EventEmitter, OnInit, Output} from '@angular/core';
+import {AuthService} from './security/auth.service';
+
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
-export class AppComponent {
+
+export class AppComponent implements OnInit {
+  @Output() sidenavClose = new EventEmitter();
+
+  // тип устройства - на будущее
+  isMobile: boolean;
+  isTablet: boolean;
+
   title = 'warehouse';
+  contentMargin = 260;
 
   // параметры бокового меню с категориями
-  _opened: boolean = true;
-  _positionNum: number = 0;
-  _dock: boolean = false;
-  _closeOnClickOutside: boolean = false;
-  _closeOnClickBackdrop: boolean = false;
-  _showBackdrop: boolean = false;
-  _animate: boolean = true;
-  _trapFocus: boolean = true;
-  _autoFocus: boolean = true;
-  _keyClose: boolean = false;
-  _autoCollapseHeight: number = null;
-  _autoCollapseWidth: number = null;
+  menuOpened = true;  // по умолчанию - открыто
+  _authService: AuthService;
 
-  _MODES: Array<string> = ['over', 'push', 'slide'];
-  _POSITIONS: Array<string> = ['left', 'right', 'top', 'bottom'];
-
-  _toggleOpened(): void {
-    this._opened = !this._opened;
+  constructor(private authService: AuthService) {
+    this._authService = authService;
   }
 
-  _onOpenStart(): void {
-    console.info('Sidebar opening');
+  ngOnInit(): void {
+   }
+
+  public onSidenavClose = () => {
+    this.sidenavClose.emit();
   }
 
-  _onOpened(): void {
-    console.info('Sidebar opened');
+  toggleMenu(): void {
+    this.menuOpened = !this.menuOpened;
+    if (this.menuOpened) {
+      this.contentMargin = 260;
+    } else {
+      this.contentMargin = 70;
+    }
   }
-
-  _onCloseStart(): void {
-    console.info('Sidebar closing');
-  }
-
-  _onClosed(): void {
-    console.info('Sidebar closed');
-  }
-
 }

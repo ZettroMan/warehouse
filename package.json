@@ -6,10 +6,11 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
-    "build": "ng build",
+    "build": "ng build --prod",
     "test": "ng test",
     "lint": "ng lint",
-    "e2e": "ng e2e"
+    "e2e": "ng e2e",
+    "postinstall": "ng build --prod"
   },
   "private": true,
   "dependencies": {
@@ -23,6 +24,11 @@
     "@angular/platform-browser": "~11.2.5",
     "@angular/platform-browser-dynamic": "~11.2.5",
     "@angular/router": "~11.2.5",
+    "@swimlane/ngx-charts": "^17.0.1",
+    "bootstrap": "^4.6.0",
+    "compression": "^1.7.4",
+    "express": "^4.17.1",
+    "file-saver": "^2.0.5",
     "ng-sidebar": "^9.4.2",
     "rxjs": "~6.6.0",
     "tslib": "^2.0.0",
@@ -30,8 +36,9 @@
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "~0.1102.3",
-    "@angular/cli": "~11.2.4",
+    "@angular/cli": "^11.2.5",
     "@angular/compiler-cli": "~11.2.5",
+    "@types/file-saver": "^2.0.2",
     "@types/jasmine": "~3.6.0",
     "@types/node": "^12.11.1",
     "codelyzer": "^6.0.0",
