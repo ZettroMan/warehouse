@@ -22,13 +22,15 @@ export class Delivery {
   invoice: string;
   user: User;
   warehouse: Warehouse;
+  isDelivered: boolean;
 
 
   constructor(id: number, deliveryDate: Date, deliveryTime: DeliveryTime,
               carInfo: string, driverInfo: string, brand: Brand,
               orderNumber: string, deliveryType: DeliveryType, sender: string,
               comment: string, shop: Shop, numberOfPlaces: string,
-              torgNumber: string, invoice: string, user: User, warehouse: Warehouse) {
+              torgNumber: string, invoice: string, user: User, warehouse: Warehouse,
+              isDelivered: boolean) {
     this.id = id;
     this.deliveryDate = deliveryDate;
     this.deliveryTime = deliveryTime;
@@ -45,5 +47,6 @@ export class Delivery {
     this.invoice = invoice;
     this.user = user;
     this.warehouse = warehouse;
+    this.isDelivered = isDelivered;
   }
 }

@@ -6,7 +6,7 @@ import {MatDialog} from '@angular/material/dialog';
 import {User} from '../../model/User';
 import {UserService} from '../../services/dao/impl/UserService';
 import {DateAdapter} from '@angular/material/core';
-import {DeliveryTypeService} from '../../services/dao/impl/DeliveryTypeService';
+import {deliveryTypeMapper, DeliveryTypeService} from '../../services/dao/impl/DeliveryTypeService';
 import {DeliveryTimeService} from '../../services/dao/impl/DeliveryTimeService';
 import {WarehouseService} from '../../services/dao/impl/WarehouseService';
 import {ShopService} from '../../services/dao/impl/ShopService';
@@ -18,6 +18,9 @@ import {Shop} from '../../model/Shop';
 import {Brand} from '../../model/Brand';
 import {NgForm} from '@angular/forms';
 import {DialogService} from '../../services/dialog.service';
+import * as XLSX from 'xlsx';
+
+type AOA = any[][];
 
 @Component({
   selector: 'app-deliveries',
@@ -30,12 +33,14 @@ export class AddDeliveriesComponent implements OnInit {
     'deliveryType', 'sender', 'comment', 'shop', 'numberOfPlaces', 'torgNumber', 'invoice', 'warehouse'];
   pasteTableDataSource = new MatTableDataSource<Delivery>();
   todaysDate: any;
-// ----------------------------
+  // ----------------------------
   allBrands: Brand[];
   allShops: Shop[];
   allWarehouses: Warehouse[];
   allTimes: DeliveryTime[];
   allTypes: DeliveryType[];
+  // ----------
+  excData: AOA = [[1, 2], [3, 4]];
 
   @ViewChild('copyPasteForm') formGroup;
 
@@ -74,9 +79,7 @@ export class AddDeliveriesComponent implements OnInit {
 
     rowData.forEach(rd => {
       if (rd !== '') {
-        console.log(rd);
         const rowValues = rd.split('\t');
-        console.log(rowValues);
         rowValues[rowValues.length - 1] = rowValues[rowValues.length - 1].trim();
         const row = {};
         this.pasteTableDisplayedColumns.forEach((str, index) => {
@@ -136,7 +139,8 @@ export class AddDeliveriesComponent implements OnInit {
         item.torgNumber,
         item.invoice,
         this.currentUser,
-        item.warehouse);
+        item.warehouse,
+        false);
       deliveriesToSend.push(delivery);
     }
     return deliveriesToSend;
@@ -144,9 +148,7 @@ export class AddDeliveriesComponent implements OnInit {
 
   toDate(stringDate: string): Date {
     const dateParts = stringDate.split('.');
-    console.log(dateParts);
     const date = new Date(Number(dateParts[2]), Number(dateParts[1]) - 1, Number(dateParts[0]), 12);
-    console.log(date);
     return date;
   }
 
@@ -155,5 +157,31 @@ export class AddDeliveriesComponent implements OnInit {
       return false;
     }
     return (o1.id === o2.id);
+  }
+
+  // --------------------------------- Import excel file ---------------------------------
+  onFileChange(evt: any): void {
+    /* wire up file reader */
+    const target: DataTransfer = (evt.target) as DataTransfer;
+    if (target.files.length !== 1) { throw new Error('Cannot use multiple files'); }
+    const reader: FileReader = new FileReader();
+    reader.onload = (e: any) => {
+      /* read workbook */
+      const bstr: string = e.target.result;
+      const wb: XLSX.WorkBook = XLSX.read(bstr, { type: 'binary' });
+
+      /* grab first sheet */
+      const wsname: string = wb.SheetNames[0];
+      const ws: XLSX.WorkSheet = wb.Sheets[wsname];
+
+      /* save data */
+      this.excData = ((XLSX.utils.sheet_to_json(ws, { header: 1 })));
+      console.log(this.excData);
+    };
+    reader.readAsBinaryString(target.files[0]);
+  }
+
+  mapDeliveryType(dt: string): string {
+    return deliveryTypeMapper[dt];
   }
 }

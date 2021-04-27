@@ -44,6 +44,7 @@ export class DeliveryService extends CommonService<Delivery> implements Delivery
       params = params.set('last', this.toStringDate(endDate));
     }
     return this.http.get<any[]>('https://command-project-warehouse.herokuapp.com/api/v1/deliveries/uniqueDeliveriesReport', {params});
+    // return this.http.get<any[]>('http://localhost:8189/api/v1/deliveries/uniqueDeliveriesReport', {params});
   }
 
   toStringDate(dateValue: any): string {
@@ -53,10 +54,12 @@ export class DeliveryService extends CommonService<Delivery> implements Delivery
 
   addAll(obj: Delivery[]): Observable<boolean> {
     return this.http.post<boolean>('https://command-project-warehouse.herokuapp.com/api/v1/deliveries/grouped-save', obj);
+    // return this.http.post<boolean>('http://localhost:8189/api/v1/deliveries/grouped-save', obj);
   }
 
   loadToExcel(data: Delivery[], displayedColumns: string[]): void {
     this.http.post('https://command-project-warehouse.herokuapp.com/api/v1/deliveries/report',
+    // this.http.post('http://localhost:8189/api/v1/deliveries/report',
       data, {params: {columns: displayedColumns}, responseType: 'blob'})
       .subscribe(onloadeddata => this.downloadFile(onloadeddata),
         error => this.dialogService.openFailureSnackBar('Произошла ошибка загрузки файла: ' + error.message));

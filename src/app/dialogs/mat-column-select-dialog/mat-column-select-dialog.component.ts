@@ -37,7 +37,6 @@ export class MatColumnSelectDialogComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.columns.selectAll();
   }
 
   onSelectAll(): void {

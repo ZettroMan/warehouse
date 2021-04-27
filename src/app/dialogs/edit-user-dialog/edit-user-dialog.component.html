@@ -42,6 +42,13 @@
     </mat-select>
   </mat-form-field>
 
+  <mat-form-field [hidden]="!isWarehouseWorker()">
+    <mat-label>Склады</mat-label>
+    <mat-select formControlName="warehouse" [compareWith]="compareFn">
+      <mat-option *ngFor="let warehouse of warehouses" [value]="warehouse">{{warehouse.name}}</mat-option>
+    </mat-select>
+  </mat-form-field>
+
 </mat-dialog-content>
 <mat-dialog-actions>
   <div class="container">
