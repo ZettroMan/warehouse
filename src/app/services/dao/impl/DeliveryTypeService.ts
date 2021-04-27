@@ -25,6 +25,12 @@ export class DeliveryTypeService extends CommonCachedService<DeliveryType> imple
 
   toDeliveryType(text: string): DeliveryType {
     if (this.entities === null) { return null; }
+    if (text === 'Кросс-докинг') {
+      text = 'CROSS_DOCKING';
+    }
+    if (text === 'На склад') {
+      text = 'TO_WAREHOUSE';
+    }
     const result = this.entities.filter(entity => entity.type === text);
     if (result.length > 0) {
       return result[0];

@@ -51,6 +51,12 @@
                 <mat-cell *matCellDef="let element"> {{getFormattedRoles(element.roles)}} </mat-cell>
               </ng-container>
 
+              <!-- Warehouse Column -->
+              <ng-container matColumnDef="warehouse">
+                <mat-header-cell *matHeaderCellDef>Склад</mat-header-cell>
+                <mat-cell *matCellDef="let element"> {{getFormattedWarehouse(element.warehouse)}} </mat-cell>
+              </ng-container>
+
               <ng-container matColumnDef="loading">
                 <mat-footer-cell *matFooterCellDef colspan="0">
                   Данные загружаются....

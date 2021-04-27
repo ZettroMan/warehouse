@@ -12,6 +12,7 @@ export class DeliveryDto {
   numberOfPlaces: string;
   torgNumber: string;
   invoice: string;
+  isDelivered: boolean;
   // user: string;
 
 

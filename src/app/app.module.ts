@@ -41,8 +41,8 @@ import {AddDeliveriesComponent} from './views/add-deliveries/add-deliveries.comp
 import { NgxChartsModule } from '@swimlane/ngx-charts';
 import {MatColumnSelectDialogComponent} from './dialogs/mat-column-select-dialog/mat-column-select-dialog.component';
 
-const BACKEND_ROOT_URL = 'https://command-project-warehouse.herokuapp.com/api/v1';
-// const BACKEND_ROOT_URL = 'http://localhost:8189/api/v1';
+// const BACKEND_ROOT_URL = 'https://command-project-warehouse.herokuapp.com/api/v1';
+const BACKEND_ROOT_URL = 'http://localhost:8189/api/v1';
 
 registerLocaleData(localeRu);
 

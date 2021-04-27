@@ -37,7 +37,9 @@ export class DeliveriesComponent implements OnInit {
   });
   onlyMyRecords: boolean;
   onlyMyBrands: boolean;
+  onlyMyWarehouse: boolean;
   isBrandManager: boolean;
+  isWarehouse: boolean;
   isAdmin: boolean;
   filter = '~'; // любое значение, без него фильтр не работает
 
@@ -55,7 +57,6 @@ export class DeliveriesComponent implements OnInit {
     this.dialogConfig.autoFocus = true;
     this.dialogConfig.width = '60%';
     this.dialogConfig.height = 'auto';
-
     this.userService.refresh().subscribe(() => {
       this.currentUser = this.userService.getCurrentUser();
       this.checkUserRoles();
@@ -63,51 +64,58 @@ export class DeliveriesComponent implements OnInit {
     this.deliveryService.findByDateRange(this.range.controls.start.value, this.range.controls.end.value)
       .subscribe(deliveries => {
         // console.log(deliveries);
-        this.dataSource.data = deliveries;  // this forces mat-table to refresh data
-        this.dataSource.sortingDataAccessor = (item, property) => {
-          switch (property) {
-            case 'deliveryTime':
-              return item.deliveryTime.deliveryTime;
-            case 'brand':
-              return item.brand.name;
-            case 'deliveryType':
-              return item.deliveryType.type;
-            case 'shop':
-              return item.shop.name;
-            case 'warehouse':
-              return item.warehouse.name;
-            default:
-              return item[property];
-          }
-        };
-        this.sort.sort(({id: 'deliveryDate', start: 'asc'}) as MatSortable);
-        this.dataSource.sort = this.sort;
-        this.dataSource.paginator = this.paginator;
-        this.paginator._intl.itemsPerPageLabel = 'Поставок на странице:';
-        // В предикате фильтра реализован отбор по id текущего пользователя и id его брендов
-        this.dataSource.filterPredicate = (delivery, filter) => {
-          if (this.onlyMyRecords) {
-            if (delivery.user.id !== this.currentUser.id) {
-              return false;
+        if (this.isWarehouse) {
+          this.dataSource.data = deliveries;
+          this.dataSource.filterPredicate = (delivery, filter: string): boolean => (delivery.warehouse.name.trim() === filter);
+          console.log(this.currentUser.warehouse.name);
+          this.dataSource.filter = this.currentUser.warehouse.name.trim();
+        } else {
+          this.dataSource.data = deliveries;
+          // this forces mat-table to refresh data
+          this.dataSource.sortingDataAccessor = (item, property) => {
+            switch (property) {
+              case 'deliveryTime':
+                return item.deliveryTime.deliveryTime;
+              case 'brand':
+                return item.brand.name;
+              case 'deliveryType':
+                return item.deliveryType.type;
+              case 'shop':
+                return item.shop.name;
+              case 'warehouse':
+                return item.warehouse.name;
+              default:
+                return item[property];
             }
-          }
-          if (this.onlyMyBrands) {
-            return this.isMyBrand(delivery.brand.id);
-          }
-          return true;
-        };
+          };
+          this.sort.sort(({id: 'deliveryDate', start: 'asc'}) as MatSortable);
+          this.dataSource.sort = this.sort;
+          this.dataSource.paginator = this.paginator;
+          this.paginator._intl.itemsPerPageLabel = 'Поставок на странице:';
+          // В предикате фильтра реализован отбор по id текущего пользователя и id его брендов
+          this.dataSource.filterPredicate = (delivery, filter) => {
+            if (this.onlyMyRecords) {
+              if (delivery.user.id !== this.currentUser.id) {
+                return false;
+              }
+            }
+            if (this.onlyMyBrands) {
+              return this.isMyBrand(delivery.brand.id);
+            }
+            return true;
+          };
+        }
       });
   }
 
   addDelivery(): void {
     this.dialogConfig.data = new Delivery(null, new Date(), null, '', '',
       null, '', null, '', '', null, '',
-      '', '', this.currentUser, null);
+      '', '', this.currentUser, null, false);
     const dialogRef = this.dialog.open(EditDeliveryDialogComponent, this.dialogConfig);
     dialogRef.afterClosed().subscribe(delivery => {
       if (delivery) {
         delivery.deliveryDate.setHours(12);
-        console.log(delivery);
         this.deliveryService.add(delivery)
           .subscribe(newDelivery =>
               this.dialogService.openSuccessSnackBar('Создан приход № ' + newDelivery.id + ' от ' + newDelivery.deliveryDate),
@@ -136,7 +144,6 @@ export class DeliveriesComponent implements OnInit {
           }
         } else {
           delivery.deliveryDate.setHours(12);
-          console.log(delivery);
           this.deliveryService.update(delivery.id, delivery).subscribe(() => this.dialogService.openSuccessSnackBar('Данные сохранены'),
             error => this.dialogService.openFailureSnackBar('Произошла ошибка: ' + error.message),
             () => this.reloadData());
@@ -184,6 +191,9 @@ export class DeliveriesComponent implements OnInit {
       if (role.role === 'ROLE_ADMIN') {
         this.isAdmin = true;
       }
+      if (role.role === 'ROLE_WAREHOUSE') {
+        this.isWarehouse = true;
+      }
     }
   }
 
@@ -195,6 +205,16 @@ export class DeliveriesComponent implements OnInit {
       if (brand.id === id) {
         return true;
       }
+    }
+    return false;
+  }
+
+  isMyWarehouse(id: number): boolean {
+    if (!this.currentUser) {
+      return false;
+    }
+    if (this.currentUser.warehouse.id === id) {
+      return true;
     }
     return false;
   }

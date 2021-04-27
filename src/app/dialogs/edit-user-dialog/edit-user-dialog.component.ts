@@ -7,6 +7,8 @@ import {Role} from '../../model/Role';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {User} from '../../model/User';
 import {DialogService} from '../../services/dialog.service';
+import {Warehouse} from '../../model/Warehouse';
+import {WarehouseService} from '../../services/dao/impl/WarehouseService';
 
 @Component({
   selector: 'app-edit-user-dialog',
@@ -17,12 +19,14 @@ export class EditUserDialogComponent implements OnInit {
 
   allBrands: Brand[];
   allRoles: Role[];
+  warehouses: Warehouse[];
   form: FormGroup;
 
   constructor(@Inject(MAT_DIALOG_DATA) public user: User,
               private dialogRef: MatDialogRef<EditUserDialogComponent>,
               private brandService: BrandService,
               private roleService: RoleService,
+              private warehouseService: WarehouseService,
               private dialogService: DialogService,
               private fb: FormBuilder) {
     this.form = fb.group({
@@ -33,7 +37,8 @@ export class EditUserDialogComponent implements OnInit {
       email: [user.email],
       phone: [user.phone],
       brands: [user.brands],
-      roles: [user.roles, Validators.required]
+      roles: [user.roles, Validators.required],
+      warehouse: [user.warehouse]
     });
   }
 
@@ -42,6 +47,8 @@ export class EditUserDialogComponent implements OnInit {
       error => this.dialogService.openFailureSnackBar('Произошла ошибка загрузки справочника "Бренды": ' + error.message));
     this.roleService.findAll().subscribe(onloadeddata => this.allRoles = onloadeddata,
       error => this.dialogService.openFailureSnackBar('Произошла ошибка загрузки справочника "Роли в системе": ' + error.message));
+    this.warehouseService.findAll().subscribe(onloadeddata => this.warehouses = onloadeddata,
+      error => this.dialogService.openFailureSnackBar('Произошла ошибка загрузки справочника "Склады": ' + error.message));
   }
 
   compareFn(o1: any, o2: any): boolean {
@@ -73,7 +80,18 @@ export class EditUserDialogComponent implements OnInit {
 
   isBrandManager(): boolean {
     for (const role of this.form.value.roles) {
-      if (role.role === 'ROLE_BRAND_MANAGER') { return true; }
+      if (role.role === 'ROLE_BRAND_MANAGER') {
+        return true;
+      }
+    }
+    return false;
+  }
+
+  isWarehouseWorker(): boolean {
+    for (const role of this.form.value.roles) {
+      if (role.role === 'ROLE_WAREHOUSE') {
+        return true;
+      }
     }
     return false;
   }

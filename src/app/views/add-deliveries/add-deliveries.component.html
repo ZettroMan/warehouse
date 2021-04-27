@@ -128,11 +128,12 @@
                     <mat-cell *matCellDef="let delivery; let rowIdx = index;">
                       <mat-form-field class="myCopyPasteField" hideRequiredMarker>
                         <mat-label></mat-label>
-                        <mat-select [compareWith]="compareFn" matInput #deliveryType="ngModel" name="deliveryType{{rowIdx}}"
+                        <mat-select [compareWith]="compareFn" matInput #deliveryType="ngModel"
+                                    name="deliveryType{{rowIdx}}"
                                     placeholder="Время"
                                     [(ngModel)]="delivery.deliveryType" required>
                           <mat-option *ngFor="let deliveryType of allTypes"
-                                      [value]="deliveryType">{{deliveryType.type}}</mat-option>
+                                      [value]="deliveryType">{{mapDeliveryType(deliveryType.type)}}</mat-option>
                         </mat-select>
                         <mat-error *ngIf="deliveryType?.invalid">
                           <div *ngIf="deliveryType.errors.required">Укажите корректный тип</div>
@@ -261,6 +262,24 @@
           </mat-card-actions>
         </mat-card>
       </form>
+
+    </div>
+    <div class="card">
+<!--      &lt;!&ndash;      Import excel file &ndash;&gt;-->
+
+<!--      <button type="button" mat-raised-button (click)="fileInput.click()">Выберите файл</button>-->
+<!--      <input hidden (change)="onFileSelected()" #fileInput type="file" id="file">-->
+
+<!--      <input type="file" (change)="onFileChange($event)" multiple="false">asd<input/>-->
+<!--      <table class="sjs-table">-->
+<!--        <tbody>-->
+<!--        <tr *ngFor="let row of excData">-->
+<!--          <td *ngFor="let val of row">-->
+<!--            {{val}}-->
+<!--          </td>-->
+<!--        </tr>-->
+<!--        </tbody>-->
+<!--      </table>-->
     </div>
   </div>
 </div>

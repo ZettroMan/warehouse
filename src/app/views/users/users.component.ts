@@ -10,6 +10,7 @@ import {AuthService} from '../../security/auth.service';
 import {roleMapper} from '../../services/dao/impl/RoleService';
 import {DialogService} from '../../services/dialog.service';
 import {MatSort} from '@angular/material/sort';
+import {Warehouse} from '../../model/Warehouse';
 
 @Component({
   selector: 'app-users',
@@ -18,7 +19,7 @@ import {MatSort} from '@angular/material/sort';
 })
 export class UsersComponent implements OnInit {
 
-  displayedColumns: string[] = ['No', 'username', 'fullName', 'email', 'phone', 'brands', 'roles'];
+  displayedColumns: string[] = ['No', 'username', 'fullName', 'email', 'phone', 'brands', 'roles', 'warehouse'];
   dataSource = new MatTableDataSource<User>();
   dialogConfig = new MatDialogConfig();
   @ViewChild(MatSort) sort: MatSort;
@@ -43,7 +44,7 @@ export class UsersComponent implements OnInit {
   }
 
   addUser(): void {
-    this.dialogConfig.data = new User(null, '', '', '', '', '', [], []);
+    this.dialogConfig.data = new User(null, '', '', '', '', '', [], [], null);
     const dialogRef = this.dialog.open(EditUserDialogComponent, this.dialogConfig);
     dialogRef.afterClosed().subscribe(user => {
       if (user) {
@@ -100,4 +101,7 @@ export class UsersComponent implements OnInit {
     return brandsList;
   }
 
+  getFormattedWarehouse(warehouse: Warehouse): string {
+    return warehouse.name;
+  }
 }

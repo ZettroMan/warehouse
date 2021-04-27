@@ -35,6 +35,7 @@ export class ProfileComponent implements OnInit {
         fullName: [this.user.fullName],
         email: [this.user.email],
         phone: [this.user.phone],
+        warehouse: [this.user.warehouse]
       });
     });
   }
