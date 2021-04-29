@@ -18,9 +18,8 @@ import {Shop} from '../../model/Shop';
 import {Brand} from '../../model/Brand';
 import {NgForm} from '@angular/forms';
 import {DialogService} from '../../services/dialog.service';
-import * as XLSX from 'xlsx';
+import {TransferService} from '../../services/transfer.service';
 
-type AOA = any[][];
 
 @Component({
   selector: 'app-deliveries',
@@ -40,11 +39,11 @@ export class AddDeliveriesComponent implements OnInit {
   allTimes: DeliveryTime[];
   allTypes: DeliveryType[];
   // ----------
-  excData: AOA = [[1, 2], [3, 4]];
 
   @ViewChild('copyPasteForm') formGroup;
 
-  constructor(private deliveryService: DeliveryService,
+  constructor(private readonly transferService: TransferService,
+              private deliveryService: DeliveryService,
               private userService: UserService,
               private dialog: MatDialog,
               private dateAdapter: DateAdapter<any>,
@@ -59,6 +58,10 @@ export class AddDeliveriesComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.transferService.data$.subscribe(data => {
+      console.log(data);
+      this.pasteTableDataSource = new MatTableDataSource(data);
+    });
     this.brandService.findAll().subscribe(onloadeddata => this.allBrands = onloadeddata);
     this.shopService.findAll().subscribe(onloadeddata => this.allShops = onloadeddata);
     this.warehouseService.findAll().subscribe(onloadeddata => this.allWarehouses = onloadeddata);
@@ -71,7 +74,7 @@ export class AddDeliveriesComponent implements OnInit {
 
 
   // ---------------------------------------------------------
-  data(event: ClipboardEvent): void {
+  handleData(event: ClipboardEvent): void {
     const clipboardData = event.clipboardData;
     const pastedText = clipboardData.getData('text');
     const rowData = pastedText.split('\n');
@@ -105,7 +108,6 @@ export class AddDeliveriesComponent implements OnInit {
       }
     });
     this.pasteTableDataSource = new MatTableDataSource(dataObject);
-    console.log(this.pasteTableDataSource);
   }
 
   send(form: NgForm): void {
@@ -121,7 +123,6 @@ export class AddDeliveriesComponent implements OnInit {
     let delivery: Delivery;
     const deliveriesToSend: Delivery[] = [];
     for (const item of table.data) {
-      // console.log('prepare to send data: ');
       const goodDate = new Date(item.deliveryDate.getFullYear(), item.deliveryDate.getMonth(), item.deliveryDate.getDate(), 12);
       delivery = new Delivery(
         null,
@@ -157,28 +158,6 @@ export class AddDeliveriesComponent implements OnInit {
       return false;
     }
     return (o1.id === o2.id);
-  }
-
-  // --------------------------------- Import excel file ---------------------------------
-  onFileChange(evt: any): void {
-    /* wire up file reader */
-    const target: DataTransfer = (evt.target) as DataTransfer;
-    if (target.files.length !== 1) { throw new Error('Cannot use multiple files'); }
-    const reader: FileReader = new FileReader();
-    reader.onload = (e: any) => {
-      /* read workbook */
-      const bstr: string = e.target.result;
-      const wb: XLSX.WorkBook = XLSX.read(bstr, { type: 'binary' });
-
-      /* grab first sheet */
-      const wsname: string = wb.SheetNames[0];
-      const ws: XLSX.WorkSheet = wb.Sheets[wsname];
-
-      /* save data */
-      this.excData = ((XLSX.utils.sheet_to_json(ws, { header: 1 })));
-      console.log(this.excData);
-    };
-    reader.readAsBinaryString(target.files[0]);
   }
 
   mapDeliveryType(dt: string): string {
