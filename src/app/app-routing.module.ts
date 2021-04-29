@@ -10,6 +10,7 @@ import {ProfileComponent} from './views/profile/profile.component';
 import {AuthGuard} from './security/auth.guard';
 import {LoginComponent} from './views/login/login.component';
 import {AddDeliveriesComponent} from './views/add-deliveries/add-deliveries.component';
+import {ImporterComponent} from './views/add-deliveries/dragNdrop/importer/importer.component';
 
 const routes: Routes = [
   {

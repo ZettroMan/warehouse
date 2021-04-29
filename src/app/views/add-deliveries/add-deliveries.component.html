@@ -2,7 +2,7 @@
   <div class="col-md-12">
     <div class="card">
 
-      <div class="card-header card-header-primary" (paste)="data($event)">
+      <div class="card-header card-header-primary" (paste)="handleData($event)">
         <h4 class="card-title ">Нажмите левой кнопкой мыши на эту надпись и вставьте Вашу excel таблицу (ctrl +
           v)</h4>
       </div>
@@ -265,21 +265,7 @@
 
     </div>
     <div class="card">
-<!--      &lt;!&ndash;      Import excel file &ndash;&gt;-->
-
-<!--      <button type="button" mat-raised-button (click)="fileInput.click()">Выберите файл</button>-->
-<!--      <input hidden (change)="onFileSelected()" #fileInput type="file" id="file">-->
-
-<!--      <input type="file" (change)="onFileChange($event)" multiple="false">asd<input/>-->
-<!--      <table class="sjs-table">-->
-<!--        <tbody>-->
-<!--        <tr *ngFor="let row of excData">-->
-<!--          <td *ngFor="let val of row">-->
-<!--            {{val}}-->
-<!--          </td>-->
-<!--        </tr>-->
-<!--        </tbody>-->
-<!--      </table>-->
+      <app-importer></app-importer>
     </div>
   </div>
 </div>
